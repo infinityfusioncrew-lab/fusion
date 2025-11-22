@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Infinity Fusion - Hard Techno Experience</title>
+    <meta name="description" content="05 de Dezembro em SP. Hard Techno em sua forma pura. Ingressos disponíveis.">
+    <meta name="author" content="Infinity Fusion Team">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://infinityfusion.com.br"> 
+    
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:image" content="https://i.imgur.com/ROt9UJN.png">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://i.imgur.com/ROt9UJN.png">
+
+    <meta name="theme-color" content="#ff4500">
+    <link rel="icon" href="https://i.imgur.com/ROt9UJN.png" type="image/png">
+
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Event",
+      "name": "Infinity Fusion",
+      "startDate": "2025-12-05T22:00-03:00",
+      "endDate": "2025-12-06T06:00-03:00",
+      "location": { "@type": "Place", "name": "Estação Marquês", "address": "Av. Marquês de São Vicente, 412 - Várzea da Barra Funda, São Paulo - SP" },
+      "image": ["https://i.imgur.com/ROt9UJN.png"],
+      "description": "Hard Techno em sua forma pura.",
+      "offers": { "@type": "Offer", "url": "https://www.sympla.com.br/evento/infinity-fusion/3163299", "availability": "https://schema.org/InStock" }
+    }
+    </script>
+
+    <style>
+        /* --- VARIÁVEIS --- */
+        :root {
+            --primary: #ff4500;
+            --primary-glow: rgba(255, 69, 0, 0.3);
+            --bg-dark: #050302;
+            --bg-black: #000;
+            --text-light: #fff;
+            --text-dim: #ccc;
+            --font-main: 'Orbitron', sans-serif;
+            --icon-yellow: #FFD700; 
+        }
+
+        /* --- RESET --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        
+        body {
+            font-family: var(--font-main);
+            background: transparent; 
+            background-color: #000;
+            color: var(--text-light);
+            min-height: 100vh;
+            overflow-x: hidden;
+            padding-bottom: 120px; 
+        }
+
+        :focus-visible {
+            outline: 2px solid var(--primary);
+            outline-offset: 4px;
+        }
+
+        /* --- VIDEO BACKGROUND FIXED (LOCAL) --- */
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -10; 
+            overflow: hidden;
+            background: #000;
+        }
+        .video-background video {
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0.6; 
+        }
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6); 
+            background-image: linear-gradient(transparent 50%, rgba(0,0,0,0.5) 50%);
+            background-size: 4px 4px;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* --- PRELOADER COM GRADE LARANJA BEM TRANSPARENTE --- */
+        #preloader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            
+            background-color: #000;
+            background-image: 
+                linear-gradient(rgba(255, 69, 0, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 69, 0, 0.05) 1px, transparent 1px);
+            background-size: 150px 150px;
+            
+            z-index: 10000;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            transition: opacity 1s ease-out, visibility 1s;
+        }
+        
+        .preloader-content {
+            text-align: center;
+            width: 85%;
+            max-width: 350px;
+            position: relative;
+            z-index: 10002; 
+        }
+        
+        .preloader-logo {
+            width: 240px; 
+            height: auto;
+            margin-bottom: 50px;
+            filter: brightness(0) invert(1) drop-shadow(0 0 20px rgba(255,255,255,0.6));
+            animation: pulseLogo 2s infinite alternate;
+        }
+        .loader-container {
+            width: 100%;
+            height: 12px;
+            background: #111;
+            border-radius: 6px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #444;
+            box-shadow: 0 0 25px rgba(0,0,0,0.9);
+        }
+        .loader-bar {
+            height: 100%;
+            width: 0%;
+            background: var(--primary);
+            box-shadow: 0 0 25px var(--primary);
+            transition: width 0.2s linear;
+            position: relative;
+        }
+        .loader-bar::after {
+            content: ''; position: absolute; top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(90deg, transparent, #fff, transparent);
+            transform: translateX(-100%);
+            animation: loadShimmer 1.5s infinite;
+        }
+        .loader-text {
+            margin-top: 20px;
+            font-size: 14px;
+            color: var(--primary);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            font-weight: 900;
+            text-shadow: 0 0 10px var(--primary-glow);
+        }
+        .loader-phrase {
+            margin-top: 15px;
+            font-size: 13px;
+            color: #fff;
+            letter-spacing: 1px;
+            font-weight: 400;
+            text-transform: none;
+            font-style: italic;
+            animation: blinkText 3s infinite;
+        }
+
+        @keyframes pulseLogo { 0% { transform: scale(1); opacity: 0.9; } 100% { transform: scale(1.05); opacity: 1; } }
+        @keyframes loadShimmer { 100% { transform: translateX(100%); } }
+        @keyframes blinkText { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+
+        /* --- PARTÍCULAS --- */
+        #particleContainer {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 10001; 
+            pointer-events: none; overflow: hidden;
+            transition: z-index 0s linear 1s; 
+        }
+        
+        body.loaded #particleContainer {
+            z-index: -4;
+        }
+
+        .particle {
+            position: absolute; bottom: -10px;
+            background: rgba(255, 69, 0, 0.8);
+            border-radius: 50%;
+            box-shadow: 0 0 15px rgba(255, 69, 0, 0.6);
+            animation: rise linear forwards;
+            will-change: transform, opacity;
+        }
+        .particle.orange { background: #ffaa00; }
+        @keyframes rise { to { transform: translateY(-120vh); opacity: 0; } }
+
+        @media (prefers-reduced-motion: reduce) {
+            .particle, .profile-image-wrapper, .invert-fx, .dev-btn, .link-card:hover, .dj-card:hover, .faq-toggle, .share-btn:hover, .social-link, .social-icon, .social-svg, .progress-fill {
+                animation: none !important; transition: none !important; transform: none !important;
+            }
+            .invert-fx { transform: none !important; color: var(--primary) !important; }
+            .profile-image-wrapper { transform: none !important; }
+            .profile-image img { animation: none !important; }
+        }
+
+        .container { max-width: 680px; margin: 0 auto; padding: 0 15px; position: relative; z-index: 2; width: 100%; }
+
+        /* HEADER */
+        .profile-section { 
+            text-align: center; 
+            margin-top: 50px; 
+            margin-bottom: 40px; 
+            animation: glitchIn 1s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        @keyframes glitchIn { 0% { opacity: 0; transform: translateY(-20px); } 100% { opacity: 1; transform: translateY(0); } }
+        
+        /* LOGO QUADRADO */
+        .profile-image-wrapper { display: inline-block; animation: floatGlitch 5s ease-in-out infinite; }
+        .profile-image { width: 120px; height: 120px; margin: 0 auto 15px; box-shadow: none; } 
+        .profile-image img { 
+            width: 100%; height: 100%; object-fit: cover; border-radius: 30px; 
+            filter: drop-shadow(0 0 15px rgba(255, 69, 0, 0.5)); 
+            animation: logoBreath 4s ease-in-out infinite; 
+        }
+
+        @keyframes floatGlitch { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
+        @keyframes logoBreath { 50% { transform: scale(1.05); filter: drop-shadow(0 0 30px rgba(255, 69, 0, 0.8)); } }
+
+        .invert-fx { display: inline-block; animation: mirrorFlicker 4s infinite steps(1); }
+        @keyframes mirrorFlicker {
+            0%, 45%, 55%, 100% { transform: scaleX(1); color: var(--primary); }
+            46% { transform: scaleX(-1); color: var(--text-light); }
+            48% { transform: scaleX(1); color: var(--primary); }
+            50% { transform: scaleX(-1); color: var(--text-light); }
+            52% { transform: scaleX(1); color: var(--primary); }
+        }
+
+        /* COUNTDOWN */
+        .event-countdown {
+            background: rgba(0, 0, 0, 0.85); border: 2px solid var(--primary); border-radius: 20px;
+            padding: 30px 20px 20px; margin-bottom: 40px; 
+            box-shadow: 0 0 40px rgba(255, 69, 0, 0.25);
+            position: relative; overflow: hidden;
+            animation: borderPulse 3s infinite alternate;
+            text-align: center; width: 100%;
+        }
+        @keyframes borderPulse { from { border-color: var(--primary); box-shadow: 0 0 20px rgba(255,69,0,0.2); } to { border-color: #ff8800; box-shadow: 0 0 40px rgba(255,69,0,0.5); } }
+        
+        .event-title { font-size: 18px; color: var(--primary); font-weight: 900; text-transform: uppercase; margin-bottom: 10px; text-align: center; letter-spacing: 2px; width: 100%; }
+        
+        /* DATA DO EVENTO */
+        .event-date { 
+            font-size: 12px; 
+            color: var(--text-dim); 
+            margin-bottom: 25px; 
+            text-align: center; 
+            display: block; 
+            font-weight: 700; 
+            width: 100%; 
+            line-height: 1.8; 
+        }
+        .event-date .location-name {
+            display: block; 
+            color: #fff; 
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .countdown-timer { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 20px; }
+        
+        .time-unit { 
+            background: rgba(10, 5, 0, 0.9); border: 1px solid var(--primary); 
+            padding: 10px 5px; border-radius: 12px; width: 70px;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            aspect-ratio: 1/1;
+        }
+        .time-value { display: block; font-size: 22px; font-weight: 900; color: var(--primary); line-height: 1; }
+        .time-label { display: block; font-size: 8px; color: var(--text-dim); text-transform: uppercase; margin-top: 5px; font-weight: 700; }
+
+        /* BARRA DE ESCASSEZ */
+        .lot-status-container {
+            width: 100%; max-width: 100%; margin: 30px auto 20px; 
+            text-align: left; background: rgba(0, 0, 0, 0.5); padding: 15px; 
+            border-radius: 12px; border: 1px solid rgba(255, 69, 0, 0.2);
+        }
+        .lot-header {
+            display: flex; justify-content: space-between; align-items: flex-end;
+            margin-bottom: 8px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+        }
+        
+        .lot-info-col {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            line-height: 1.3;
+        }
+        .lot-label-text { font-size: 9px; color: #ccc; }
+        .lot-value-text { font-size: 13px; color: #fff; font-weight: 900; }
+
+        .lot-warning { color: #ff0000; font-weight: 900; animation: blink 1s infinite; }
+
+        .progress-track {
+            width: 100%; height: 16px; background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .progress-fill {
+            width: 87%; height: 100%;
+            background: linear-gradient(90deg, var(--primary), #ff0000);
+            box-shadow: 0 0 20px var(--primary); border-radius: 20px;
+            position: relative; animation: loadBar 2s ease-out forwards;
+        }
+        .progress-fill::after {
+            content: ''; position: absolute; top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.9), transparent);
+            transform: translateX(-100%); animation: shimmer 1.5s infinite;
+        }
+        .lot-footer {
+            text-align: center; font-size: 9px; color: #ccc; margin-top: 8px;
+            letter-spacing: 2px; opacity: 0.9; font-weight: 700;
+        }
+        @keyframes loadBar { from { width: 0; } to { width: 87%; } }
+        @keyframes shimmer { 100% { transform: translateX(100%); } }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+
+        /* BOTÃO COMPARTILHAR */
+        .share-btn {
+            background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px); color: #fff; padding: 10px 24px; border-radius: 8px;
+            font-size: 11px; cursor: pointer; text-transform: uppercase; font-weight: 700;
+            letter-spacing: 1px; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            margin-top: 8px; 
+            display: inline-flex; align-items: center; gap: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+        .share-btn svg { width: 16px; height: 16px; fill: #fff; transition: transform 0.3s ease; }
+        .share-btn:hover { 
+            background: rgba(255, 69, 0, 0.15); border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(255, 69, 0, 0.4); transform: translateY(-3px) scale(1.02);
+        }
+        .share-btn:hover svg { transform: translate(3px, -3px); }
+        .share-btn:active { transform: translateY(0); }
+
+        /* LINKS */
+        .links { display: flex; flex-direction: column; gap: 15px; margin: 30px 0; width: 100%; }
+        .link-card {
+            background: rgba(5, 5, 5, 0.8); border: 1px solid rgba(255, 69, 0, 0.5);
+            padding: 25px 20px; border-radius: 16px; text-decoration: none; color: var(--text-light);
+            display: flex; align-items: center; gap: 20px; transition: all 0.3s ease; position: relative;
+            width: 100%; box-sizing: border-box;
+        }
+        .link-card:active { transform: scale(0.98); }
+
+        @media (hover: hover) {
+            .link-card:hover {
+                background: var(--bg-black); border-color: var(--primary);
+                box-shadow: 0 0 25px rgba(255, 69, 0, 0.6), inset 0 0 15px rgba(255, 69, 0, 0.3);
+                z-index: 10; transform: scale(1.02);
+            }
+            .link-card:hover .link-icon { background: var(--primary); box-shadow: 0 0 25px var(--primary); transform: rotate(-5deg); }
+            .link-card:hover .link-arrow { transform: translateX(5px) scale(1.2); color: var(--text-light); text-shadow: 0 0 10px var(--text-light); }
+            .dj-card:hover { border-color: var(--text-light); transform: translateY(-5px); box-shadow: 0 10px 20px rgba(255, 69, 0, 0.2); background: rgba(0,0,0,0.8); z-index: 5; }
+        }
+
+        .link-icon {
+            width: 55px; height: 55px; background: var(--bg-black); border-radius: 12px;
+            display: flex; align-items: center; justify-content: center; border: 1px solid var(--primary);
+            box-shadow: 0 0 15px rgba(255, 69, 0, 0.3); flex-shrink: 0; transition: 0.3s;
+        }
+        .link-icon img, .link-icon svg { width: 60%; height: 60%; object-fit: contain; }
+        .link-icon.sympla img { width: 90%; } .link-icon.talent img { width: 90%; }
+        .link-icon.whatsapp img { width: 85%; } .link-icon.nexus img { width: 75%; }
+        .link-icon.course svg { width: 60%; }
+        
+        /* TIKTOK ICON AJUSTADO */
+        .link-icon.tiktok-img img { width: 80%; height: 80%; }
+
+        .link-content { flex: 1; }
+        .link-title { font-size: 15px; font-weight: 900; margin-bottom: 5px; text-transform: uppercase; line-height: 1.2; white-space: normal; }
+        .link-description { font-size: 11px; color: var(--text-dim); line-height: 1.3; white-space: normal; }
+        .link-arrow { font-size: 24px; color: var(--primary); transition: 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55); }
+
+        .section-title {
+            font-size: 24px; color: var(--primary); font-weight: 900; text-transform: uppercase;
+            letter-spacing: 2px; text-align: center; margin: 60px 0 30px; text-shadow: 0 0 20px rgba(255, 69, 0, 0.6);
+        }
+        
+        .lineup-title-txt { font-size: 28px; letter-spacing: 1px; }
+
+        .lineup-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 50px; width: 100%; }
+        #lineup { margin-top: 100px; }
+
+        .dj-card {
+            background: rgba(0, 0, 0, 0.6); border: 1px solid rgba(255, 69, 0, 0.3);
+            border-radius: 12px; padding: 15px 10px; text-align: center;
+            position: relative; overflow: hidden; transition: 0.3s;
+            width: 100%; box-sizing: border-box;
+            display: flex; flex-direction: column; 
+        }
+        
+        /* DJ PHOTO */
+        .dj-photo { 
+            display: block !important; 
+            width: 100%; 
+            aspect-ratio: 1/1; 
+            border-radius: 8px; 
+            margin: 0 auto 10px; 
+            border: 1px solid var(--primary); 
+            overflow: hidden; 
+            position: relative; 
+            flex-shrink: 0; 
+        }
+        .dj-photo img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(20%); transition: 0.3s; }
+        .dj-name { font-size: 16px; font-weight: 900; color: var(--text-light); text-transform: uppercase; margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .dj-instagram { font-size: 9px; color: var(--text-dim); margin-bottom: 8px; cursor: pointer; }
+        .dj-card.headliner { background: linear-gradient(180deg, rgba(255,69,0,0.1), rgba(0,0,0,0.9)); border: 1px solid var(--primary); box-shadow: 0 0 15px rgba(255, 69, 0, 0.2); }
+        .dj-card.headliner .dj-name { font-size: 18px; text-shadow: 0 0 5px var(--primary); }
+        .dj-card.contest-card { grid-column: 1 / -1; width: 100%; margin: 0 auto; background: rgba(0, 0, 0, 0.6); border: 1px dashed var(--primary); display: flex; flex-direction: column; align-items: center; padding: 20px; box-sizing: border-box; }
+        .contest-info { font-size: 10px; color: var(--text-dim); margin-top: 5px; margin-bottom: 10px; }
+        .contest-btn {
+            background: var(--primary); color: var(--bg-black); border: none; padding: 8px 20px; border-radius: 20px; font-weight: 900; font-size: 11px; cursor: pointer; text-decoration: none; animation: pulse 2s infinite; display: inline-block;
+        }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+
+        .play-btn {
+            background: rgba(255, 69, 0, 0.2); 
+            border: 1px solid var(--primary);
+            color: #fff;
+            border-radius: 20px;
+            min-width: 50px;
+            height: 36px; 
+            font-size: 11px; 
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center; margin: 5px auto 0; 
+            transition: all 0.2s ease;
+            box-shadow: 0 0 10px rgba(255,69,0,0.3);
+            padding: 0 10px;
+            font-family: monospace;
+            font-weight: 700;
+        }
+        .play-btn:hover { background: var(--primary); color: #000; transform: scale(1.05); }
+        .play-btn.playing { background: rgba(0, 255, 0, 0.2); border-color: #00ff00; color: #00ff00; box-shadow: 0 0 15px rgba(0,255,0,0.4); }
+        .play-btn.error { background: #ff0000 !important; color: var(--text-light); } 
+
+        .location-section { background: rgba(0, 0, 0, 0.8); border: 2px solid rgba(255, 69, 0, 0.4); border-radius: 18px; padding: 20px; width: 100%; box-sizing: border-box; }
+        .info-item { display: flex; align-items: flex-start; gap: 12px; padding: 10px; margin-bottom: 10px; background: rgba(255, 255, 255, 0.05); border-radius: 8px; }
+        .info-icon { font-size: 18px; }
+        .info-label { font-size: 11px; color: var(--primary); font-weight: 800; margin-bottom: 4px; }
+        .info-text { font-size: 14px; color: #fff; }
+        
+        .map-button { display: block; background: var(--primary); color: var(--bg-black); padding: 12px; border-radius: 10px; text-decoration: none; font-weight: 900; text-align: center; font-size: 12px; margin-bottom: 10px; }
+        
+        /* BOTOES DE CONTATO */
+        .contact-buttons { display: flex; gap: 10px; width: 100%; margin-bottom: 20px; }
+        .contact-btn {
+            flex: 1;
+            padding: 12px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 900;
+            font-size: 12px;
+            text-align: center;
+            display: flex; justify-content: center; align-items: center; gap: 8px;
+            color: #000;
+            transition: transform 0.2s ease;
+        }
+        .contact-btn:hover { transform: translateY(-2px); }
+        .contact-btn.whatsapp { background: #25D366; border: 1px solid #25D366; }
+        .contact-btn.email { background: #fff; border: 1px solid #ccc; }
+        .contact-btn svg { width: 16px; height: 16px; fill: #000; }
+
+        .map-container { margin-top: 0px; border-radius: 12px; overflow: hidden; height: 250px; background: #111; }
+        .map-container iframe { width: 100%; height: 100%; border: none; filter: grayscale(100%) contrast(1.2); }
+
+        .about-content { background: rgba(0, 0, 0, 0.8); border: 2px solid rgba(255, 69, 0, 0.4); border-radius: 18px; padding: 15px 25px 25px; margin-bottom: 30px; text-align: center; width: 100%; box-sizing: border-box; }
+        .about-text { font-size: 14px; line-height: 1.7; text-align: justify; }
+        .about-text-center { text-align: center; display: block; margin-bottom: 10px; }
+        .c-org { color: var(--primary); font-weight: 900; text-transform: uppercase; }
+        .c-wht { color: #ffffff; font-weight: 400; }
+
+        .faq-section { background: rgba(0, 0, 0, 0.8); border: 2px solid var(--primary); border-radius: 18px; padding: 10px 20px 25px; box-shadow: none; width: 100%; box-sizing: border-box; }
+        .faq-title { font-size: 18px; color: var(--primary); font-weight: 900; text-align: center; margin-bottom: 20px; margin-top: 5px; }
+        .faq-list { display: flex; flex-direction: column; gap: 15px; }
+        .faq-item { background: rgba(255, 255, 255, 0.03); border-bottom: 1px solid rgba(255,69,0,0.2); border-radius: 8px; margin-bottom: 8px; overflow: hidden; transition: all 0.3s ease; border: 1px solid transparent; }
+        .faq-item:hover, .faq-item:active { border-color: var(--primary); box-shadow: 0 0 10px rgba(255, 69, 0, 0.3); background: rgba(255, 69, 0, 0.05); }
+        .faq-question { padding: 15px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-weight: 700; font-size: 14px; }
+        .faq-toggle { color: var(--primary); font-weight: 900; font-size: 18px; transition: transform 0.3s ease; }
+        .faq-item.active .faq-toggle { transform: rotate(45deg); }
+        .faq-answer { max-height: 0; overflow: hidden; transition: 0.3s; padding: 0 15px; font-size: 13px; color: var(--text-dim); line-height: 1.5; }
+        .faq-item.active .faq-answer { max-height: 300px; padding: 0 15px 15px 15px; }
+
+        /* NEWSLETTER MOBILE FIXED */
+        .newsletter-section { 
+            background: rgba(0, 0, 0, 0.8); 
+            border: 2px solid rgba(255, 69, 0, 0.6); 
+            border-radius: 18px; 
+            padding: 15px 25px 25px; 
+            margin: 40px auto; 
+            text-align: center; 
+            box-shadow: none; 
+            width: 100%; 
+            max-width: 600px; 
+            box-sizing: border-box; 
+        }
+
+        .newsletter-title { font-size: 18px; color: var(--primary); font-weight: 900; margin-bottom: 5px; margin-top: 0; }
+        .newsletter-description { font-size: 11px; color: var(--text-dim); margin-bottom: 15px; text-transform: uppercase; font-weight: 700; }
+        .newsletter-privacy { font-size: 9px; color: #666; margin-top: 10px; }
+        .newsletter-form { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 10px; 
+            max-width: 500px; 
+            margin: 0 auto; 
+            justify-content: center; 
+        }
+
+        .newsletter-input { width: 100%; padding: 12px; background: #111; border: 1px solid var(--primary); border-radius: 8px; color: var(--text-light); margin-bottom: 0; }
+        
+        .newsletter-button { 
+            width: 50%; 
+            margin: 10px auto 0; 
+            padding: 12px; 
+            background: var(--primary); 
+            border: none; 
+            border-radius: 8px; 
+            font-weight: 900; 
+            color: var(--bg-black); 
+            cursor: pointer; 
+        }
+        #successMessage { display: none; color: #00ff00; margin-top: 10px; font-weight: 700; font-size: 12px; }
+        #errorMessage { display: none; color: #ff0000; margin-top: 10px; font-weight: 700; font-size: 12px; }
+
+        /* SEPARADOR DE SEÇÃO */
+        .section-divider {
+            width: 80%; height: 1px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            margin: 50px auto 10px; opacity: 0.3;
+        }
+
+        /* RODAPÉ & COPYRIGHT AUMENTADO */
+        .footer-copyright {
+            color: #ffffff; 
+            font-weight: 700;
+            font-size: 14px; 
+            opacity: 0.6;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        footer { text-align: center; margin-top: 10px; padding: 20px 0 40px; }
+
+        /* FLOATING DEV BUTTON (Centralizado, Surge de Baixo, Sem X) */
+        #dev-float-wrapper {
+            position: fixed;
+            bottom: -100px; /* Começa escondido */
+            left: 50%; /* Centralizado */
+            transform: translateX(-50%);
+            z-index: 9990;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: bottom 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            width: auto;
+        }
+        
+        #dev-float-wrapper.visible {
+            bottom: 20px; /* Sobe */
+        }
+
+        .dev-btn-float {
+            background: rgba(0, 0, 0, 0.9);
+            border: 1px solid var(--primary);
+            color: var(--text-light);
+            padding: 10px 24px; /* Aumentado */
+            border-radius: 30px;
+            font-size: 12px; /* Fonte aumentada */
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+            transition: all 0.3s ease;
+        }
+
+        .dev-btn-float:hover {
+            background: var(--primary);
+            color: #000;
+            box-shadow: 0 0 25px var(--primary);
+            transform: scale(1.05);
+        }
+
+        /* STICKY CTA - TEXTO CENTRALIZADO */
+        .sticky-cta { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(100px); width: auto; min-width: 260px; max-width: 320px; height: 60px; background: rgba(5, 5, 5, 0.98); border: 2px solid var(--primary); border-radius: 50px; padding: 5px 25px; display: flex; justify-content: space-between; align-items: center; gap: 15px; z-index: 1000; box-shadow: 0 0 30px rgba(255, 69, 0, 0.6); opacity: 0; transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); pointer-events: none; }
+        .sticky-cta.visible { opacity: 1; transform: translateX(-50%) translateY(0); pointer-events: all; }
+        
+        .cta-text-col { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+        .cta-line-1 { font-size: 10px; color: var(--text-light); font-weight: 400; }
+        .cta-line-2 { font-size: 14px; color: var(--primary); font-weight: 900; line-height: 1; }
+        .cta-btn { background: var(--primary); color: var(--bg-black); padding: 10px 20px; border-radius: 30px; font-weight: 900; text-decoration: none; font-size: 12px; text-transform: uppercase; white-space: nowrap; }
+
+        @media (max-width: 600px) {
+            .section-title, .faq-title, .newsletter-title, .event-title { font-size: 18px; white-space: nowrap; overflow: visible; letter-spacing: 1px; margin: 60px 0 20px; text-align: center !important; width: 100%; }
+            .lineup-title-txt { font-size: 22px !important; letter-spacing: 0.5px; white-space: nowrap; }
+            .countdown-timer { justify-content: center; gap: 8px; }
+            .about-section .section-title { text-align: center !important; padding: 0; }
+            .newsletter-description { font-size: 11px; white-space: nowrap; }
+            .lineup-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+            .dj-card.headliner { grid-column: span 2; } 
+            .social-links { flex-wrap: gap: 20px; padding-bottom: 10px; justify-content: center; }
+            .time-unit { padding: 8px 2px; width: 60px; }
+            .time-value { font-size: 18px; }
+            .time-label { font-size: 8px; }
+            .about-text { text-align: center !important; }
+
+            .event-countdown, .faq-section, .about-content, .location-section, .newsletter-section { width: 90% !important; margin: 20px auto; padding: 20px 15px 25px !important; box-sizing: border-box; }
+            .event-title, .faq-title, .newsletter-title, .section-title { margin-top: 0 !important; margin-bottom: 15px; line-height: 1.2; }
+            .newsletter-input { text-align: center; }
+        }
+        @media (max-width: 350px) {
+            .countdown-timer { gap: 5px; }
+            .time-unit { width: 45%; margin-bottom: 5px; } 
+            .time-value { font-size: 16px; }
+            .lineup-grid { grid-template-columns: 1fr; }
+            .dj-card.headliner { grid-column: auto; }
+        }
+    </style>
+</head>
+<body>
+    <div id="preloader">
+        <div class="preloader-content">
+            <img src="logo-name.png" alt="Loading..." class="preloader-logo">
+            <div class="loader-container">
+                <div class="loader-bar"></div>
+            </div>
+            <div class="loader-text">SYSTEM INITIALIZING... <span id="loaderPercent">0%</span></div>
+            <div class="loader-phrase">“Aguarde… estamos moldando a experiência perfeita para você.”</div>
+        </div>
+    </div>
+
+    <div class="video-background">
+        <div class="video-overlay"></div>
+        <video id="bgVideo" autoplay muted loop playsinline poster="https://i.imgur.com/ROt9UJN.png">
+            <source src="video-bg.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <div id="particleContainer"></div>
+    
+    <div id="headerTrigger" style="position: absolute; top: 0; height: 1px; width: 100%;"></div>
+
+    <main class="container">
+        <div class="profile-section">
+            <div class="profile-image-wrapper">
+                <div class="profile-image">
+                    <img src="https://i.imgur.com/ROt9UJN.png" alt="Infinity Fusion Logo" fetchpriority="high" decoding="async">
+                </div>
+            </div>
+        </div>
+
+        <section class="event-countdown">
+            <h1 class="event-title invert-fx">🔥 PRÓXIMO EVENTO 🔥</h1>
+            <time class="event-date" datetime="2025-12-05T22:00">
+                📅 05 DE DEZEMBRO 2025<br>
+                <span class="location-name">ESTAÇÃO MARQUÊS</span>
+            </time>
+            <div class="countdown-timer" id="countdown">
+                <div class="time-unit"><span class="time-value" id="days">00</span><span class="time-label">Dias</span></div>
+                <div class="time-unit"><span class="time-value" id="hours">00</span><span class="time-label">Horas</span></div>
+                <div class="time-unit"><span class="time-value" id="minutes">00</span><span class="time-label">Min</span></div>
+                <div class="time-unit"><span class="time-value" id="seconds">00</span><span class="time-label">Seg</span></div>
+            </div>
+            
+            <div class="lot-status-container">
+                <div class="lot-header">
+                    <div class="lot-info-col">
+                        <span class="lot-label-text">LOTE ATUAL:</span>
+                        <span class="lot-value-text" id="lot-tier">2º LOTE</span>
+                    </div>
+                    <span class="lot-warning">87% VENDIDO 🔥</span>
+                </div>
+                <div class="progress-track">
+                    <div class="progress-fill"></div>
+                </div>
+                <div class="lot-footer">VIRADA DE LOTE EM BREVE</div>
+            </div>
+
+            <button class="share-btn" onclick="shareEvent()">
+                <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                </svg>
+                <span>COMPARTILHAR</span>
+            </button>
+        </section>
+
+        <section class="links">
+            <a href="https://www.sympla.com.br/evento/infinity-fusion/3163299" target="_blank" rel="noopener noreferrer" class="link-card">
+                <div class="link-icon sympla">
+                    <svg viewBox="0 0 24 24" fill="#FFD700" stroke="#ff4500" stroke-width="1">
+                        <path d="M13 10V3L4 14H11V21L20 10H13Z"/>
+                    </svg>
+                </div>
+                <div class="link-content"><div class="link-title">GARANTIR MEU ACESSO</div><div class="link-description">Compre online com segurança</div></div>
+                <div class="link-arrow">⚡</div>
+            </a>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSf2DXh-_sB7YW0XMARxt_IMEPqX91064JgyT2HBBXC_Eg6NVA/viewform" target="_blank" rel="noopener noreferrer" class="link-card">
+                <div class="link-icon ticket"><svg width="60%" height="60%" viewBox="0 0 24 24" fill="none"><rect x="3" y="6" width="18" height="12" rx="2" stroke="#FFD700" stroke-width="2"/><circle cx="8" cy="12" r="1.5" fill="#FFD700"/><circle cx="16" cy="12" r="1.5" fill="#FFD700"/></svg></div>
+                <div class="link-content"><div class="link-title">INGRESSO SEM TAXA</div><div class="link-description">Compre via PIX sem taxas</div></div>
+                <div class="link-arrow">⚡</div>
+            </a>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLScReh_qEZPtOUqNu6rHjtmVKL8-i3TScIr2rebpw4b3euCtsw/viewform" target="_blank" rel="noopener noreferrer" class="link-card">
+                <div class="link-icon talent"><img src="https://i.imgur.com/TmyRrGw.png" alt="Talentos" loading="lazy" decoding="async"></div>
+                <div class="link-content"><div class="link-title">SELEÇÃO DE NOVOS TALENTOS</div><div class="link-description">DJ ou produtor? Mostre seu trabalho aqui</div></div>
+                <div class="link-arrow">⚡</div>
+            </a>
+            <a href="https://chat.whatsapp.com/CHK8jKPORfi2XAUygk9tIb" target="_blank" rel="noopener noreferrer" class="link-card">
+                <div class="link-icon whatsapp"><img src="https://i.imgur.com/Fiv7RoH.png" alt="WhatsApp" loading="lazy" decoding="async"></div>
+                <div class="link-content"><div class="link-title">GRUPO OFICIAL</div><div class="link-description">Entre na comunidade WhatsApp agora</div></div>
+                <div class="link-arrow">⚡</div>
+            </a>
+            <a href="https://www.instagram.com/thenexusbrasil/" target="_blank" rel="noopener noreferrer" class="link-card">
+                <div class="link-icon nexus"><img src="https://i.imgur.com/bm1PSmm.png" alt="Nexus" loading="lazy" decoding="async"></div>
+                <div class="link-content"><div class="link-title">CONHEÇA A NEXUS</div><div class="link-description">Evento de Hard Dance em São Paulo</div></div>
+                <div class="link-arrow">⚡</div>
+            </a>
+            <a href="https://hotmart.com/pt-br/marketplace/produtos/hagsxd-nexus-cursos-aprenda-a-produzir-hardstyle-com-sl-complex-u2q0w/U102050307P" target="_blank" rel="noopener noreferrer" class="link-card">
+                <div class="link-icon course"><svg width="60%" height="60%" viewBox="0 0 24 24" fill="none" stroke="#FFD700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg></div>
+                <div class="link-content"><div class="link-title">APRENDA A PRODUZIR</div><div class="link-description">Curso de Hardstyle com SL Complex</div></div>
+                <div class="link-arrow">⚡</div>
+            </a>
+             <a href="https://www.tiktok.com/@infinityfusionofc" target="_blank" rel="noopener noreferrer" class="link-card">
+                <div class="link-icon tiktok-img">
+                    <img src="https://i.imgur.com/cMmqiGK.png" alt="TikTok" loading="lazy" decoding="async">
+                </div>
+                <div class="link-content"><div class="link-title">SIGA NO TIKTOK</div><div class="link-description">Conteúdos exclusivos e bastidores</div></div>
+                <div class="link-arrow">⚡</div>
+            </a>
+        </section>
+
+        <section id="lineup">
+            <h2 class="section-title invert-fx lineup-title-txt">LINE-UP CONFIRMADO</h2>
+            <div class="lineup-grid" id="lineupGrid"></div>
+        </section>
+
+        <section id="location">
+            <h2 class="section-title invert-fx">COMO CHEGAR 📍</h2>
+            <div class="location-section">
+                <div class="location-info">
+                    <div class="info-item"><span class="info-icon">🏢</span><div><div class="info-label">LOCAL</div><div class="info-text">Estação Marquês</div></div></div>
+                    <div class="info-item"><span class="info-icon">📍</span><div><div class="info-label">ENDEREÇO</div><div class="info-text">Av. Marquês de São Vicente, 412 - SP</div></div></div>
+                    <div class="info-item"><span class="info-icon">🚇</span><div><div class="info-label">METRÔ</div><div class="info-text">Palmeiras-Barra Funda (Linha Vermelha)</div></div></div>
+                    <div class="info-item"><span class="info-icon">🚗</span><div><div class="info-label">ESTACIONAMENTO</div><div class="info-text">Disponível no local</div></div></div>
+                    
+                    <a href="https://www.google.com/maps/search/?api=1&query=Av.+Marqu%C3%AAs+de+S%C3%A3o+Vicente,+412+-+V%C3%A1rzea+da+Barra+Funda,+S%C3%A3o+Paulo" target="_blank" rel="noopener noreferrer" class="map-button">ABRIR NO GOOGLE MAPS</a>
+                    
+                    <div class="contact-buttons">
+                        <a href="https://wa.me/5511959365932" target="_blank" class="contact-btn whatsapp">
+                            <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                            WHATSAPP
+                        </a>
+                        <a href="mailto:infinityfusioncrew@gmail.com" class="contact-btn email">
+                            <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                            EMAIL
+                        </a>
+                    </div>
+                </div>
+                <div class="map-container">
+                    <iframe src="https://maps.google.com/maps?width=100%25&height=600&hl=pt-BR&q=Av.+Marqu%C3%AAs+de+S%C3%A3o+Vicente,+412+-+V%C3%A1rzea+da+Barra+Funda,+S%C3%A3o+Paulo&t=&z=15&ie=UTF8&iwloc=B&output=embed" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </section>
+
+        <section class="about-section">
+            <h2 class="section-title invert-fx">SOBRE O EVENTO</h2>
+            <div class="about-content">
+                <p class="about-text">
+                    <span class="about-text-center c-org">INFINITY FUSION — HARD TECHNO EM SUA FORMA PURA</span><br>
+                    <span class="c-wht">A Infinity Fusion apresenta uma experiência dedicada ao </span><span class="c-org">Hard Techno</span><span class="c-wht">, com sets intensos, atmosfera industrial e estética futurista em preto e neon. O evento combina luz, som e visual de forma precisa para criar uma noite pesada, envolvente e fiel à cultura rave atual.</span><br><br>
+                    <span class="c-org">Hard Techno sem exagero, sem romances — apenas o impacto real da pista.</span>
+                </p>
+            </div>
+            
+            <div class="faq-section">
+                <h3 class="faq-title invert-fx">PERGUNTAS FREQUENTES</h3>
+                <div class="faq-list">
+                    <div class="faq-item"><div class="faq-question"><span>🔞 Classificação etária?</span><span class="faq-toggle">+</span></div><div class="faq-answer">Estritamente para maiores de 18 anos. Obrigatório documento original com foto.</div></div>
+                    <div class="faq-item"><div class="faq-question"><span>🚫 Pode levar bebidas/comida?</span><span class="faq-toggle">+</span></div><div class="faq-answer">Não. O local possui bar completo e opções de alimentação.</div></div>
+                    <div class="faq-item"><div class="faq-question"><span>🕒 Horário do evento?</span><span class="faq-toggle">+</span></div><div class="faq-answer">Das 22:00 às 06:00.</div></div>
+                    <div class="faq-item"><div class="faq-question"><span>👗 Dress Code?</span><span class="faq-toggle">+</span></div><div class="faq-answer">Recomendamos All Black (roupas pretas) ou estilo underground. Vista-se confortavelmente para dançar.</div></div>
+                    <div class="faq-item"><div class="faq-question"><span>🎟 Ingresso na porta?</span><span class="faq-toggle">+</span></div><div class="faq-answer">Sujeito a lotação. Recomendamos comprar antecipado.</div></div>
+                    <div class="faq-item"><div class="faq-question"><span>🧥 Haverá chapelaria?</span><span class="faq-toggle">+</span></div><div class="faq-answer">Sim, haverá chapelaria no local.</div></div>
+                    <div class="faq-item"><div class="faq-question"><span>💳 Aceita cartão?</span><span class="faq-toggle">+</span></div><div class="faq-answer">Sim: Crédito, Débito e PIX.</div></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="newsletter-section" id="footerTrigger">
+            <div class="newsletter-title invert-fx">FIQUE POR DENTRO</div>
+            <div class="newsletter-description">RECEBA NOVIDADES E PROMOÇÕES</div>
+            <form class="newsletter-form" id="newsletterForm" action="https://docs.google.com/forms/d/e/1FAIpQLSf8hPw24ntxtbG8l3sBzAC3w7-wuLjNIsZ2VN0FruOJrTKPPg/formResponse" method="POST" target="hidden_iframe" onsubmit="return validateEmail()">
+                <input type="email" name="entry.1948041952" class="newsletter-input" id="emailInput" placeholder="Seu e-mail" required>
+                <button type="submit" class="newsletter-button">INSCREVER</button>
+            </form>
+            <div class="newsletter-privacy">Seus dados não serão compartilhados com terceiros.</div>
+            <iframe name="hidden_iframe" style="display:none;"></iframe>
+            <div id="successMessage">✓ INSCRITO COM SUCESSO!</div>
+            <div id="errorMessage">⚠️ E-MAIL INVÁLIDO!</div>
+        </section>
+        
+        <div class="section-divider"></div>
+
+        <footer>
+            <p class="footer-copyright">∞ INFINITY FUSION © 2025 ∞</p>
+        </footer>
+    </main>
+
+    <div id="dev-float-wrapper">
+        <a href="#" class="dev-btn-float">
+            <span>⚡ BY GHOSTFRAME</span>
+        </a>
+    </div>
+
+    <div class="sticky-cta" id="stickyCta">
+        <div class="cta-text-col">
+            <span class="cta-line-1">ÚLTIMOS</span>
+            <span class="cta-line-2">INGRESSOS</span>
+        </div>
+        <a href="https://www.sympla.com.br/evento/infinity-fusion/3163299" target="_blank" rel="noopener noreferrer" class="cta-btn">COMPRAR</a>
+    </div>
+
+    <script>
+        // --- PRELOADER ---
+        window.addEventListener('load', () => {
+            const preloader = document.getElementById('preloader');
+            const loaderBar = document.querySelector('.loader-bar');
+            const loaderPercent = document.getElementById('loaderPercent');
+            
+            let width = 0;
+            const interval = setInterval(() => {
+                if (width >= 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        preloader.style.opacity = '0';
+                        setTimeout(() => preloader.remove(), 1000);
+                    }, 800);
+                } else {
+                    width += Math.floor(Math.random() * 3) + 1; 
+                    if (width > 100) width = 100;
+                    loaderBar.style.width = width + '%';
+                    loaderPercent.textContent = width + '%';
+                }
+            }, 60); 
+
+            const vid = document.getElementById('bgVideo');
+            if (vid) {
+                vid.play().catch(error => {
+                    console.log('Autoplay prevented:', error);
+                });
+            }
+        });
+
+        // --- AUTO LOT UPDATE LOGIC ---
+        const lotTier = document.getElementById('lot-tier');
+        if (lotTier) {
+            // Data da virada: 24 de Novembro de 2025 às 00:00:00
+            const switchDate = new Date('2025-11-24T00:00:00').getTime();
+            const now = new Date().getTime();
+            
+            if (now >= switchDate) {
+                lotTier.textContent = '3º LOTE';
+            }
+        }
+
+        let countdownInterval;
+        function updateCountdown() {
+            const eventDate = new Date('2025-12-05T22:00:00-03:00').getTime();
+            const now = new Date().getTime();
+            const distance = eventDate - now;
+
+            if (distance < 0) {
+                clearInterval(countdownInterval);
+                document.getElementById('countdown').innerHTML = '<div class="time-unit" style="width:100%; border-color:#444"><span class="time-value" style="font-size:20px">O EVENTO JÁ COMEÇOU!</span></div>';
+                return;
+            }
+
+            document.getElementById('days').textContent = String(Math.floor(distance / (1000 * 60 * 60 * 24))).padStart(2, '0');
+            document.getElementById('hours').textContent = String(Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
+            document.getElementById('minutes').textContent = String(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
+            document.getElementById('seconds').textContent = String(Math.floor((distance % (1000 * 60)) / 1000)).padStart(2, '0');
+        }
+        countdownInterval = setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // --- DJ LINEUP LOGIC ---
+        const TEST_AUDIO_URL = 'set.mp3'; 
+        
+        const djLineup = [
+                        { name: 'SALVYAN 👑', instagram: 'salvyan.music', photo: 'salvyan.jpg', pos: 'center 5%', headliner: true, audio: 'salvyan.mp3' },
+            { name: 'LAUD 👑', instagram: 'laud.mp3', photo: 'laud.jpg', pos: 'center 21%', headliner: true, audio: 'laud.mp3' },
+            { name: 'MITSUNARI 👑', instagram: 'mitsunaribr', photo: 'mitsunari.jpg', pos: 'center 90%', headliner: true, audio: 'mitsunari.mp3' },
+            { name: 'G9SS', instagram: 'g9ss_dj', photo: 'g9ss.jpg', pos: 'center 13%', audio: 'g9ss.mp3' },
+            { name: 'ORSKED', instagram: 'orskeddj', photo: 'orsked.jpg', pos: 'center 10%', audio: 'orsked.mp3' },
+            { name: 'CYBER FUSION', instagram: 'cyberfusionofc', photo: 'cyberfusion.jpg', pos: 'center 45%', audio: 'cyberfusion.mp3' },
+            { name: 'INFINITY NOIZE', instagram: 'djinfinitynoize', photo: 'infinitynoize.jpg', pos: 'center 20%', audio: 
+ 'infinitynoize.mp3' },
+            { name: 'VENCEDOR DJ CONTEST', instagram: 'infinityfusionofc', photo: 'contest.jpg', pos: 'center 10%', audio: 'contest.mp3', isContest: true }
+        ];
+
+        const lineupGrid = document.getElementById('lineupGrid');
+        djLineup.forEach((dj, index) => {
+            const djCard = document.createElement('div');
+            djCard.className = dj.isContest ? 'dj-card contest-card' : ('dj-card' + (dj.headliner ? ' headliner' : ''));
+            const audioId = `audio-${index}`;
+            
+            if (dj.isContest) {
+                djCard.innerHTML = `
+                    <div class="dj-name">DJ CONTEST</div>
+                    <div class="contest-info">Quer tocar na Infinity Fusion?</div>
+                    <a href="https://www.instagram.com/p/DRFNTefDH4w/?igsh=a2V0OTVnN2hxZDRm" target="_blank" rel="noopener noreferrer" class="contest-btn">PARTICIPAR (Até 30/11 23:59)</a>
+                `;
+            } else {
+                djCard.innerHTML = `
+                    <a href="https://instagram.com/${dj.instagram}" target="_blank" class="dj-photo">
+                        <img src="${dj.photo}" alt="${dj.name}" style="object-position: ${dj.pos};" loading="lazy">
+                    </a>
+                    <div class="info-wrap">
+                        <div class="dj-name">${dj.name}</div>
+                        <div class="dj-instagram" onclick="window.open('https://instagram.com/${dj.instagram}', '_blank')">@${dj.instagram}</div>
+                        <button class="play-btn" aria-label="Ouvir set de ${dj.name}" onclick="toggleAudio('${audioId}', this)">▶</button>
+                        <audio id="${audioId}" src="${dj.audio}" preload="none"></audio>
+                    </div>
+                `;
+            }
+            lineupGrid.appendChild(djCard);
+        });
+
+        function toggleAudio(id, btn) {
+            const audio = document.getElementById(id);
+            
+            document.querySelectorAll('audio').forEach(a => { if(a.id !== id) { a.pause(); a.currentTime = 0; } });
+            document.querySelectorAll('.play-btn').forEach(b => { if(b !== btn) { b.textContent = '▶'; b.classList.remove('playing'); b.classList.remove('error'); } });
+
+            if (audio.paused) {
+                audio.volume = 1.0;
+                audio.play().then(_ => { 
+                    btn.textContent = '■'; btn.classList.add('playing'); 
+                    
+                    // TIMER
+                    audio.ontimeupdate = () => {
+                        const timeLeft = audio.duration - audio.currentTime;
+                        const minutes = Math.floor(timeLeft / 60);
+                        const seconds = Math.floor(timeLeft % 60).toString().padStart(2, '0');
+                        if (!isNaN(minutes)) {
+                             btn.textContent = `${minutes}:${seconds}`;
+                        }
+                        if(timeLeft <= 0) {
+                             btn.textContent = '▶';
+                             btn.classList.remove('playing');
+                        }
+                    };
+
+                }).catch(error => { 
+                    console.error("Erro de áudio:", error); 
+                    btn.classList.add('error'); btn.textContent = '⚠️';
+                    setTimeout(() => { btn.classList.remove('error'); btn.textContent = '▶'; }, 2000);
+                });
+            } else {
+                audio.pause();
+                btn.textContent = '▶';
+                btn.classList.remove('playing');
+            }
+        }
+
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', function() {
+                const item = this.parentElement;
+                const isActive = item.classList.contains('active');
+                document.querySelectorAll('.faq-item').forEach(otherItem => otherItem.classList.remove('active'));
+                if (!isActive) item.classList.add('active');
+            });
+        });
+
+        const particleContainer = document.getElementById('particleContainer');
+        function createParticle() {
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+            if (document.hidden) return;
+            if (particleContainer.children.length > 15) return;
+            
+            const particle = document.createElement('div');
+            particle.className = Math.random() > 0.5 ? 'particle orange' : 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            
+            const size = Math.random() * 4 + 2;
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+            
+            particle.style.animationDuration = (5 + Math.random() * 10) + 's';
+            
+            particle.addEventListener('animationend', () => particle.remove());
+            particleContainer.appendChild(particle);
+        }
+        setInterval(createParticle, 500);
+
+        function validateEmail() {
+            const email = document.getElementById('emailInput').value;
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!re.test(email)) {
+                document.getElementById('errorMessage').style.display = 'block';
+                document.getElementById('successMessage').style.display = 'none';
+                return false;
+            }
+            document.getElementById('errorMessage').style.display = 'none';
+            return true;
+        }
+
+        let submitted = false;
+        document.querySelector('iframe[name="hidden_iframe"]').onload = function() {
+            if (submitted) {
+                document.getElementById('successMessage').style.display = 'block';
+                document.getElementById('newsletterForm').reset();
+                setTimeout(() => {
+                    document.getElementById('successMessage').style.display = 'none';
+                    submitted = false;
+                }, 5000);
+            }
+        };
+        document.getElementById('newsletterForm').addEventListener('submit', () => submitted = true);
+        
+        function shareEvent() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Infinity Fusion - Hard Techno Experience',
+                    text: 'Confira este evento de Hard Techno em SP!',
+                    url: window.location.href,
+                }).catch(console.error);
+            } else {
+                navigator.clipboard.writeText(window.location.href);
+                const btn = document.querySelector('.share-btn span');
+                const originalText = btn.textContent;
+                btn.textContent = 'COPIADO!';
+                setTimeout(() => btn.textContent = originalText, 2000);
+            }
+        }
+
+        // --- LOGIC FOR FLOATING DEV BUTTON ---
+        window.addEventListener('scroll', () => {
+            const devFloat = document.getElementById('dev-float-wrapper');
+            if (!devFloat) return;
+
+            const scrollPosition = window.scrollY + window.innerHeight;
+            const threshold = document.body.offsetHeight - 300; 
+
+            if (scrollPosition > threshold) {
+                devFloat.classList.add('visible');
+            } else {
+                devFloat.classList.remove('visible');
+            }
+        });
+
+        // --- INTELLIGENT VISIBILITY OBSERVER (CTA vs DEV BUTTON) ---
+        const stickyCta = document.getElementById('stickyCta');
+        const devFloatingBtn = document.getElementById('dev-float-wrapper');
+        const headerTrigger = document.getElementById('headerTrigger');
+        const footerTrigger = document.getElementById('footerTrigger'); 
+
+        // 1. Show CTA when user scrolls past header
+        const headerObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) {
+                    if (!footerTrigger.getBoundingClientRect().top < window.innerHeight) {
+                         stickyCta.classList.add('visible');
+                    }
+                } else {
+                    stickyCta.classList.remove('visible');
+                }
+            });
+        }, { threshold: 0 });
+        headerObserver.observe(headerTrigger);
+
+        // 2. Hide CTA when user reaches footer/newsletter
+        const footerObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    stickyCta.style.opacity = '0';
+                    stickyCta.style.pointerEvents = 'none';
+                    devFloatingBtn.classList.add('visible');
+                } else {
+                    if (window.scrollY > 100) { 
+                        stickyCta.style.opacity = ''; 
+                        stickyCta.style.pointerEvents = '';
+                    }
+                    devFloatingBtn.classList.remove('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+        footerObserver.observe(footerTrigger);
+
+    </script>
+</body>
+</html>
