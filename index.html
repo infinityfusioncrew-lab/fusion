@@ -12,13 +12,13 @@
     
     <meta property="og:type" content="website">
     <meta property="og:locale" content="pt_BR">
-    <meta property="og:image" content="https://i.imgur.com/ROt9UJN.png">
+    <meta property="og:image" content="infinity-logo.png">
 
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content="https://i.imgur.com/ROt9UJN.png">
+    <meta name="twitter:image" content="infinity-logo.png">
 
     <meta name="theme-color" content="#ff4500">
-    <link rel="icon" href="https://i.imgur.com/ROt9UJN.png" type="image/png">
+    <link rel="icon" href="infinity-logo.png" type="image/png">
 
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
     
@@ -30,7 +30,7 @@
       "startDate": "2025-12-05T22:00-03:00",
       "endDate": "2025-12-06T06:00-03:00",
       "location": { "@type": "Place", "name": "Estação Marquês", "address": "Av. Marquês de São Vicente, 412 - Várzea da Barra Funda, São Paulo - SP" },
-      "image": ["https://i.imgur.com/ROt9UJN.png"],
+      "image": ["infinity-logo.png"],
       "description": "Hard Techno em sua forma pura.",
       "offers": { "@type": "Offer", "url": "https://www.sympla.com.br/evento/infinity-fusion/3163299", "availability": "https://schema.org/InStock" }
     }
@@ -39,14 +39,15 @@
     <style>
         /* --- VARIÁVEIS --- */
         :root {
-            --primary: #ff4500;
-            --primary-glow: rgba(255, 69, 0, 0.3);
-            --bg-dark: #050302;
+            --primary: #FF4F17; /* AJUSTADO PARA O NOVO HEX NEON LARANJA */
+            --primary-glow: rgba(255, 79, 23, 0.3); /* AJUSTADO PARA O NOVO RGB DO GLOW */
             --bg-black: #000;
             --text-light: #fff;
             --text-dim: #ccc;
-            --font-main: 'Orbitron', sans-serif;
+            --font-main: 'Orbitron', 'Space Mono', monospace, sans-serif;
             --icon-yellow: #FFD700; 
+            --text-paragraph: #EDEDED; /* NOVA VARIÁVEL PARA O CINZA QUASE BRANCO */
+            --neon-green: #00ff00; /* Adicionado para facilidade de uso */
         }
 
         /* --- RESET --- */
@@ -101,16 +102,14 @@
             pointer-events: none;
         }
 
-        /* --- PRELOADER COM GRADE LARANJA BEM TRANSPARENTE --- */
+        /* --- PRELOADER --- */
         #preloader {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            
             background-color: #000;
             background-image: 
                 linear-gradient(rgba(255, 69, 0, 0.05) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(255, 69, 0, 0.05) 1px, transparent 1px);
             background-size: 150px 150px;
-            
             z-index: 10000;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             transition: opacity 1s ease-out, visibility 1s;
@@ -119,7 +118,8 @@
         .preloader-content {
             text-align: center;
             width: 85%;
-            max-width: 350px;
+            /* DIMINUI A LARGURA DA BARRA E DO CONTEÚDO */
+            max-width: 300px; 
             position: relative;
             z-index: 10002; 
         }
@@ -127,13 +127,15 @@
         .preloader-logo {
             width: 240px; 
             height: auto;
-            margin-bottom: 50px;
+            /* ✅ AJUSTE: Move o logo para cima para centralizar o loading bar no meio da tela */
+            margin-bottom: 50px; 
             filter: brightness(0) invert(1) drop-shadow(0 0 20px rgba(255,255,255,0.6));
             animation: pulseLogo 2s infinite alternate;
         }
         .loader-container {
             width: 100%;
-            height: 12px;
+            /* AUMENTA A ALTURA DA BARRA */
+            height: 16px;
             background: #111;
             border-radius: 6px;
             position: relative;
@@ -142,6 +144,7 @@
             box-shadow: 0 0 25px rgba(0,0,0,0.9);
         }
         .loader-bar {
+            /* Garante que a barra interna use a nova altura */
             height: 100%;
             width: 0%;
             background: var(--primary);
@@ -151,7 +154,7 @@
         }
         .loader-bar::after {
             content: ''; position: absolute; top: 0; left: 0; bottom: 0; right: 0;
-            background: linear-gradient(90deg, transparent, #fff, transparent);
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.9), transparent);
             transform: translateX(-100%);
             animation: loadShimmer 1.5s infinite;
         }
@@ -163,16 +166,12 @@
             text-transform: uppercase;
             font-weight: 900;
             text-shadow: 0 0 10px var(--primary-glow);
+            /* ✅ AJUSTE: Aumenta margem inferior para compensar a frase removida */
+            margin-bottom: 20px; 
         }
         .loader-phrase {
-            margin-top: 15px;
-            font-size: 13px;
-            color: #fff;
-            letter-spacing: 1px;
-            font-weight: 400;
-            text-transform: none;
-            font-style: italic;
-            animation: blinkText 3s infinite;
+            /* ✅ REMOVIDO: Este estilo não será aplicado, pois o elemento HTML foi removido */
+            display: none; 
         }
 
         @keyframes pulseLogo { 0% { transform: scale(1); opacity: 0.9; } 100% { transform: scale(1.05); opacity: 1; } }
@@ -211,7 +210,14 @@
             .profile-image img { animation: none !important; }
         }
 
-        .container { max-width: 680px; margin: 0 auto; padding: 0 15px; position: relative; z-index: 2; width: 100%; }
+        .container { 
+            max-width: 680px; 
+            margin: 0 auto; 
+            padding: 0 15px; 
+            position: relative; 
+            z-index: 2; 
+            width: 100%; 
+        }
 
         /* HEADER */
         .profile-section { 
@@ -253,7 +259,10 @@
             box-shadow: 0 0 40px rgba(255, 69, 0, 0.25);
             position: relative; overflow: hidden;
             animation: borderPulse 3s infinite alternate;
-            text-align: center; width: 100%;
+            width: 100%;
+            /* Ajuste de largura e centralização para Desktop (dentro do .container) */
+            margin-left: 0;
+            margin-right: 0;
         }
         @keyframes borderPulse { from { border-color: var(--primary); box-shadow: 0 0 20px rgba(255,69,0,0.2); } to { border-color: #ff8800; box-shadow: 0 0 40px rgba(255,69,0,0.5); } }
         
@@ -295,18 +304,20 @@
             border-radius: 12px; border: 1px solid rgba(255, 69, 0, 0.2);
         }
         .lot-header {
-            display: flex; justify-content: space-between; align-items: flex-end;
+            display: flex; justify-content: space-between; align-items: center;
             margin-bottom: 8px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
         }
         
+        /* ESTILO DO LOTE SIMPLIFICADO */
         .lot-info-col {
             display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            line-height: 1.3;
+            flex-direction: row;
+            align-items: center;
+            gap: 5px;
         }
-        .lot-label-text { font-size: 9px; color: #ccc; }
-        .lot-value-text { font-size: 13px; color: #fff; font-weight: 900; }
+        /* Lote em destaque (maior) */
+        .lot-value-text { font-size: 12px; color: #fff; font-weight: 900; text-shadow: 0 0 8px var(--primary); margin-right: 10px; }
+        .lot-price-text { font-size: 12px; color: var(--primary); font-weight: 900; text-shadow: 0 0 8px var(--primary); }
 
         .lot-warning { color: #ff0000; font-weight: 900; animation: blink 1s infinite; }
 
@@ -333,14 +344,19 @@
         @keyframes shimmer { 100% { transform: translateX(100%); } }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
 
-        /* BOTÃO COMPARTILHAR */
+        /* BOTÃO COMPARTILHAR - AJUSTADO PARA CENTRALIZAÇÃO */
         .share-btn {
             background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.15);
             backdrop-filter: blur(10px); color: #fff; padding: 10px 24px; border-radius: 8px;
             font-size: 11px; cursor: pointer; text-transform: uppercase; font-weight: 700;
             letter-spacing: 1px; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             margin-top: 8px; 
-            display: inline-flex; align-items: center; gap: 8px;
+            display: flex; /* Mantém o ícone e texto alinhados */
+            margin-left: auto; /* Centraliza */
+            margin-right: auto; /* Centraliza */
+            width: fit-content; /* Permite que o margin: auto funcione */
+            align-items: center; 
+            gap: 8px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.3);
         }
         .share-btn svg { width: 16px; height: 16px; fill: #fff; transition: transform 0.3s ease; }
@@ -349,7 +365,6 @@
             box-shadow: 0 0 15px rgba(255, 69, 0, 0.4); transform: translateY(-3px) scale(1.02);
         }
         .share-btn:hover svg { transform: translate(3px, -3px); }
-        .share-btn:active { transform: translateY(0); }
 
         /* LINKS */
         .links { display: flex; flex-direction: column; gap: 15px; margin: 30px 0; width: 100%; }
@@ -359,7 +374,6 @@
             display: flex; align-items: center; gap: 20px; transition: all 0.3s ease; position: relative;
             width: 100%; box-sizing: border-box;
         }
-        .link-card:active { transform: scale(0.98); }
 
         @media (hover: hover) {
             .link-card:hover {
@@ -371,6 +385,29 @@
             .link-card:hover .link-arrow { transform: translateX(5px) scale(1.2); color: var(--text-light); text-shadow: 0 0 10px var(--text-light); }
             .dj-card:hover { border-color: var(--text-light); transform: translateY(-5px); box-shadow: 0 10px 20px rgba(255, 69, 0, 0.2); background: rgba(0,0,0,0.8); z-index: 5; }
         }
+        
+        /* ✨ EFEITO TOUCH/ACTIVE PARA TODOS OS BOTÕES E LINKS (Simula o hover em mobile) */
+        .link-card:active,
+        .share-btn:active,
+        .play-btn:active,
+        .map-button:active,
+        .contact-btn:active,
+        .contest-btn:active,
+        .newsletter-button:active,
+        .contest-cta-link:active, /* Adicionado */
+        .contest-play-btn:active { /* Adicionado */
+            /* Simula o toque encolhendo levemente */
+            transform: scale(0.98) !important; 
+            /* Adiciona o brilho laranja/branco */
+            box-shadow: 0 0 15px rgba(255, 69, 0, 0.8), inset 0 0 5px rgba(255, 255, 255, 0.2) !important;
+        }
+
+        /* Garante que o :active no link-card prevaleça sobre o :hover do desktop se o toque for rápido */
+        .link-card:active { 
+            background: var(--bg-black) !important; 
+            border-color: var(--primary) !important;
+            z-index: 10; 
+        }
 
         .link-icon {
             width: 55px; height: 55px; background: var(--bg-black); border-radius: 12px;
@@ -378,11 +415,13 @@
             box-shadow: 0 0 15px rgba(255, 69, 0, 0.3); flex-shrink: 0; transition: 0.3s;
         }
         .link-icon img, .link-icon svg { width: 60%; height: 60%; object-fit: contain; }
-        .link-icon.sympla img { width: 90%; } .link-icon.talent img { width: 90%; }
-        .link-icon.whatsapp img { width: 85%; } .link-icon.nexus img { width: 75%; }
+        .link-icon.sympla img { width: 90%; }
+        .link-icon.talent img { width: 95%; } /* <-- AQUI O AJUSTE PARA O ÍCONE TALENTO */
+        .link-icon.whatsapp img { width: 85%; }
+        .link-icon.nexus img { width: 75%; }
         .link-icon.course svg { width: 60%; }
         
-        /* TIKTOK ICON AJUSTADO */
+        /* TIKTOK ICON AJUSTADO (MAIOR) */
         .link-icon.tiktok-img img { width: 80%; height: 80%; }
 
         .link-content { flex: 1; }
@@ -398,7 +437,24 @@
         .lineup-title-txt { font-size: 28px; letter-spacing: 1px; }
 
         .lineup-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 50px; width: 100%; }
-        #lineup { margin-top: 100px; }
+        /* ✅ AJUSTE DE ESPAÇAMENTO DO LINE-UP */
+        #lineup { margin-top: 40px; margin-bottom: 40px;} 
+
+        /* --- ANIMAÇÃO DE PULSAÇÃO DA FOTO (DJ VIBE) --- */
+        @keyframes audio-pulse {
+            0% { transform: scale(1.0); box-shadow: 0 0 10px rgba(255, 69, 0, 0.4); }
+            50% { transform: scale(1.02); box-shadow: 0 0 25px var(--primary); }
+            100% { transform: scale(1.0); box-shadow: 0 0 10px rgba(255, 69, 0, 0.4); }
+        }
+        .dj-card.contest-player-card .dj-photo.is-playing-green {
+            animation: audio-pulse-green 1s infinite alternate;
+        }
+        @keyframes audio-pulse-green {
+            0% { transform: scale(1.0); box-shadow: 0 0 10px rgba(0, 255, 0, 0.4); }
+            50% { transform: scale(1.02); box-shadow: 0 0 25px #00ff00; }
+            100% { transform: scale(1.0); box-shadow: 0 0 10px rgba(0, 255, 0, 0.4); }
+        }
+
 
         .dj-card {
             background: rgba(0, 0, 0, 0.6); border: 1px solid rgba(255, 69, 0, 0.3);
@@ -408,6 +464,10 @@
             display: flex; flex-direction: column; 
         }
         
+        .dj-card.contest-player-card {
+            display: none; 
+        }
+
         /* DJ PHOTO */
         .dj-photo { 
             display: block !important; 
@@ -419,13 +479,21 @@
             overflow: hidden; 
             position: relative; 
             flex-shrink: 0; 
+            transition: all 0.4s ease-in-out;
+            box-shadow: 0 0 10px rgba(255, 69, 0, 0.4); 
         }
+        
+        /* EFEITO ATIVO */
+        .dj-photo.is-playing {
+            animation: audio-pulse 1s infinite alternate;
+        }
+
         .dj-photo img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(20%); transition: 0.3s; }
         .dj-name { font-size: 16px; font-weight: 900; color: var(--text-light); text-transform: uppercase; margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .dj-instagram { font-size: 9px; color: var(--text-dim); margin-bottom: 8px; cursor: pointer; }
         .dj-card.headliner { background: linear-gradient(180deg, rgba(255,69,0,0.1), rgba(0,0,0,0.9)); border: 1px solid var(--primary); box-shadow: 0 0 15px rgba(255, 69, 0, 0.2); }
         .dj-card.headliner .dj-name { font-size: 18px; text-shadow: 0 0 5px var(--primary); }
-        .dj-card.contest-card { grid-column: 1 / -1; width: 100%; margin: 0 auto; background: rgba(0, 0, 0, 0.6); border: 1px dashed var(--primary); display: flex; flex-direction: column; align-items: center; padding: 20px; box-sizing: border-box; }
+        .dj-card.contest-card { display: none; }
         .contest-info { font-size: 10px; color: var(--text-dim); margin-top: 5px; margin-bottom: 10px; }
         .contest-btn {
             background: var(--primary); color: var(--bg-black); border: none; padding: 8px 20px; border-radius: 20px; font-weight: 900; font-size: 11px; cursor: pointer; text-decoration: none; animation: pulse 2s infinite; display: inline-block;
@@ -452,8 +520,44 @@
         .play-btn.playing { background: rgba(0, 255, 0, 0.2); border-color: #00ff00; color: #00ff00; box-shadow: 0 0 15px rgba(0,255,0,0.4); }
         .play-btn.error { background: #ff0000 !important; color: var(--text-light); } 
 
-        .location-section { background: rgba(0, 0, 0, 0.8); border: 2px solid rgba(255, 69, 0, 0.4); border-radius: 18px; padding: 20px; width: 100%; box-sizing: border-box; }
-        .info-item { display: flex; align-items: flex-start; gap: 12px; padding: 10px; margin-bottom: 10px; background: rgba(255, 255, 255, 0.05); border-radius: 8px; }
+        /* ✅ CORREÇÃO ALINHAMENTO: Garante que todas as seções tenham 100% da largura do container (Desktop) */
+        .location-section, .about-content, .faq-section, .newsletter-section { 
+            background: rgba(0, 0, 0, 0.8); border: 2px solid rgba(255, 69, 0, 0.4); border-radius: 18px; 
+            padding: 20px; 
+            width: 100%; 
+            box-sizing: border-box; 
+            margin-bottom: 30px;
+            margin-left: 0;
+            margin-right: 0;
+        }
+        .faq-section, .newsletter-section { border-color: var(--primary); }
+        
+        /* NOVO: DESTAQUE FAQ */
+        .faq-highlight {
+            border-color: var(--neon-green) !important;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.4) !important;
+            background: rgba(0, 255, 0, 0.05) !important;
+        }
+        .faq-highlight .faq-question {
+            color: var(--neon-green);
+        }
+        .faq-highlight .faq-toggle {
+            color: var(--neon-green);
+            text-shadow: 0 0 5px rgba(0, 255, 0, 0.8);
+        }
+
+        /* INFO ITEM COM EFEITO HOVER NEON */
+        .info-item { 
+            display: flex; align-items: flex-start; gap: 12px; padding: 10px; margin-bottom: 10px; 
+            background: rgba(255, 255, 255, 0.05); border-radius: 8px; 
+            border: 1px solid transparent; transition: all 0.3s ease;
+        }
+        .info-item:hover, .info-item:active {
+            border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(255, 69, 0, 0.2);
+            transform: translateX(5px);
+        }
+
         .info-icon { font-size: 18px; }
         .info-label { font-size: 11px; color: var(--primary); font-weight: 800; margin-bottom: 4px; }
         .info-text { font-size: 14px; color: #fff; }
@@ -482,15 +586,32 @@
         .map-container { margin-top: 0px; border-radius: 12px; overflow: hidden; height: 250px; background: #111; }
         .map-container iframe { width: 100%; height: 100%; border: none; filter: grayscale(100%) contrast(1.2); }
 
-        .about-content { background: rgba(0, 0, 0, 0.8); border: 2px solid rgba(255, 69, 0, 0.4); border-radius: 18px; padding: 15px 25px 25px; margin-bottom: 30px; text-align: center; width: 100%; box-sizing: border-box; }
-        .about-text { font-size: 14px; line-height: 1.7; text-align: justify; }
+        /* SOBRE O EVENTO - AJUSTADO COM NOVAS CORES E FONTES */
+        .about-content { padding: 15px 25px 25px; text-align: center; } 
+        .about-text { 
+            font-size: 14px; 
+            line-height: 1.7; 
+            text-align: justify; 
+            color: var(--text-paragraph); /* Cor Cinza Quase Branco */
+        }
         .about-text-center { text-align: center; display: block; margin-bottom: 10px; }
         .c-org { color: var(--primary); font-weight: 900; text-transform: uppercase; }
-        .c-wht { color: #ffffff; font-weight: 400; }
+        .c-wht { color: var(--text-paragraph); font-weight: 400; } /* Ajustado para Cinza Quase Branco */
 
-        .faq-section { background: rgba(0, 0, 0, 0.8); border: 2px solid var(--primary); border-radius: 18px; padding: 10px 20px 25px; box-shadow: none; width: 100%; box-sizing: border-box; }
-        .faq-title { font-size: 18px; color: var(--primary); font-weight: 900; text-align: center; margin-bottom: 20px; margin-top: 5px; }
-        .faq-list { display: flex; flex-direction: column; gap: 15px; }
+        .faq-section { padding: 10px 20px 25px; box-shadow: none; } 
+        .faq-title { 
+            font-size: 18px; 
+            color: var(--primary); 
+            font-weight: 900; 
+            text-align: center; 
+            margin-bottom: 30px; /* Aumentado o espaçamento */
+            margin-top: 5px; 
+        }
+        .faq-list { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 20px; /* Aumentado o espaçamento entre os itens */
+        }
         .faq-item { background: rgba(255, 255, 255, 0.03); border-bottom: 1px solid rgba(255,69,0,0.2); border-radius: 8px; margin-bottom: 8px; overflow: hidden; transition: all 0.3s ease; border: 1px solid transparent; }
         .faq-item:hover, .faq-item:active { border-color: var(--primary); box-shadow: 0 0 10px rgba(255, 69, 0, 0.3); background: rgba(255, 69, 0, 0.05); }
         .faq-question { padding: 15px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-weight: 700; font-size: 14px; }
@@ -501,16 +622,14 @@
 
         /* NEWSLETTER MOBILE FIXED */
         .newsletter-section { 
-            background: rgba(0, 0, 0, 0.8); 
-            border: 2px solid rgba(255, 69, 0, 0.6); 
-            border-radius: 18px; 
             padding: 15px 25px 25px; 
-            margin: 40px auto; 
+            margin: 40px auto 30px; 
             text-align: center; 
             box-shadow: none; 
-            width: 100%; 
-            max-width: 600px; 
+            max-width: 100%; 
             box-sizing: border-box; 
+            margin-left: 0;
+            margin-right: 0;
         }
 
         .newsletter-title { font-size: 18px; color: var(--primary); font-weight: 900; margin-bottom: 5px; margin-top: 0; }
@@ -527,6 +646,7 @@
 
         .newsletter-input { width: 100%; padding: 12px; background: #111; border: 1px solid var(--primary); border-radius: 8px; color: var(--text-light); margin-bottom: 0; }
         
+        /* BOTÃO INSCREVER MENOR E CENTRALIZADO */
         .newsletter-button { 
             width: 50%; 
             margin: 10px auto 0; 
@@ -550,9 +670,9 @@
 
         /* RODAPÉ & COPYRIGHT AUMENTADO */
         .footer-copyright {
-            color: #ffffff; 
+            color: #ffffff; /* Branco */
             font-weight: 700;
-            font-size: 14px; 
+            font-size: 14px; /* Aumentado */
             opacity: 0.6;
             text-transform: uppercase;
             letter-spacing: 2px;
@@ -560,16 +680,13 @@
 
         footer { text-align: center; margin-top: 10px; padding: 20px 0 40px; }
 
-        /* FLOATING DEV BUTTON (Centralizado, Surge de Baixo, Sem X) */
+        /* FLOATING DEV BUTTON (Centralizado, Surge de Baixo, Uma Linha) */
         #dev-float-wrapper {
             position: fixed;
             bottom: -100px; /* Começa escondido */
             left: 50%; /* Centralizado */
             transform: translateX(-50%);
             z-index: 9990;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             transition: bottom 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
             width: auto;
         }
@@ -619,13 +736,20 @@
             .newsletter-description { font-size: 11px; white-space: nowrap; }
             .lineup-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
             .dj-card.headliner { grid-column: span 2; } 
+
             .social-links { flex-wrap: gap: 20px; padding-bottom: 10px; justify-content: center; }
             .time-unit { padding: 8px 2px; width: 60px; }
             .time-value { font-size: 18px; }
             .time-label { font-size: 8px; }
             .about-text { text-align: center !important; }
 
-            .event-countdown, .faq-section, .about-content, .location-section, .newsletter-section { width: 90% !important; margin: 20px auto; padding: 20px 15px 25px !important; box-sizing: border-box; }
+            /* ✅ AJUSTE MOBILE: Garante que todos os retângulos de conteúdo tenham a mesma largura (98% do viewport) e centralização */
+            .event-countdown, .faq-section, .about-content, .location-section, .newsletter-section { 
+                width: 98% !important; 
+                margin: 20px auto; 
+                padding: 20px 15px 25px !important; 
+                box-sizing: border-box; 
+            }
             .event-title, .faq-title, .newsletter-title, .section-title { margin-top: 0 !important; margin-bottom: 15px; line-height: 1.2; }
             .newsletter-input { text-align: center; }
         }
@@ -635,6 +759,103 @@
             .time-value { font-size: 16px; }
             .lineup-grid { grid-template-columns: 1fr; }
             .dj-card.headliner { grid-column: auto; }
+        }
+        
+        /* === ESTILOS E ANIMAÇÕES DO DJ CONTEST CTA === */
+        
+        /* Animação para a borda pulsar em verde neon */
+        @keyframes contest-border-pulse { 
+            0% { border-color: var(--neon-green); box-shadow: 0 0 15px rgba(0, 255, 0, 0.4); } 
+            50% { border-color: #33ff33; box-shadow: 0 0 30px rgba(0, 255, 0, 0.7); } 
+            100% { border-color: var(--neon-green); box-shadow: 0 0 15px rgba(0, 255, 0, 0.4); } 
+        }
+        /* Animação para o título piscar */
+        @keyframes contest-title-blink { 
+            0%, 45%, 55%, 100% { opacity: 1; }
+            50% { opacity: 0.7; } /* Pisca menos intensamente */
+        }
+
+        /* ✅ ESTILO PRINCIPAL DO CARD (Compactado) */
+        .contest-cta-card {
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid var(--neon-green); 
+            border-radius: 12px;
+            padding: 25px 15px; /* ✅ AJUSTE: Aumentado padding-top/bottom (25px) para mais altura e espaço interno */
+            margin: 20px auto 40px; /* ✅ AJUSTE: Mantida margem superior (20px) e inferior (40px) para separar das seções */
+            box-shadow: 0 0 25px rgba(0, 255, 0, 0.4); 
+            text-align: center;
+            transition: all 0.3s ease;
+            width: 100%;
+            max-width: 500px; 
+            height: auto;
+            /* Aplicar Animação de Borda */
+            animation: contest-border-pulse 2.5s infinite alternate;
+        }
+
+        .contest-cta-card:hover, .contest-cta-card:active {
+            transform: translateY(-3px) scale(1.01);
+            box-shadow: 0 0 35px rgba(0, 255, 0, 0.6); 
+            background: rgba(0, 0, 0, 0.9);
+        }
+
+        /* ✅ TÍTULO (Espaçamento maior abaixo) */
+        .contest-cta-title {
+            font-size: clamp(1rem, 2.5vw, 1.2rem); 
+            font-weight: 900;
+            color: var(--neon-green);
+            text-shadow: 0 0 8px rgba(0, 255, 0, 0.7);
+            text-transform: uppercase;
+            margin-bottom: 8px; /* ✅ AJUSTE: Aumentado de 5px para 8px para separar do subtítulo */
+            /* Aplicar Animação de Piscar */
+            animation: contest-title-blink 4s infinite;
+        }
+
+        /* ✅ SUBTÍTULO (Fonte maior, espaçamento) */
+        .contest-cta-subtitle {
+            font-size: 14px; 
+            color: var(--text-dim);
+            margin-bottom: 20px; /* ✅ AJUSTE: Aumentado de 15px para 20px para separar do player */
+            font-weight: 400;
+        }
+        
+        /* ✅ PLAYER (Removido, ajuste de margem) */
+        .contest-play-btn {
+            display: none;
+        }
+
+
+        /* ✅ LINK (Espaçamento) */
+        .contest-cta-link {
+            display: inline-block;
+            background: var(--neon-green);
+            color: var(--bg-black);
+            padding: 8px 20px; 
+            border-radius: 30px;
+            font-weight: 900;
+            font-size: 12px; 
+            text-decoration: none;
+            transition: all 0.2s ease;
+            border: 2px solid var(--neon-green);
+            margin-top: 5px; /* Ajustado para compensar a remoção do player */
+            animation: pulse 2s infinite; 
+        }
+
+        .contest-cta-link:hover, .contest-cta-link:active {
+            background: var(--bg-black);
+            color: var(--neon-green);
+            box-shadow: 0 0 15px var(--neon-green);
+        }
+
+        @media (max-width: 600px) {
+            .contest-cta-card { 
+                width: 98% !important; 
+                margin: 20px auto 40px !important; /* Margens adequadas em mobile */
+                padding: 20px 15px !important; /* Padding ajustado em mobile */
+                box-sizing: border-box; 
+            }
+            .section-title.lineup-title-txt {
+                margin: 40px 0 20px !important; /* Espaçamento superior do Line-Up em Mobile */
+            }
         }
     </style>
 </head>
@@ -646,13 +867,12 @@
                 <div class="loader-bar"></div>
             </div>
             <div class="loader-text">SYSTEM INITIALIZING... <span id="loaderPercent">0%</span></div>
-            <div class="loader-phrase">“Aguarde… estamos moldando a experiência perfeita para você.”</div>
-        </div>
+            </div>
     </div>
 
     <div class="video-background">
         <div class="video-overlay"></div>
-        <video id="bgVideo" autoplay muted loop playsinline poster="https://i.imgur.com/ROt9UJN.png">
+        <video id="bgVideo" autoplay muted loop playsinline poster="infinity-logo.png">
             <source src="video-bg.mp4" type="video/mp4">
         </video>
     </div>
@@ -665,7 +885,7 @@
         <div class="profile-section">
             <div class="profile-image-wrapper">
                 <div class="profile-image">
-                    <img src="https://i.imgur.com/ROt9UJN.png" alt="Infinity Fusion Logo" fetchpriority="high" decoding="async">
+                    <img src="infinity-logo.png" alt="Infinity Fusion Logo" fetchpriority="high" decoding="async">
                 </div>
             </div>
         </div>
@@ -686,8 +906,8 @@
             <div class="lot-status-container">
                 <div class="lot-header">
                     <div class="lot-info-col">
-                        <span class="lot-label-text">LOTE ATUAL:</span>
                         <span class="lot-value-text" id="lot-tier">2º LOTE</span>
+                        <span class="lot-price-text" id="lot-price">R$ 50,00</span>
                     </div>
                     <span class="lot-warning">87% VENDIDO 🔥</span>
                 </div>
@@ -705,7 +925,92 @@
                 <span>COMPARTILHAR</span>
             </button>
         </section>
+        
+        <div class="contest-cta-card">
+            <div class="contest-cta-title">DJ Contest Infinity Fusion</div>
+            <div class="contest-cta-subtitle">Mostre seu talento e toque na próxima Infinity Fusion!</div>
+            
+            <a href="https://www.instagram.com/p/DRFNTefDH4w/" target="_blank" rel="noopener noreferrer" class="contest-cta-link">
+                PARTICIPAR DO DJ CONTEST!
+            </a>
+        </div>
+        <section id="lineup">
+            <h2 class="section-title invert-fx lineup-title-txt">LINE-UP CONFIRMADO</h2>
+            <div class="lineup-grid" id="lineupGrid"></div>
+        </section>
+        
+        <section id="location">
+            <h2 class="section-title invert-fx">COMO CHEGAR 📍</h2>
+            <div class="location-section">
+                <div class="location-info">
+                    <div class="info-item"><span class="info-icon">🏢</span><div><div class="info-label">LOCAL</div><div class="info-text">Estação Marquês</div></div></div>
+                    <div class="info-item"><span class="info-icon">📍</span><div><div class="info-label">ENDEREÇO</div><div class="info-text">Av. Marquês de São Vicente, 412 - SP</div></div></div>
+                    <div class="info-item"><span class="info-icon">🚇</span><div><div class="info-label">METRÔ</div><div class="info-text">Palmeiras-Barra Funda (Linha Vermelha)</div></div></div>
+                    <div class="info-item"><span class="info-icon">🚗</span><div><div class="info-label">ESTACIONAMENTO</div><div class="info-text">Disponível no local</div></div></div>
+                    
+                    <a href="https://www.google.com/maps/search/Av.+Marquês+de+São+Vicente,+412+-+Várzea+da+Barra+Funda,+São+Paulo+-+SP" target="_blank" rel="noopener noreferrer" class="map-button">ABRIR NO GOOGLE MAPS</a>
+                    
+                    <div class="contact-buttons">
+                        <a href="https://wa.me/5511959365932" target="_blank" class="contact-btn whatsapp">
+                            <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                            WHATSAPP
+                        </a>
+                        <a href="mailto:infinityfusioncrew@gmail.com" class="contact-btn email">
+                            <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                            EMAIL
+                        </a>
+                    </div>
+                </div>
+                <div class="map-container">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3658.058300262174!2d-46.68069502476579!3d-23.5284370788118!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce580320641113%3A0x868b1a8d38401340!2sAv.+Marqu%C3%AAs+de+S%C3%A3o+Vicente%2C+412+-+V%C3%A1rzea+da+Barra+Funda%2C+S%C3%A3o+Paulo+-+SP%2C+01139-000%2C+Brazil!5e0!3m2!1sen!2sus!4v1700877545041!5m2!1sen!2sus" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </section>
 
+        <section class="about-section">
+            <h2 class="section-title invert-fx">SOBRE O EVENTO</h2>
+            <div class="about-content">
+                <p class="about-text">
+                    <span class="about-text-center c-org" style="font-size: 20px; text-shadow: 0 0 8px rgba(255, 79, 23, 0.7);">INFINITY FUSION — HARD TECHNO EM SUA ESSÊNCIA</span><br>
+                    
+                    A Infinity Fusion entrega uma <span class="c-org" style="font-weight: 700;">EXPERIÊNCIA</span> totalmente dedicada ao <span class="c-org" style="font-weight: 700;">HARD TECHNO</span>: sets intensos, <span class="c-org" style="font-weight: 700;">ATMOSFERA INDUSTRIAL</span> e estética futurista em preto e neon.
+                    <br><br>
+                    
+                    <span style="color: #FFFFFF; font-weight: 600; font-size: 16px; letter-spacing: 1px; display: block; text-align: center; margin-bottom: 10px;">Combinação precisa de luz, som e visual criando uma noite pesada, envolvente e fiel à cultura rave contemporânea.</span>
+                    <br>
+                    
+                    <span style="font-weight: 900; font-size: 16px; text-shadow: 0 0 5px rgba(255, 79, 23, 0.8);">
+                        <span class="c-org">HARD TECHNO SEM EXAGEROS.</span>
+                        <span style="color: #FFFFFF;">SEM ROMANCES.</span>
+                        <span class="c-org">APENAS O IMPACTO REAL DA PISTA.</span>
+                    </span>
+                </p>
+            </div>
+            
+            <div class="faq-section">
+                <h3 class="faq-title invert-fx">PERGUNTAS FREQUENTES</h3>
+                <div class="faq-list">
+                    <div class="faq-item faq-highlight"><div class="faq-question"><span>👗 Dress Code?</span><span class="faq-toggle">+</span></div><div class="faq-answer">Recomendamos All Black (roupas pretas) ou estilo underground. Vista-se confortavelmente para dançar.</div></div>
+                    
+                    <div class="faq-item faq-highlight"><div class="faq-question"><span>🎟 Ingresso na porta?</span><span class="faq-toggle">+</span></div><div class="faq-answer">Sujeito a lotação e alteração de preço. <span style="color:var(--neon-green); font-weight:700;">Valor: R$ 80,00.</span> Recomendamos comprar antecipado.</div></div>
+
+                    <div class="faq-item"><div class="faq-question"><span>🔞 Classificação etária?</span><span class="faq-toggle">+</span></div><div class="faq-answer">Estritamente para maiores de 18 anos.</div></div>
+                    
+                    <div class="faq-item"><div class="faq-question"><span>🛂 É obrigatório levar documento?</span><span class="faq-toggle">+</span></div><div class="faq-answer">Sim. Obrigatório apresentar documento original com foto (RG, CNH ou Passaporte) para entrar.</div></div>
+
+                    <div class="faq-item"><div class="faq-question"><span>🚫 Pode levar bebidas/comida?</span><span class="faq-toggle">+</span></div><div class="faq-answer">Não. O local possui bar completo e opções de alimentação.</div></div>
+                    <div class="faq-item"><div class="faq-question"><span>🕒 Horário do evento?</span><span class="faq-toggle">+</span></div><div class="faq-answer">Das 22:00 às 06:00.</div></div>
+                    
+                    <div class="faq-item"><div class="faq-question"><span>📍 Qual o endereço completo?</span><span class="faq-toggle">+</span></div><div class="faq-answer">Av. Marquês de São Vicente, 412 - Várzea da Barra Funda, São Paulo - SP.</div></div>
+
+                    <div class="faq-item"><div class="faq-question"><span>🎂 Aniversariante VIP pode entrar até que horas?</span><span class="faq-toggle">+</span></div><div class="faq-answer">A entrada VIP é permitida a noite toda, sujeita à conferência do RG na portaria.</div></div>
+
+                    <div class="faq-item"><div class="faq-question"><span>🧥 Haverá chapelaria?</span><span class="faq-toggle">+</span></div><div class="faq-answer">Sim, haverá chapelaria no local.</div></div>
+                    <div class="faq-item"><div class="faq-question"><span>💳 Aceita cartão?</span><span class="faq-toggle">+</span></div><div class="faq-answer">Sim: Crédito, Débito e PIX.</div></div>
+                </div>
+            </div>
+        </section>
+        
         <section class="links">
             <a href="https://www.sympla.com.br/evento/infinity-fusion/3163299" target="_blank" rel="noopener noreferrer" class="link-card">
                 <div class="link-icon sympla">
@@ -722,17 +1027,17 @@
                 <div class="link-arrow">⚡</div>
             </a>
             <a href="https://docs.google.com/forms/d/e/1FAIpQLScReh_qEZPtOUqNu6rHjtmVKL8-i3TScIr2rebpw4b3euCtsw/viewform" target="_blank" rel="noopener noreferrer" class="link-card">
-                <div class="link-icon talent"><img src="https://i.imgur.com/TmyRrGw.png" alt="Talentos" loading="lazy" decoding="async"></div>
+                <div class="link-icon talent"><img src="icon-talent.png" alt="Talentos" loading="lazy" decoding="async"></div>
                 <div class="link-content"><div class="link-title">SELEÇÃO DE NOVOS TALENTOS</div><div class="link-description">DJ ou produtor? Mostre seu trabalho aqui</div></div>
                 <div class="link-arrow">⚡</div>
             </a>
             <a href="https://chat.whatsapp.com/CHK8jKPORfi2XAUygk9tIb" target="_blank" rel="noopener noreferrer" class="link-card">
-                <div class="link-icon whatsapp"><img src="https://i.imgur.com/Fiv7RoH.png" alt="WhatsApp" loading="lazy" decoding="async"></div>
+                <div class="link-icon whatsapp"><img src="icon-whatsapp.png" alt="WhatsApp" loading="lazy" decoding="async"></div>
                 <div class="link-content"><div class="link-title">GRUPO OFICIAL</div><div class="link-description">Entre na comunidade WhatsApp agora</div></div>
                 <div class="link-arrow">⚡</div>
             </a>
             <a href="https://www.instagram.com/thenexusbrasil/" target="_blank" rel="noopener noreferrer" class="link-card">
-                <div class="link-icon nexus"><img src="https://i.imgur.com/bm1PSmm.png" alt="Nexus" loading="lazy" decoding="async"></div>
+                <div class="link-icon nexus"><img src="icon-nexus.png" alt="Nexus" loading="lazy" decoding="async"></div>
                 <div class="link-content"><div class="link-title">CONHEÇA A NEXUS</div><div class="link-description">Evento de Hard Dance em São Paulo</div></div>
                 <div class="link-arrow">⚡</div>
             </a>
@@ -743,68 +1048,11 @@
             </a>
              <a href="https://www.tiktok.com/@infinityfusionofc" target="_blank" rel="noopener noreferrer" class="link-card">
                 <div class="link-icon tiktok-img">
-                    <img src="https://i.imgur.com/cMmqiGK.png" alt="TikTok" loading="lazy" decoding="async">
+                    <img src="icon-tiktok.png" alt="TikTok" loading="lazy" decoding="async">
                 </div>
                 <div class="link-content"><div class="link-title">SIGA NO TIKTOK</div><div class="link-description">Conteúdos exclusivos e bastidores</div></div>
                 <div class="link-arrow">⚡</div>
             </a>
-        </section>
-
-        <section id="lineup">
-            <h2 class="section-title invert-fx lineup-title-txt">LINE-UP CONFIRMADO</h2>
-            <div class="lineup-grid" id="lineupGrid"></div>
-        </section>
-
-        <section id="location">
-            <h2 class="section-title invert-fx">COMO CHEGAR 📍</h2>
-            <div class="location-section">
-                <div class="location-info">
-                    <div class="info-item"><span class="info-icon">🏢</span><div><div class="info-label">LOCAL</div><div class="info-text">Estação Marquês</div></div></div>
-                    <div class="info-item"><span class="info-icon">📍</span><div><div class="info-label">ENDEREÇO</div><div class="info-text">Av. Marquês de São Vicente, 412 - SP</div></div></div>
-                    <div class="info-item"><span class="info-icon">🚇</span><div><div class="info-label">METRÔ</div><div class="info-text">Palmeiras-Barra Funda (Linha Vermelha)</div></div></div>
-                    <div class="info-item"><span class="info-icon">🚗</span><div><div class="info-label">ESTACIONAMENTO</div><div class="info-text">Disponível no local</div></div></div>
-                    
-                    <a href="https://www.google.com/maps/search/?api=1&query=Av.+Marqu%C3%AAs+de+S%C3%A3o+Vicente,+412+-+V%C3%A1rzea+da+Barra+Funda,+S%C3%A3o+Paulo" target="_blank" rel="noopener noreferrer" class="map-button">ABRIR NO GOOGLE MAPS</a>
-                    
-                    <div class="contact-buttons">
-                        <a href="https://wa.me/5511959365932" target="_blank" class="contact-btn whatsapp">
-                            <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                            WHATSAPP
-                        </a>
-                        <a href="mailto:infinityfusioncrew@gmail.com" class="contact-btn email">
-                            <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-                            EMAIL
-                        </a>
-                    </div>
-                </div>
-                <div class="map-container">
-                    <iframe src="https://maps.google.com/maps?width=100%25&height=600&hl=pt-BR&q=Av.+Marqu%C3%AAs+de+S%C3%A3o+Vicente,+412+-+V%C3%A1rzea+da+Barra+Funda,+S%C3%A3o+Paulo&t=&z=15&ie=UTF8&iwloc=B&output=embed" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                </div>
-            </div>
-        </section>
-
-        <section class="about-section">
-            <h2 class="section-title invert-fx">SOBRE O EVENTO</h2>
-            <div class="about-content">
-                <p class="about-text">
-                    <span class="about-text-center c-org">INFINITY FUSION — HARD TECHNO EM SUA FORMA PURA</span><br>
-                    <span class="c-wht">A Infinity Fusion apresenta uma experiência dedicada ao </span><span class="c-org">Hard Techno</span><span class="c-wht">, com sets intensos, atmosfera industrial e estética futurista em preto e neon. O evento combina luz, som e visual de forma precisa para criar uma noite pesada, envolvente e fiel à cultura rave atual.</span><br><br>
-                    <span class="c-org">Hard Techno sem exagero, sem romances — apenas o impacto real da pista.</span>
-                </p>
-            </div>
-            
-            <div class="faq-section">
-                <h3 class="faq-title invert-fx">PERGUNTAS FREQUENTES</h3>
-                <div class="faq-list">
-                    <div class="faq-item"><div class="faq-question"><span>🔞 Classificação etária?</span><span class="faq-toggle">+</span></div><div class="faq-answer">Estritamente para maiores de 18 anos. Obrigatório documento original com foto.</div></div>
-                    <div class="faq-item"><div class="faq-question"><span>🚫 Pode levar bebidas/comida?</span><span class="faq-toggle">+</span></div><div class="faq-answer">Não. O local possui bar completo e opções de alimentação.</div></div>
-                    <div class="faq-item"><div class="faq-question"><span>🕒 Horário do evento?</span><span class="faq-toggle">+</span></div><div class="faq-answer">Das 22:00 às 06:00.</div></div>
-                    <div class="faq-item"><div class="faq-question"><span>👗 Dress Code?</span><span class="faq-toggle">+</span></div><div class="faq-answer">Recomendamos All Black (roupas pretas) ou estilo underground. Vista-se confortavelmente para dançar.</div></div>
-                    <div class="faq-item"><div class="faq-question"><span>🎟 Ingresso na porta?</span><span class="faq-toggle">+</span></div><div class="faq-answer">Sujeito a lotação. Recomendamos comprar antecipado.</div></div>
-                    <div class="faq-item"><div class="faq-question"><span>🧥 Haverá chapelaria?</span><span class="faq-toggle">+</span></div><div class="faq-answer">Sim, haverá chapelaria no local.</div></div>
-                    <div class="faq-item"><div class="faq-question"><span>💳 Aceita cartão?</span><span class="faq-toggle">+</span></div><div class="faq-answer">Sim: Crédito, Débito e PIX.</div></div>
-                </div>
-            </div>
         </section>
 
         <section class="newsletter-section" id="footerTrigger">
@@ -872,24 +1120,32 @@
             }
         });
 
-        // --- AUTO LOT UPDATE LOGIC ---
-        const lotTier = document.getElementById('lot-tier');
-        if (lotTier) {
-            // Data da virada: 24 de Novembro de 2025 às 00:00:00
-            const switchDate = new Date('2025-11-24T00:00:00').getTime();
+        // --- COUNTDOWN E LÓGICA DE ATUALIZAÇÃO DE LOTE E PREÇO ---
+        let countdownInterval;
+        function updatePriceAndLot() {
             const now = new Date().getTime();
-            
-            if (now >= switchDate) {
-                lotTier.textContent = '3º LOTE';
+            const lotTier = document.getElementById('lot-tier');
+            const lotPrice = document.getElementById('lot-price');
+            const switchDate = new Date('2025-11-24T00:00:00-03:00').getTime(); 
+
+            if (lotTier && lotPrice) {
+                if (now >= switchDate) {
+                    lotTier.textContent = '3º LOTE';
+                    lotPrice.textContent = 'R$ 60,00';
+                } else {
+                    lotTier.textContent = '2º LOTE';
+                    lotPrice.textContent = 'R$ 50,00';
+                }
             }
         }
 
-        let countdownInterval;
         function updateCountdown() {
             const eventDate = new Date('2025-12-05T22:00:00-03:00').getTime();
             const now = new Date().getTime();
             const distance = eventDate - now;
 
+            updatePriceAndLot(); // Atualiza lote e preço a cada segundo
+            
             if (distance < 0) {
                 clearInterval(countdownInterval);
                 document.getElementById('countdown').innerHTML = '<div class="time-unit" style="width:100%; border-color:#444"><span class="time-value" style="font-size:20px">O EVENTO JÁ COMEÇOU!</span></div>';
@@ -905,58 +1161,70 @@
         updateCountdown();
 
         // --- DJ LINEUP LOGIC ---
-        const TEST_AUDIO_URL = 'set.mp3'; 
-        
         const djLineup = [
-                        { name: 'SALVYAN 👑', instagram: 'salvyan.music', photo: 'salvyan.jpg', pos: 'center 5%', headliner: true, audio: 'salvyan.mp3' },
+            // HEADLINERS
+            { name: 'SALVYAN 👑', instagram: 'salvyan.music', photo: 'salvyan.jpg', pos: 'center 5%', headliner: true, audio: 'salvyan.mp3' },
             { name: 'LAUD 👑', instagram: 'laud.mp3', photo: 'laud.jpg', pos: 'center 21%', headliner: true, audio: 'laud.mp3' },
             { name: 'MITSUNARI 👑', instagram: 'mitsunaribr', photo: 'mitsunari.jpg', pos: 'center 90%', headliner: true, audio: 'mitsunari.mp3' },
             { name: 'G9SS', instagram: 'g9ss_dj', photo: 'g9ss.jpg', pos: 'center 13%', audio: 'g9ss.mp3' },
             { name: 'ORSKED', instagram: 'orskeddj', photo: 'orsked.jpg', pos: 'center 10%', audio: 'orsked.mp3' },
             { name: 'CYBER FUSION', instagram: 'cyberfusionofc', photo: 'cyberfusion.jpg', pos: 'center 45%', audio: 'cyberfusion.mp3' },
-            { name: 'INFINITY NOIZE', instagram: 'djinfinitynoize', photo: 'infinitynoize.jpg', pos: 'center 20%', audio: 
- 'infinitynoize.mp3' },
-            { name: 'VENCEDOR DJ CONTEST', instagram: 'infinityfusionofc', photo: 'contest.jpg', pos: 'center 10%', audio: 'contest.mp3', isContest: true }
+            { name: 'INFINITY NOIZE', instagram: 'djinfinitynoize', photo: 'infinitynoize.jpg', pos: 'center 20%', audio: 'infinitynoize.mp3' } 
         ];
 
         const lineupGrid = document.getElementById('lineupGrid');
         djLineup.forEach((dj, index) => {
             const djCard = document.createElement('div');
-            djCard.className = dj.isContest ? 'dj-card contest-card' : ('dj-card' + (dj.headliner ? ' headliner' : ''));
+            // REMOVIDO isContest, só verifica Headliner
+            djCard.className = ('dj-card' + (dj.headliner ? ' headliner' : ''));
             const audioId = `audio-${index}`;
             
-            if (dj.isContest) {
-                djCard.innerHTML = `
-                    <div class="dj-name">DJ CONTEST</div>
-                    <div class="contest-info">Quer tocar na Infinity Fusion?</div>
-                    <a href="https://www.instagram.com/p/DRFNTefDH4w/?igsh=a2V0OTVnN2hxZDRm" target="_blank" rel="noopener noreferrer" class="contest-btn">PARTICIPAR (Até 30/11 23:59)</a>
-                `;
-            } else {
-                djCard.innerHTML = `
-                    <a href="https://instagram.com/${dj.instagram}" target="_blank" class="dj-photo">
-                        <img src="${dj.photo}" alt="${dj.name}" style="object-position: ${dj.pos};" loading="lazy">
-                    </a>
-                    <div class="info-wrap">
-                        <div class="dj-name">${dj.name}</div>
-                        <div class="dj-instagram" onclick="window.open('https://instagram.com/${dj.instagram}', '_blank')">@${dj.instagram}</div>
-                        <button class="play-btn" aria-label="Ouvir set de ${dj.name}" onclick="toggleAudio('${audioId}', this)">▶</button>
-                        <audio id="${audioId}" src="${dj.audio}" preload="none"></audio>
-                    </div>
-                `;
-            }
+            // USANDO APENAS A ESTRUTURA PADRÃO DO DJ
+             djCard.innerHTML = `
+                <a href="https://instagram.com/${dj.instagram}" target="_blank" class="dj-photo">
+                    <img id="photo-${audioId}" src="${dj.photo}" alt="${dj.name}" style="object-position: ${dj.pos};" loading="lazy">
+                </a>
+                <div class="info-wrap">
+                    <div class="dj-name">${dj.name}</div>
+                    <div class="dj-instagram" onclick="window.open('https://instagram.com/${dj.instagram}', '_blank')">@${dj.instagram}</div>
+                    <button class="play-btn" aria-label="Ouvir set de ${dj.name}" onclick="toggleAudio('${audioId}', this)">▶</button>
+                    <audio id="${audioId}" src="${dj.audio}" preload="none"></audio>
+                </div>
+            `;
             lineupGrid.appendChild(djCard);
         });
 
+        // --- FUNÇÃO toggleAudio PADRÃO (sem lidar com contest) ---
         function toggleAudio(id, btn) {
             const audio = document.getElementById(id);
+            const photoElement = document.getElementById(`photo-${id}`).closest('.dj-photo');
             
-            document.querySelectorAll('audio').forEach(a => { if(a.id !== id) { a.pause(); a.currentTime = 0; } });
-            document.querySelectorAll('.play-btn').forEach(b => { if(b !== btn) { b.textContent = '▶'; b.classList.remove('playing'); b.classList.remove('error'); } });
+            // 1. Limpa o estado e o efeito visual de todos os outros players
+            document.querySelectorAll('audio').forEach(a => { 
+                if(a.id !== id) { 
+                    a.pause(); a.currentTime = 0; 
+                    const otherPhoto = document.getElementById(`photo-${a.id}`);
+                    if (otherPhoto) otherPhoto.closest('.dj-photo').classList.remove('is-playing');
+                }
+            });
+            document.querySelectorAll('.play-btn').forEach(b => { 
+                if(b !== btn) { 
+                    b.textContent = '▶'; 
+                    b.classList.remove('playing'); 
+                    b.classList.remove('error'); 
+                }
+            });
+
 
             if (audio.paused) {
                 audio.volume = 1.0;
                 audio.play().then(_ => { 
-                    btn.textContent = '■'; btn.classList.add('playing'); 
+                    btn.textContent = '■'; 
+                    btn.classList.add('playing'); 
+                    
+                    if (photoElement) {
+                        photoElement.classList.add('is-playing'); // Adiciona o efeito visual
+                    }
                     
                     // TIMER
                     audio.ontimeupdate = () => {
@@ -969,20 +1237,35 @@
                         if(timeLeft <= 0) {
                              btn.textContent = '▶';
                              btn.classList.remove('playing');
+                             if (photoElement) { 
+                                photoElement.classList.remove('is-playing');
+                             }
                         }
                     };
 
                 }).catch(error => { 
                     console.error("Erro de áudio:", error); 
-                    btn.classList.add('error'); btn.textContent = '⚠️';
-                    setTimeout(() => { btn.classList.remove('error'); btn.textContent = '▶'; }, 2000);
+                    btn.classList.add('error'); 
+                    btn.textContent = '⚠️';
+                    if (photoElement) {
+                         photoElement.classList.remove('is-playing'); // Remove o efeito em caso de erro
+                    }
+
+                    if(error.name !== "NotAllowedError") {
+                        setTimeout(() => { btn.classList.remove('error'); btn.textContent = '▶'; }, 2000);
+                    }
                 });
             } else {
                 audio.pause();
                 btn.textContent = '▶';
                 btn.classList.remove('playing');
+                if (photoElement) {
+                    photoElement.classList.remove('is-playing'); // Remove o efeito ao pausar
+                } 
             }
         }
+        
+        // --- FUNÇÃO toggleContestAudio REMOVIDA ---
 
         document.querySelectorAll('.faq-question').forEach(question => {
             question.addEventListener('click', function() {
