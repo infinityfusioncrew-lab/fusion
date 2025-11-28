@@ -85,7 +85,18 @@
 
         /* --- RESET E BASE --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
+        
+        /* ✅ CORREÇÃO FIREFOX MOBILE: Impedir inflação de texto automática */
+        html { 
+            scroll-behavior: smooth;
+            -webkit-text-size-adjust: 100%;
+            -moz-text-size-adjust: none; /* Crucial para Firefox Mobile */
+            text-size-adjust: 100%;
+            
+            /* ✅ CORREÇÃO FIREFOX SCROLLBAR: Estilo fino para não quebrar layout */
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary) #0a0a0a;
+        }
         
         body {
             font-family: var(--font-main);
@@ -95,6 +106,7 @@
             overflow-x: hidden;
             padding-bottom: 120px; 
             font-size: 16px; 
+            line-height: 1.5; /* Melhor controle de altura de linha */
         }
 
         :focus-visible { outline: 2px solid var(--primary); outline-offset: 4px; }
@@ -109,10 +121,9 @@
         .video-background video { width: 100vw; height: 100vh; object-fit: cover; position: absolute; top: 0; left: 0; opacity: 0.6; display: none; } 
         .video-background.active video { display: block; }
         
-        /* ✅ CORREÇÃO: REMOVIDA A LOGO DO FUNDO (AGORA APENAS PRETO SÓLIDO POR TRÁS DO VÍDEO) */
         .video-background::before {
             content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: #000; /* Apenas fundo preto, sem imagem de logo */
+            background: #000;
             opacity: 1; z-index: -2;
         }
 
@@ -223,10 +234,6 @@
             to { border-color: #ff1a1a; box-shadow: 0 0 50px rgba(255, 20, 20, 0.7), inset 0 0 40px rgba(255, 20, 20, 0.4); }
         }
 
-        .live-title { font-size: 20px; color: #fff; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; text-shadow: 0 0 10px rgba(255,255,255,0.5); line-height: 1.2; }
-        .live-subtitle { font-size: 12px; color: var(--text-dim); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
-        .live-price { font-size: 36px; color: var(--primary); font-weight: 900; text-shadow: 0 0 20px var(--primary); line-height: 1; }
-
         .countdown-cta-group { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 15px; margin-top: 15px; width: 100%; }
 
         .btn-whatsapp-countdown {
@@ -288,7 +295,6 @@
         @media (min-width: 601px) { .lineup-grid .dj-card:nth-child(7) { grid-column: 2; } }
         #lineup { margin-top: 40px; margin-bottom: 40px;} 
         
-        /* ✅ CARDS COM EFEITOS CYBER-REACTIVE */
         .dj-card { 
             background: rgba(0, 0, 0, 0.6); 
             border: 1px solid rgba(255, 69, 0, 0.3); 
@@ -327,7 +333,6 @@
             box-shadow: 0 0 10px rgba(255, 69, 0, 0.4); 
         }
         
-        /* ✅ ANIMAÇÃO DE "BALANÇAR" RESTAURADA (Kick + Shake) */
         .dj-photo.is-playing { 
             animation: audio-beat 0.45s infinite alternate ease-in-out !important; 
             border-color: #fff;
@@ -438,7 +443,6 @@
 
         .about-section-box, .location-section-box, .faq-section-box { background: rgba(0, 0, 0, 0.8); border: 2px solid var(--primary); border-radius: 18px; padding: 0; margin-bottom: 30px; overflow: hidden; }
         
-        /* ✅ AJUSTE DA SEÇÃO SOBRE (ESPAÇAMENTO AUMENTADO E FONTE REDUZIDA) */
         .about-brand-title {
             font-size: 24px; 
             font-weight: 900;
@@ -548,8 +552,6 @@
         
         .contest-cta-title { font-size: clamp(1rem, 2.5vw, 1.2rem); font-weight: 900; color: var(--primary); text-shadow: 0 0 8px rgba(255, 79, 23, 0.7); text-transform: uppercase; margin-bottom: 20px; animation: contest-title-blink 4s infinite; }
         
-        /* Subtítulo removido via HTML */
-        
         .contest-deadline { display: block; width: fit-content; margin: 0 auto 20px auto; font-size: clamp(10px, 3.5vw, 14px); white-space: nowrap; overflow: hidden; color: var(--primary); font-weight: 900; text-transform: uppercase; text-shadow: 0 0 8px var(--primary); letter-spacing: 1px; background: rgba(255, 79, 23, 0.1); padding: 5px 10px; border-radius: 4px; border: 1px solid rgba(255, 79, 23, 0.3); animation: pulse 3s infinite alternate; }
         
         @keyframes pulse { from { transform: scale(1); } to { transform: scale(1.02); } }
@@ -574,25 +576,22 @@
 
         #dev-float-wrapper { position: fixed; bottom: -100px; left: 50%; transform: translateX(-50%); z-index: 9990; transition: bottom 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55); width: auto; }
         #dev-float-wrapper.visible { bottom: calc(20px + env(safe-area-inset-bottom)); }
-        .dev-btn-float { background: rgba(0, 0, 0, 0.9); border: 1px solid var(--primary); color: var(--text-light); padding: 10px 24px; border-radius: 30px; font-size: 12px; text-decoration: none; display: flex; align-items: center; gap: 8px; font-weight: 700; letter-spacing: 1px; box-shadow: 0 0 20px rgba(0, 0, 0, 0.8); transition: all 0.3s ease; }
-        .dev-btn-float:hover { background: var(--primary); color: #000; box-shadow: 0 0 25px var(--primary); transform: scale(1.05); }
-
-<<<<<<< HEAD
-        .sticky-cta { position: fixed; bottom: calc(20px + env(safe-area-inset-bottom)); left: 50%; transform: translateX(-50%) translateY(150px); width: auto; min-width: 260px; max-width: 320px; height: 60px; background: rgba(5, 5, 5, 0.98); border: 2px solid var(--primary); border-radius: 50px; padding: 5px 25px; display: flex; justify-content: space-between; align-items: center; gap: 15px; z-index: 1000; box-shadow: 0 0 30px rgba(255, 69, 0, 0.6); opacity: 0; transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); pointer-events: none; backdrop-filter: blur(5px); }
-=======
+        
+        /* ✅ CORREÇÃO 3: BOTÃO DEV SEM QUEBRA DE LINHA */
         .dev-btn-float {
             background: rgba(0, 0, 0, 0.9);
             border: 1px solid var(--primary);
             color: var(--text-light);
-            padding: 10px 21px; /* Aumentado */
+            padding: 10px 20px;
             border-radius: 30px;
-            font-size: 10px; /* Fonte aumentada */
+            font-size: 11px;
             text-decoration: none;
             display: flex;
             align-items: center;
             gap: 8px;
             font-weight: 700;
             letter-spacing: 1px;
+            white-space: nowrap; /* Impede quebra de linha */
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
             transition: all 0.3s ease;
         }
@@ -601,12 +600,35 @@
             background: var(--primary);
             color: #000;
             box-shadow: 0 0 25px var(--primary);
-            transform: scale(1.00);
+            transform: scale(1.05);
         }
 
-        /* STICKY CTA - TEXTO CENTRALIZADO */
-        .sticky-cta { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(100px); width: auto; min-width: 260px; max-width: 320px; height: 60px; background: rgba(5, 5, 5, 0.98); border: 2px solid var(--primary); border-radius: 50px; padding: 5px 25px; display: flex; justify-content: space-between; align-items: center; gap: 15px; z-index: 1000; box-shadow: 0 0 30px rgba(255, 69, 0, 0.6); opacity: 0; transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); pointer-events: none; }
->>>>>>> 811cac04c345dd94fc06d6559d42fc7fd17a1bfd
+        /* ✅ CORREÇÃO 1: STICKY CTA RESTAURADO (CONFLITOS REMOVIDOS) */
+        .sticky-cta { 
+            position: fixed; 
+            bottom: calc(20px + env(safe-area-inset-bottom)); 
+            left: 50%; 
+            transform: translateX(-50%) translateY(150px); 
+            width: auto; 
+            min-width: 260px; 
+            max-width: 320px; 
+            height: 60px; 
+            background: rgba(5, 5, 5, 0.98); 
+            border: 2px solid var(--primary); 
+            border-radius: 50px; 
+            padding: 5px 25px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            gap: 15px; 
+            z-index: 1000; 
+            box-shadow: 0 0 30px rgba(255, 69, 0, 0.6); 
+            opacity: 0; 
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            pointer-events: none; 
+            backdrop-filter: blur(5px); 
+        }
+
         .sticky-cta.visible { opacity: 1; transform: translateX(-50%) translateY(0); pointer-events: all; }
         .sticky-cta.closed-mode { height: 45px; min-width: 180px; padding: 0 15px; border-color: var(--neon-red); box-shadow: 0 0 10px rgba(255, 0, 0, 0.3); background: rgba(10, 0, 0, 0.98); }
         .cta-text-col { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; min-width: 120px; }
@@ -624,7 +646,20 @@
         /* --- MOBILE FIXES --- */
         @media (max-width: 600px) {
             body { font-size: 16px; } 
-            .section-title, .newsletter-title, .event-title { font-size: 22px; white-space: nowrap; overflow: visible; letter-spacing: 2px; margin: 60px 0 30px; text-align: center !important; width: 100%; color: #fff; }
+            
+            /* ✅ CORREÇÃO 2: TÍTULO COM QUEBRA DE LINHA NO MOBILE (FIREFOX FIX) */
+            .section-title, .newsletter-title, .event-title { 
+                font-size: 22px; 
+                white-space: normal; /* Permite quebrar linha */
+                overflow: visible; 
+                letter-spacing: 2px; 
+                margin: 60px 0 30px; 
+                text-align: center !important; 
+                width: 100%; 
+                color: #fff; 
+                line-height: 1.2;
+            }
+
             .faq-question { font-size: 16px; } 
             .lineup-title-txt { font-size: 26px !important; letter-spacing: 0.5px; }
             .countdown-timer { justify-content: center; gap: 8px; }
