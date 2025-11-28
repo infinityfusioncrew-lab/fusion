@@ -86,14 +86,13 @@
         /* --- RESET E BASE --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
-        /* ✅ CORREÇÃO FIREFOX E MOBILE: Reset agressivo de inflação de fonte */
+        /* ✅ FIREFOX FIX: Reset agressivo de inflação de fonte */
         html { 
             scroll-behavior: smooth;
             -webkit-text-size-adjust: 100%;
             -moz-text-size-adjust: none; /* Firefox Mobile Fix */
             text-size-adjust: none;
-            touch-action: manipulation; /* Melhora resposta ao toque */
-            
+            touch-action: manipulation;
             scrollbar-width: thin;
             scrollbar-color: var(--primary) #0a0a0a;
         }
@@ -490,6 +489,7 @@
         .faq-item.active .faq-answer { max-height: 300px; padding: 0 15px 15px 15px; }
         .faq-highlight .faq-question { color: #fff; }
         
+        /* ✅ CORREÇÃO LINK FAQ */
         .faq-answer a, .faq-map-btn { 
             display: inline-block !important; 
             margin-top: 10px; 
@@ -651,18 +651,26 @@
             body { font-size: 16px; } 
             
             /* ✅ CORREÇÃO 2: TÍTULO COM QUEBRA DE LINHA NO MOBILE (FIREFOX FIX) */
+            /* AGORA COM white-space: nowrap para evitar quebras */
             .section-title, .newsletter-title, .event-title { 
-                font-size: 22px; 
-                white-space: normal; /* Permite quebrar linha */
+                font-size: 5.5vw !important; /* Tamanho fluido para caber */
+                white-space: nowrap !important; /* PROIBIDO QUEBRAR LINHA */
                 overflow: visible; 
-                letter-spacing: 2px; 
+                letter-spacing: 1px; 
                 margin: 60px 0 30px; 
                 text-align: center !important; 
                 width: 100%; 
                 color: #fff; 
                 line-height: 1.2;
-                max-width: 100%;
-                word-wrap: break-word; /* Garante que palavras longas quebrem */
+                display: flex;
+                justify-content: center;
+                gap: 5px;
+            }
+            
+            /* Ajuste específico para o container do countdown ficar menos apertado */
+            .event-countdown {
+                padding: 25px 10px !important;
+                width: 95% !important;
             }
 
             .faq-question { font-size: 16px; } 
@@ -672,8 +680,9 @@
             .newsletter-description { font-size: 12px; white-space: nowrap; }
             .contest-cta-card, .location-section, .about-content, .faq-section, .links { margin-bottom: 80px !important; }
             .contest-cta-card { width: 98% !important; margin: 20px auto 80px !important; padding: 30px 20px !important; box-sizing: border-box; }
+            
             .event-countdown { width: 98% !important; margin: 20px auto 60px !important; padding: 20px 15px 25px !important; }
-            .event-title, .newsletter-title, .section-title { margin-top: 0 !important; margin-bottom: 25px; line-height: 1.2; }
+            .newsletter-title, .section-title { margin-top: 0 !important; margin-bottom: 25px; line-height: 1.2; }
             .newsletter-input { text-align: center; font-size: 16px; }
             .section-title.lineup-title-txt { margin: 40px 0 30px !important; }
             .lot-price-text { font-size: 24px; }
@@ -690,6 +699,15 @@
             .dj-card:nth-child(-n+3) .play-btn { transform: scale(1.2); margin-top: 10px; }
              .dj-card:nth-child(-n+3) .dj-photo { margin-bottom: 15px; }
             .manifesto-text { border-left-width: 2px; } 
+
+            /* Ajuste dos botões espremidos */
+            .calendar-btn, .btn-whatsapp-countdown {
+                white-space: nowrap !important;
+                font-size: 11px !important;
+                padding: 10px 10px !important;
+                width: 90% !important;
+                max-width: none !important;
+            }
         }
     </style>
 </head>
@@ -819,7 +837,7 @@
                 <div class="faq-item"><div class="faq-question"><span>📍 Qual o endereço completo?</span><span class="faq-toggle">+</span></div>
                     <div class="faq-answer">
                         Av. Marquês de São Vicente, 412 - Várzea da Barra Funda, São Paulo - SP. <br>
-                        <a href="https://www.google.com/maps/search/?api=1&query=Av.+Marquês+de+São+Vicente,+412+-+Várzea+da+Barra+Funda,+São+Paulo+-+SP" target="_blank" class="faq-map-btn">Abrir no Maps</a>
+                        <a href="https://www.google.com/maps/search/?api=1&query=Av.+Marquês+de+São+Vicente,+412+-+Várzea+da+Barra+Funda,+São+Paulo" target="_blank" class="faq-map-btn">Abrir no Maps</a>
                     </div>
                 </div>
                 <div class="faq-item"><div class="faq-question"><span>🎂 Aniversariante VIP pode entrar até que horas?</span><span class="faq-toggle">+</span></div><div class="faq-answer">A entrada VIP é permitida a noite toda, sujeita à conferência do RG na portaria.</div></div>
@@ -837,9 +855,9 @@
                     <div class="info-item"><span class="info-icon">🚇</span><div><div class="info-label">METRÔ</div><div class="info-text">Palmeiras-Barra Funda (Linha Vermelha)</div></div></div>
                     <div class="info-item"><span class="info-icon">🚗</span><div><div class="info-label">ESTACIONAMENTO</div><div class="info-text">Disponível no local</div></div></div>
                     
-                    <div class="map-container" onclick="window.open('https://www.google.com/maps/search/?api=1&query=Estação+Marquês+Barra+Funda', '_blank')">
+                    <div class="map-container">
                         <iframe 
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3658.107055745147!2d-46.66918492383827!3d-23.518608260389803!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94cef80706240001%3A0x6e26868d44207903!2zRXN0YcOnw6NvIE1hcnF1w6pz!5e0!3m2!1spt-BR!2sbr!4v1716920000000!5m2!1spt-BR!2sbr" 
+                            src="https://maps.google.com/maps?q=Estacao%20Marques%20Barra%20Funda&t=&z=15&ie=UTF8&iwloc=&output=embed" 
                             width="100%" 
                             height="100%" 
                             style="border:0; filter: grayscale(100%) invert(90%) contrast(85%);" 
@@ -849,7 +867,7 @@
                         </iframe>
                     </div>
 
-                    <a href="https://www.google.com/maps/search/?api=1&query=Estação+Marquês+Barra+Funda" target="_blank" rel="noopener noreferrer" class="map-button">ABRIR NO GOOGLE MAPS APP</a>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Estação+Marquês+Av+Marques+de+Sao+Vicente+412" target="_blank" rel="noopener noreferrer" class="map-button">ABRIR NO GOOGLE MAPS APP</a>
                     
                     <div class="contact-buttons">
                         <a href="https://wa.me/5511988602480" target="_blank" class="contact-btn whatsapp">
