@@ -2,21 +2,39 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     
     <title>Infinity Fusion - Hard Techno Experience</title>
     <meta name="description" content="05 de Dezembro em SP. Hard Techno em sua forma pura. Ingressos disponíveis.">
     <meta name="author" content="Infinity Fusion Team">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://infinityfusion.com.br"> 
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FPED0K61N3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-FPED0K61N3');
+    </script>
     
+    <link rel="preload" href="infinity-logo.png" as="image">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" as="style">
+
     <meta property="og:type" content="website">
     <meta property="og:locale" content="pt_BR">
+    <meta property="og:site_name" content="Infinity Fusion">
+    <meta property="og:title" content="Infinity Fusion - Hard Techno Experience">
+    <meta property="og:description" content="05 de Dezembro em SP. O underground chama.">
     <meta property="og:image" content="infinity-logo.png">
-
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content="infinity-logo.png">
-
     <meta name="theme-color" content="#ff4500">
     <link rel="icon" href="infinity-logo.png" type="image/png">
 
@@ -29,446 +47,272 @@
       "name": "Infinity Fusion",
       "startDate": "2025-12-05T22:00-03:00",
       "endDate": "2025-12-06T06:00-03:00",
-      "location": { "@type": "Place", "name": "Estação Marquês", "address": "Av. Marquês de São Vicente, 412 - Várzea da Barra Funda, São Paulo - SP" },
+      "eventStatus": "https://schema.org/EventScheduled",
+      "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+      "location": { 
+        "@type": "Place", 
+        "name": "Estação Marquês", 
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Av. Marquês de São Vicente, 412",
+            "addressLocality": "São Paulo",
+            "postalCode": "01139-000",
+            "addressRegion": "SP",
+            "addressCountry": "BR"
+        } 
+      },
       "image": ["infinity-logo.png"],
       "description": "Hard Techno em sua forma pura.",
-      "offers": { "@type": "Offer", "url": "https://www.sympla.com.br/evento/infinity-fusion/3163299", "availability": "https://schema.org/InStock" }
+      "offers": { "@type": "Offer", "url": "https://www.sympla.com.br/evento/infinity-fusion/3163299", "availability": "https://schema.org/InStock", "price": "50.00", "priceCurrency": "BRL" }
     }
     </script>
 
     <style>
-        /* --- VARIÁVEIS --- */
+        /* --- VARIÁVEIS GLOBAIS --- */
         :root {
-            --primary: #FF4F17; /* AJUSTADO PARA O NOVO HEX NEON LARANJA */
-            --primary-glow: rgba(255, 79, 23, 0.3); /* AJUSTADO PARA O NOVO RGB DO GLOW */
+            --primary: #FF4F17; 
+            --primary-glow: rgba(255, 79, 23, 0.5);
             --bg-black: #000;
             --text-light: #fff;
             --text-dim: #ccc;
             --font-main: 'Orbitron', 'Space Mono', monospace, sans-serif;
             --icon-yellow: #FFD700; 
-            --text-paragraph: #EDEDED; /* NOVA VARIÁVEL PARA O CINZA QUASE BRANCO */
-            --neon-green: #00ff00; /* Adicionado para facilidade de uso */
+            --text-paragraph: #EDEDED;
+            --neon-green: #00ff00;
+            --neon-red: #ff0000;
+            --whatsapp-green: #25D366;
         }
 
-        /* --- RESET --- */
+        /* --- RESET E BASE --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         
         body {
             font-family: var(--font-main);
-            background: transparent; 
-            background-color: #000;
+            background: #000;
             color: var(--text-light);
             min-height: 100vh;
             overflow-x: hidden;
             padding-bottom: 120px; 
+            font-size: 16px; 
         }
 
-        :focus-visible {
-            outline: 2px solid var(--primary);
-            outline-offset: 4px;
+        :focus-visible { outline: 2px solid var(--primary); outline-offset: 4px; }
+
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #0a0a0a; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 5px; border: 1px solid #000; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+
+        /* --- VIDEO BACKGROUND --- */
+        .video-background { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -10; background: #000; }
+        .video-background video { width: 100vw; height: 100vh; object-fit: cover; position: absolute; top: 0; left: 0; opacity: 0.6; display: none; } 
+        .video-background.active video { display: block; }
+        
+        /* ✅ CORREÇÃO: REMOVIDA A LOGO DO FUNDO (AGORA APENAS PRETO SÓLIDO POR TRÁS DO VÍDEO) */
+        .video-background::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: #000; /* Apenas fundo preto, sem imagem de logo */
+            opacity: 1; z-index: -2;
         }
 
-        /* --- VIDEO BACKGROUND FIXED (LOCAL) --- */
-        .video-background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -10; 
-            overflow: hidden;
-            background: #000;
-        }
-        .video-background video {
-            width: 100vw;
-            height: 100vh;
-            object-fit: cover;
-            position: absolute;
-            top: 0;
-            left: 0;
-            opacity: 0.6; 
-        }
-        .video-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.6); 
-            background-image: linear-gradient(transparent 50%, rgba(0,0,0,0.5) 50%);
-            background-size: 4px 4px;
-            z-index: 1;
-            pointer-events: none;
+        .video-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); background-image: linear-gradient(transparent 50%, rgba(0,0,0,0.5) 50%); background-size: 4px 4px; z-index: 1; pointer-events: none; }
+
+        @media (max-width: 768px) {
+            .btn-whatsapp-countdown, .sticky-cta, .link-card, .event-live-box {
+                backdrop-filter: none !important;
+                background: rgba(10, 10, 10, 0.95) !important;
+            }
         }
 
         /* --- PRELOADER --- */
-        #preloader {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: #000;
-            background-image: 
-                linear-gradient(rgba(255, 69, 0, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 69, 0, 0.05) 1px, transparent 1px);
-            background-size: 150px 150px;
-            z-index: 10000;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            transition: opacity 1s ease-out, visibility 1s;
-        }
-        
-        .preloader-content {
-            text-align: center;
-            width: 85%;
-            /* DIMINUI A LARGURA DA BARRA E DO CONTEÚDO */
-            max-width: 300px; 
-            position: relative;
-            z-index: 10002; 
-        }
-        
-        .preloader-logo {
-            width: 240px; 
-            height: auto;
-            /* ✅ AJUSTE: Move o logo para cima para centralizar o loading bar no meio da tela */
-            margin-bottom: 50px; 
-            filter: brightness(0) invert(1) drop-shadow(0 0 20px rgba(255,255,255,0.6));
-            animation: pulseLogo 2s infinite alternate;
-        }
-        .loader-container {
-            width: 100%;
-            /* AUMENTA A ALTURA DA BARRA */
-            height: 16px;
-            background: #111;
-            border-radius: 6px;
-            position: relative;
-            overflow: hidden;
-            border: 1px solid #444;
-            box-shadow: 0 0 25px rgba(0,0,0,0.9);
-        }
-        .loader-bar {
-            /* Garante que a barra interna use a nova altura */
-            height: 100%;
-            width: 0%;
-            background: var(--primary);
-            box-shadow: 0 0 25px var(--primary);
-            transition: width 0.2s linear;
-            position: relative;
-        }
-        .loader-bar::after {
-            content: ''; position: absolute; top: 0; left: 0; bottom: 0; right: 0;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.9), transparent);
-            transform: translateX(-100%);
-            animation: loadShimmer 1.5s infinite;
-        }
-        .loader-text {
-            margin-top: 20px;
-            font-size: 14px;
-            color: var(--primary);
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            font-weight: 900;
-            text-shadow: 0 0 10px var(--primary-glow);
-            /* ✅ AJUSTE: Aumenta margem inferior para compensar a frase removida */
-            margin-bottom: 20px; 
-        }
-        .loader-phrase {
-            /* ✅ REMOVIDO: Este estilo não será aplicado, pois o elemento HTML foi removido */
-            display: none; 
-        }
+        #preloader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #000; background-image: linear-gradient(rgba(255, 69, 0, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 69, 0, 0.05) 1px, transparent 1px); background-size: 150px 150px; z-index: 10000; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 0.5s ease-out, visibility 0.5s; }
+        .preloader-content { text-align: center; width: 85%; max-width: 300px; position: relative; z-index: 10002; }
+        .preloader-logo { width: 240px; height: auto; margin-bottom: 50px; filter: brightness(0) invert(1) drop-shadow(0 0 20px rgba(255,255,255,0.6)); animation: pulseLogo 2s infinite alternate; }
+        .loader-container { width: 100%; height: 16px; background: #111; border-radius: 6px; position: relative; overflow: hidden; border: 1px solid #444; box-shadow: 0 0 25px rgba(0,0,0,0.9); }
+        .loader-bar { height: 100%; width: 0%; background: var(--primary); box-shadow: 0 0 25px var(--primary); transition: width 0.1s linear; position: relative; } 
+        .loader-bar::after { content: ''; position: absolute; top: 0; left: 0; bottom: 0; right: 0; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.9), transparent); transform: translateX(-100%); animation: loadShimmer 1.5s infinite; }
+        .loader-text { margin-top: 20px; font-size: 14px; color: var(--primary); letter-spacing: 4px; text-transform: uppercase; font-weight: 900; text-shadow: 0 0 10px var(--primary-glow); margin-bottom: 20px; }
 
         @keyframes pulseLogo { 0% { transform: scale(1); opacity: 0.9; } 100% { transform: scale(1.05); opacity: 1; } }
         @keyframes loadShimmer { 100% { transform: translateX(100%); } }
-        @keyframes blinkText { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
 
         /* --- PARTÍCULAS --- */
-        #particleContainer {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 10001; 
-            pointer-events: none; overflow: hidden;
-            transition: z-index 0s linear 1s; 
-        }
-        
-        body.loaded #particleContainer {
-            z-index: -4;
-        }
-
-        .particle {
-            position: absolute; bottom: -10px;
-            background: rgba(255, 69, 0, 0.8);
-            border-radius: 50%;
-            box-shadow: 0 0 15px rgba(255, 69, 0, 0.6);
-            animation: rise linear forwards;
-            will-change: transform, opacity;
-        }
+        #particleContainer { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 10001; pointer-events: none; overflow: hidden; transition: z-index 0s linear 1s; }
+        body.loaded #particleContainer { z-index: -4; }
+        .particle { position: absolute; bottom: -10px; background: rgba(255, 69, 0, 0.8); border-radius: 50%; box-shadow: 0 0 15px rgba(255, 69, 0, 0.6); animation: rise linear forwards; will-change: transform, opacity; }
         .particle.orange { background: #ffaa00; }
         @keyframes rise { to { transform: translateY(-120vh); opacity: 0; } }
 
-        @media (prefers-reduced-motion: reduce) {
-            .particle, .profile-image-wrapper, .invert-fx, .dev-btn, .link-card:hover, .dj-card:hover, .faq-toggle, .share-btn:hover, .social-link, .social-icon, .social-svg, .progress-fill {
-                animation: none !important; transition: none !important; transform: none !important;
-            }
-            .invert-fx { transform: none !important; color: var(--primary) !important; }
-            .profile-image-wrapper { transform: none !important; }
-            .profile-image img { animation: none !important; }
-        }
+        .container { max-width: 680px; margin: 0 auto; padding: 0 15px; position: relative; z-index: 2; width: 100%; }
 
-        .container { 
-            max-width: 680px; 
-            margin: 0 auto; 
-            padding: 0 15px; 
-            position: relative; 
-            z-index: 2; 
-            width: 100%; 
-        }
-
-        /* HEADER */
-        .profile-section { 
-            text-align: center; 
-            margin-top: 50px; 
-            margin-bottom: 40px; 
-            animation: glitchIn 1s ease;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+        /* --- HEADER --- */
+        .profile-section { text-align: center; margin-top: 50px; margin-bottom: 40px; animation: glitchIn 1s ease; display: flex; flex-direction: column; align-items: center; }
         @keyframes glitchIn { 0% { opacity: 0; transform: translateY(-20px); } 100% { opacity: 1; transform: translateY(0); } }
-        
-        /* LOGO QUADRADO */
         .profile-image-wrapper { display: inline-block; animation: floatGlitch 5s ease-in-out infinite; }
         .profile-image { width: 120px; height: 120px; margin: 0 auto 15px; box-shadow: none; } 
-        .profile-image img { 
-            width: 100%; height: 100%; object-fit: cover; border-radius: 30px; 
-            filter: drop-shadow(0 0 15px rgba(255, 69, 0, 0.5)); 
-            animation: logoBreath 4s ease-in-out infinite; 
-        }
-
+        .profile-image img { width: 100%; height: 100%; object-fit: cover; border-radius: 30px; filter: drop-shadow(0 0 15px rgba(255, 69, 0, 0.5)); animation: logoBreath 4s ease-in-out infinite; }
         @keyframes floatGlitch { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
         @keyframes logoBreath { 50% { transform: scale(1.05); filter: drop-shadow(0 0 30px rgba(255, 69, 0, 0.8)); } }
-
         .invert-fx { display: inline-block; animation: mirrorFlicker 4s infinite steps(1); }
-        @keyframes mirrorFlicker {
-            0%, 45%, 55%, 100% { transform: scaleX(1); color: var(--primary); }
-            46% { transform: scaleX(-1); color: var(--text-light); }
-            48% { transform: scaleX(1); color: var(--primary); }
-            50% { transform: scaleX(-1); color: var(--text-light); }
-            52% { transform: scaleX(1); color: var(--primary); }
-        }
+        @keyframes mirrorFlicker { 0%, 45%, 55%, 100% { transform: scaleX(1); color: var(--primary); } 46% { transform: scaleX(-1); color: var(--text-light); } 48% { transform: scaleX(1); color: var(--primary); } 50% { transform: scaleX(-1); color: var(--text-light); } 52% { transform: scaleX(1); color: var(--primary); } }
 
-        /* COUNTDOWN */
+        /* --- ÁREA DO COUNTDOWN --- */
         .event-countdown {
             background: rgba(0, 0, 0, 0.85); border: 2px solid var(--primary); border-radius: 20px;
-            padding: 30px 20px 20px; margin-bottom: 40px; 
-            box-shadow: 0 0 40px rgba(255, 69, 0, 0.25);
-            position: relative; overflow: hidden;
-            animation: borderPulse 3s infinite alternate;
-            width: 100%;
-            /* Ajuste de largura e centralização para Desktop (dentro do .container) */
-            margin-left: 0;
-            margin-right: 0;
+            padding: 30px 20px 20px; margin-bottom: 40px; margin-top: 40px;
+            box-shadow: 0 0 40px rgba(255, 69, 0, 0.25); text-align: center; width: 100%;
         }
-        @keyframes borderPulse { from { border-color: var(--primary); box-shadow: 0 0 20px rgba(255,69,0,0.2); } to { border-color: #ff8800; box-shadow: 0 0 40px rgba(255,69,0,0.5); } }
-        
-        .event-title { font-size: 18px; color: var(--primary); font-weight: 900; text-transform: uppercase; margin-bottom: 10px; text-align: center; letter-spacing: 2px; width: 100%; }
-        
-        /* DATA DO EVENTO */
-        .event-date { 
-            font-size: 12px; 
-            color: var(--text-dim); 
-            margin-bottom: 25px; 
-            text-align: center; 
-            display: block; 
-            font-weight: 700; 
-            width: 100%; 
-            line-height: 1.8; 
+        .event-title { 
+            font-size: 18px; color: #fff; font-weight: 900; margin-bottom: 5px; 
+            text-transform: uppercase; letter-spacing: 2px; width: 100%; 
+            text-shadow: 0 0 25px var(--primary);
         }
-        .event-date .location-name {
-            display: block; 
-            color: #fff; 
-            text-transform: uppercase;
-            letter-spacing: 1px;
+        .section-title, .newsletter-title {
+             text-shadow: 0 0 25px var(--primary);
         }
 
-        .countdown-timer { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 20px; }
-        
-        .time-unit { 
-            background: rgba(10, 5, 0, 0.9); border: 1px solid var(--primary); 
-            padding: 10px 5px; border-radius: 12px; width: 70px;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            aspect-ratio: 1/1;
+        .event-date { font-size: 12px; color: var(--text-dim); margin-bottom: 15px; text-align: center; display: block; font-weight: 700; width: 100%; line-height: 1.8; }
+        .event-date .location-name { display: block; color: #fff; text-transform: uppercase; letter-spacing: 1px; }
+
+        .calendar-btn {
+            display: inline-block; background: rgba(255,255,255,0.1); color: #fff;
+            padding: 8px 16px; border-radius: 15px; font-size: 10px; font-weight: 700;
+            text-decoration: none; border: 1px solid rgba(255,255,255,0.2);
+            margin: 0;
+            transition: all 0.3s;
         }
+        .calendar-btn:hover { background: var(--primary); border-color: var(--primary); color: #000; }
+
+        /* === DESIGN 1: PRÉ-EVENTO === */
+        #pre-event-layout { display: block; width: 100%; }
+
+        .countdown-timer { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 20px; }
+        .time-unit { background: rgba(10, 5, 0, 0.9); border: 1px solid var(--primary); padding: 10px 5px; border-radius: 12px; width: 70px; aspect-ratio: 1/1; display: flex; flex-direction: column; align-items: center; justify-content: center; }
         .time-value { display: block; font-size: 22px; font-weight: 900; color: var(--primary); line-height: 1; }
         .time-label { display: block; font-size: 8px; color: var(--text-dim); text-transform: uppercase; margin-top: 5px; font-weight: 700; }
 
-        /* BARRA DE ESCASSEZ */
         .lot-status-container {
-            width: 100%; max-width: 100%; margin: 30px auto 20px; 
+            width: 100%; max-width: 100%; margin: 30px auto 10px; 
             text-align: left; background: rgba(0, 0, 0, 0.5); padding: 15px; 
             border-radius: 12px; border: 1px solid rgba(255, 69, 0, 0.2);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
         }
-        .lot-header {
-            display: flex; justify-content: space-between; align-items: center;
-            margin-bottom: 8px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
-        }
-        
-        /* ESTILO DO LOTE SIMPLIFICADO */
-        .lot-info-col {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            gap: 5px;
-        }
-        /* Lote em destaque (maior) */
-        .lot-value-text { font-size: 12px; color: #fff; font-weight: 900; text-shadow: 0 0 8px var(--primary); margin-right: 10px; }
-        .lot-price-text { font-size: 12px; color: var(--primary); font-weight: 900; text-shadow: 0 0 8px var(--primary); }
-
+        .lot-header { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 8px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+        .lot-price-text { font-size: 14px; color: var(--primary); font-weight: 900; text-shadow: 0 0 8px var(--primary); }
         .lot-warning { color: #ff0000; font-weight: 900; animation: blink 1s infinite; }
+        .progress-track { width: 100%; height: 16px; background: rgba(255, 255, 255, 0.1); border-radius: 20px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.2); }
+        .progress-fill { width: 30%; height: 100%; background: linear-gradient(90deg, var(--primary), #ff0000); box-shadow: 0 0 20px var(--primary); border-radius: 20px; position: relative; transition: width 1s ease-out; }
+        .progress-fill::after { content: ''; position: absolute; top: 0; left: 0; bottom: 0; right: 0; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.9), transparent); transform: translateX(-100%); animation: shimmer 1.5s infinite; }
+        .lot-footer { text-align: center; font-size: 9px; color: #ccc; margin-top: 8px; letter-spacing: 2px; opacity: 0.9; font-weight: 700; }
 
-        .progress-track {
-            width: 100%; height: 16px; background: rgba(255, 255, 255, 0.1);
-            border-radius: 20px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.2);
+        /* === DESIGN 2: PÓS-EVENTO === */
+        #post-event-layout { display: none; width: 100%; }
+
+        .event-live-box {
+            background: linear-gradient(135deg, rgba(20, 0, 0, 0.95), rgba(60, 10, 0, 0.9));
+            border: 2px solid var(--primary); border-radius: 16px; padding: 30px 15px; 
+            margin: 20px auto; width: 100%; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; text-align: center; gap: 20px; 
+            animation: pulseLive 2s infinite alternate;
+            box-shadow: 0 0 30px rgba(255, 79, 23, 0.4), inset 0 0 30px rgba(255, 79, 23, 0.2);
         }
-        .progress-fill {
-            width: 87%; height: 100%;
-            background: linear-gradient(90deg, var(--primary), #ff0000);
-            box-shadow: 0 0 20px var(--primary); border-radius: 20px;
-            position: relative; animation: loadBar 2s ease-out forwards;
+
+        @keyframes pulseLive {
+            from { border-color: var(--primary); box-shadow: 0 0 30px rgba(255, 79, 23, 0.4), inset 0 0 20px rgba(255, 79, 23, 0.2); }
+            to { border-color: #ff1a1a; box-shadow: 0 0 50px rgba(255, 20, 20, 0.7), inset 0 0 40px rgba(255, 20, 20, 0.4); }
         }
-        .progress-fill::after {
-            content: ''; position: absolute; top: 0; left: 0; bottom: 0; right: 0;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.9), transparent);
-            transform: translateX(-100%); animation: shimmer 1.5s infinite;
+
+        .live-title { font-size: 20px; color: #fff; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; text-shadow: 0 0 10px rgba(255,255,255,0.5); line-height: 1.2; }
+        .live-subtitle { font-size: 12px; color: var(--text-dim); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
+        .live-price { font-size: 36px; color: var(--primary); font-weight: 900; text-shadow: 0 0 20px var(--primary); line-height: 1; }
+
+        .countdown-cta-group { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 15px; margin-top: 15px; width: 100%; }
+
+        .btn-whatsapp-countdown {
+            width: auto; min-width: 200px; max-width: 240px; padding: 10px 20px;
+            border-radius: 50px; text-decoration: none; display: flex; align-items: center;
+            justify-content: center; gap: 10px; position: relative; overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(5px); background: rgba(37, 211, 102, 0.1); 
+            border: 1px solid var(--whatsapp-green); box-shadow: 0 0 15px rgba(37, 211, 102, 0.2);
         }
-        .lot-footer {
-            text-align: center; font-size: 9px; color: #ccc; margin-top: 8px;
-            letter-spacing: 2px; opacity: 0.9; font-weight: 700;
-        }
-        @keyframes loadBar { from { width: 0; } to { width: 87%; } }
+
+        .btn-whatsapp-countdown:hover { background: var(--whatsapp-green); box-shadow: 0 0 30px var(--whatsapp-green); transform: translateY(-3px); border-color: #fff; }
+        .btn-text { display: flex; flex-direction: column; align-items: flex-start; line-height: 1.2; }
+        .btn-title { font-size: 13px; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; color: #fff; }
+        .btn-sub { font-size: 9px; font-weight: 600; opacity: 0.9; text-transform: uppercase; color: #fff; }
+        .btn-icon { width: 20px; height: 20px; fill: #fff; transition: transform 0.3s ease; }
+        
+        .btn-whatsapp-countdown:hover .btn-title, .btn-whatsapp-countdown:hover .btn-sub { color: #000; }
+        .btn-whatsapp-countdown:hover .btn-icon { fill: #000; transform: scale(1.1); }
+
+        .share-btn { display: none; }
         @keyframes shimmer { 100% { transform: translateX(100%); } }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
 
-        /* BOTÃO COMPARTILHAR - AJUSTADO PARA CENTRALIZAÇÃO */
-        .share-btn {
-            background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px); color: #fff; padding: 10px 24px; border-radius: 8px;
-            font-size: 11px; cursor: pointer; text-transform: uppercase; font-weight: 700;
-            letter-spacing: 1px; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            margin-top: 8px; 
-            display: flex; /* Mantém o ícone e texto alinhados */
-            margin-left: auto; /* Centraliza */
-            margin-right: auto; /* Centraliza */
-            width: fit-content; /* Permite que o margin: auto funcione */
-            align-items: center; 
-            gap: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-        }
-        .share-btn svg { width: 16px; height: 16px; fill: #fff; transition: transform 0.3s ease; }
-        .share-btn:hover { 
-            background: rgba(255, 69, 0, 0.15); border-color: var(--primary);
-            box-shadow: 0 0 15px rgba(255, 69, 0, 0.4); transform: translateY(-3px) scale(1.02);
-        }
-        .share-btn:hover svg { transform: translate(3px, -3px); }
-
-        /* LINKS */
-        .links { display: flex; flex-direction: column; gap: 15px; margin: 30px 0; width: 100%; }
+        .links { display: flex; flex-direction: column; gap: 15px; margin: 0; width: 100%; }
+        
         .link-card {
             background: rgba(5, 5, 5, 0.8); border: 1px solid rgba(255, 69, 0, 0.5);
-            padding: 25px 20px; border-radius: 16px; text-decoration: none; color: var(--text-light);
-            display: flex; align-items: center; gap: 20px; transition: all 0.3s ease; position: relative;
-            width: 100%; box-sizing: border-box;
-        }
-
-        @media (hover: hover) {
-            .link-card:hover {
-                background: var(--bg-black); border-color: var(--primary);
-                box-shadow: 0 0 25px rgba(255, 69, 0, 0.6), inset 0 0 15px rgba(255, 69, 0, 0.3);
-                z-index: 10; transform: scale(1.02);
-            }
-            .link-card:hover .link-icon { background: var(--primary); box-shadow: 0 0 25px var(--primary); transform: rotate(-5deg); }
-            .link-card:hover .link-arrow { transform: translateX(5px) scale(1.2); color: var(--text-light); text-shadow: 0 0 10px var(--text-light); }
-            .dj-card:hover { border-color: var(--text-light); transform: translateY(-5px); box-shadow: 0 10px 20px rgba(255, 69, 0, 0.2); background: rgba(0,0,0,0.8); z-index: 5; }
+            padding: 25px 20px; border-radius: 16px; text-decoration: none; 
+            color: var(--text-light); display: flex; align-items: center; gap: 20px; 
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative; width: 100%; box-sizing: border-box;
         }
         
-        /* ✨ EFEITO TOUCH/ACTIVE PARA TODOS OS BOTÕES E LINKS (Simula o hover em mobile) */
-        .link-card:active,
-        .share-btn:active,
-        .play-btn:active,
-        .map-button:active,
-        .contact-btn:active,
-        .contest-btn:active,
-        .newsletter-button:active,
-        .contest-cta-link:active, /* Adicionado */
-        .contest-play-btn:active { /* Adicionado */
-            /* Simula o toque encolhendo levemente */
-            transform: scale(0.98) !important; 
-            /* Adiciona o brilho laranja/branco */
-            box-shadow: 0 0 15px rgba(255, 69, 0, 0.8), inset 0 0 5px rgba(255, 255, 255, 0.2) !important;
-        }
-
-        /* Garante que o :active no link-card prevaleça sobre o :hover do desktop se o toque for rápido */
-        .link-card:active { 
-            background: var(--bg-black) !important; 
-            border-color: var(--primary) !important;
-            z-index: 10; 
-        }
-
-        .link-icon {
-            width: 55px; height: 55px; background: var(--bg-black); border-radius: 12px;
-            display: flex; align-items: center; justify-content: center; border: 1px solid var(--primary);
-            box-shadow: 0 0 15px rgba(255, 69, 0, 0.3); flex-shrink: 0; transition: 0.3s;
-        }
+        .link-card:hover { background: rgba(20, 10, 5, 0.95); border-color: var(--primary); box-shadow: 0 0 20px rgba(255, 79, 23, 0.3), inset 0 0 15px rgba(255, 79, 23, 0.1); transform: translateY(-3px) scale(1.02); z-index: 2; }
+        .link-card:active { background: var(--bg-black) !important; border-color: var(--primary) !important; z-index: 10; transform: scale(0.98); }
+        
+        .link-icon { width: 55px; height: 55px; background: var(--bg-black); border-radius: 12px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--primary); box-shadow: 0 0 15px rgba(255, 69, 0, 0.3); flex-shrink: 0; transition: 0.3s; }
+        .link-card:hover .link-icon { background: var(--primary); border-color: var(--primary); transform: scale(1.1) rotate(5deg); }
         .link-icon img, .link-icon svg { width: 60%; height: 60%; object-fit: contain; }
         .link-icon.sympla img { width: 90%; }
-        .link-icon.talent img { width: 95%; } /* <-- AQUI O AJUSTE PARA O ÍCONE TALENTO */
+        .link-icon.talent img { width: 95%; } 
         .link-icon.whatsapp img { width: 85%; }
         .link-icon.nexus img { width: 75%; }
         .link-icon.course svg { width: 60%; }
-        
-        /* TIKTOK ICON AJUSTADO (MAIOR) */
         .link-icon.tiktok-img img { width: 80%; height: 80%; }
-
-        .link-content { flex: 1; }
+        
+        .link-content { flex: 1; min-width: 0; }
         .link-title { font-size: 15px; font-weight: 900; margin-bottom: 5px; text-transform: uppercase; line-height: 1.2; white-space: normal; }
         .link-description { font-size: 11px; color: var(--text-dim); line-height: 1.3; white-space: normal; }
         .link-arrow { font-size: 24px; color: var(--primary); transition: 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55); }
+        .link-card:hover .link-arrow { transform: translateX(5px); text-shadow: 0 0 5px var(--primary); }
 
-        .section-title {
-            font-size: 24px; color: var(--primary); font-weight: 900; text-transform: uppercase;
-            letter-spacing: 2px; text-align: center; margin: 60px 0 30px; text-shadow: 0 0 20px rgba(255, 69, 0, 0.6);
-        }
-        
+        /* --- LINEUP --- */
+        .section-title { font-size: 24px; color: #fff; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; text-align: center; margin: 60px 0 30px; }
         .lineup-title-txt { font-size: 28px; letter-spacing: 1px; }
-
+        
         .lineup-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 50px; width: 100%; }
-        /* ✅ AJUSTE DE ESPAÇAMENTO DO LINE-UP */
+        @media (min-width: 601px) { .lineup-grid .dj-card:nth-child(7) { grid-column: 2; } }
         #lineup { margin-top: 40px; margin-bottom: 40px;} 
-
-        /* --- ANIMAÇÃO DE PULSAÇÃO DA FOTO (DJ VIBE) --- */
-        @keyframes audio-pulse {
-            0% { transform: scale(1.0); box-shadow: 0 0 10px rgba(255, 69, 0, 0.4); }
-            50% { transform: scale(1.02); box-shadow: 0 0 25px var(--primary); }
-            100% { transform: scale(1.0); box-shadow: 0 0 10px rgba(255, 69, 0, 0.4); }
-        }
-        .dj-card.contest-player-card .dj-photo.is-playing-green {
-            animation: audio-pulse-green 1s infinite alternate;
-        }
-        @keyframes audio-pulse-green {
-            0% { transform: scale(1.0); box-shadow: 0 0 10px rgba(0, 255, 0, 0.4); }
-            50% { transform: scale(1.02); box-shadow: 0 0 25px #00ff00; }
-            100% { transform: scale(1.0); box-shadow: 0 0 10px rgba(0, 255, 0, 0.4); }
-        }
-
-
-        .dj-card {
-            background: rgba(0, 0, 0, 0.6); border: 1px solid rgba(255, 69, 0, 0.3);
-            border-radius: 12px; padding: 15px 10px; text-align: center;
-            position: relative; overflow: hidden; transition: 0.3s;
-            width: 100%; box-sizing: border-box;
-            display: flex; flex-direction: column; 
+        
+        /* ✅ CARDS COM EFEITOS CYBER-REACTIVE */
+        .dj-card { 
+            background: rgba(0, 0, 0, 0.6); 
+            border: 1px solid rgba(255, 69, 0, 0.3); 
+            border-radius: 12px; 
+            padding: 15px 10px; 
+            text-align: center; 
+            position: relative; 
+            overflow: hidden; 
+            width: 100%; 
+            box-sizing: border-box; 
+            display: flex; 
+            flex-direction: column; 
+            align-self: start; 
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         
-        .dj-card.contest-player-card {
-            display: none; 
+        .dj-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: var(--primary);
+            background: rgba(15, 5, 0, 0.95);
+            box-shadow: 0 10px 30px rgba(255, 79, 23, 0.4), inset 0 0 15px rgba(255, 79, 23, 0.1);
+            z-index: 10;
         }
 
-        /* DJ PHOTO */
         .dj-photo { 
             display: block !important; 
             width: 100%; 
@@ -479,390 +323,311 @@
             overflow: hidden; 
             position: relative; 
             flex-shrink: 0; 
-            transition: all 0.4s ease-in-out;
+            transition: all 0.4s ease-in-out; 
             box-shadow: 0 0 10px rgba(255, 69, 0, 0.4); 
         }
         
-        /* EFEITO ATIVO */
-        .dj-photo.is-playing {
-            animation: audio-pulse 1s infinite alternate;
+        /* ✅ ANIMAÇÃO DE "BALANÇAR" RESTAURADA (Kick + Shake) */
+        .dj-photo.is-playing { 
+            animation: audio-beat 0.45s infinite alternate ease-in-out !important; 
+            border-color: #fff;
+            box-shadow: 0 0 25px var(--primary);
         }
 
-        .dj-photo img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(20%); transition: 0.3s; }
-        .dj-name { font-size: 16px; font-weight: 900; color: var(--text-light); text-transform: uppercase; margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        @keyframes audio-beat {
+            0% { transform: scale(1) rotate(0deg); box-shadow: 0 0 10px rgba(255, 69, 0, 0.4); } 
+            100% { transform: scale(1.05) rotate(1.5deg); box-shadow: 0 0 35px var(--primary), 0 0 10px #fff; border-color: var(--primary); }
+        }
+
+        .dj-card:hover .dj-photo {
+            border-color: #fff;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+            transform: scale(1.02);
+        }
+
+        .dj-photo img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            filter: grayscale(20%); 
+            transition: 0.4s ease-out; 
+        }
+
+        .dj-card:hover .dj-photo img {
+            transform: scale(1.15) rotate(2deg);
+            filter: grayscale(0%) brightness(1.1) contrast(1.1);
+        }
+
+        .dj-name { 
+            font-size: 16px; 
+            font-weight: 900; 
+            color: #fff; 
+            text-transform: uppercase; 
+            margin-bottom: 3px; 
+            white-space: nowrap; 
+            overflow: hidden; 
+            text-overflow: ellipsis; 
+            transition: color 0.3s;
+        }
+        
+        .dj-card:hover .dj-name {
+            color: var(--primary);
+            text-shadow: 0 0 10px var(--primary);
+        }
+
         .dj-instagram { font-size: 9px; color: var(--text-dim); margin-bottom: 8px; cursor: pointer; }
+        
         .dj-card.headliner { background: linear-gradient(180deg, rgba(255,69,0,0.1), rgba(0,0,0,0.9)); border: 1px solid var(--primary); box-shadow: 0 0 15px rgba(255, 69, 0, 0.2); }
         .dj-card.headliner .dj-name { font-size: 18px; text-shadow: 0 0 5px var(--primary); }
-        .dj-card.contest-card { display: none; }
-        .contest-info { font-size: 10px; color: var(--text-dim); margin-top: 5px; margin-bottom: 10px; }
-        .contest-btn {
-            background: var(--primary); color: var(--bg-black); border: none; padding: 8px 20px; border-radius: 20px; font-weight: 900; font-size: 11px; cursor: pointer; text-decoration: none; animation: pulse 2s infinite; display: inline-block;
-        }
-        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
-
-        .play-btn {
+        
+        .play-btn { 
             background: rgba(255, 69, 0, 0.2); 
-            border: 1px solid var(--primary);
-            color: #fff;
-            border-radius: 20px;
-            min-width: 50px;
+            border: 1px solid var(--primary); 
+            color: #fff; 
+            border-radius: 20px; 
+            min-width: 50px; 
             height: 36px; 
             font-size: 11px; 
-            cursor: pointer;
-            display: flex; align-items: center; justify-content: center; margin: 5px auto 0; 
-            transition: all 0.2s ease;
-            box-shadow: 0 0 10px rgba(255,69,0,0.3);
-            padding: 0 10px;
-            font-family: monospace;
-            font-weight: 700;
+            cursor: pointer; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            margin: 5px auto 12px; 
+            transition: all 0.2s ease; 
+            box-shadow: 0 0 10px rgba(255,69,0,0.3); 
+            padding: 0 10px; 
+            font-family: monospace; 
+            font-weight: 700; 
+            position: relative;
         }
+        .play-btn::before { content: ''; position: absolute; top: -10px; bottom: -10px; left: -10px; right: -10px; }
+
         .play-btn:hover { background: var(--primary); color: #000; transform: scale(1.05); }
         .play-btn.playing { background: rgba(0, 255, 0, 0.2); border-color: #00ff00; color: #00ff00; box-shadow: 0 0 15px rgba(0,255,0,0.4); }
         .play-btn.error { background: #ff0000 !important; color: var(--text-light); } 
 
-        /* ✅ CORREÇÃO ALINHAMENTO: Garante que todas as seções tenham 100% da largura do container (Desktop) */
-        .location-section, .about-content, .faq-section, .newsletter-section { 
-            background: rgba(0, 0, 0, 0.8); border: 2px solid rgba(255, 69, 0, 0.4); border-radius: 18px; 
-            padding: 20px; 
+        .audio-progress-container { 
             width: 100%; 
-            box-sizing: border-box; 
-            margin-bottom: 30px;
-            margin-left: 0;
-            margin-right: 0;
+            height: 4px; 
+            background: rgba(255,255,255,0.1); 
+            margin-top: 5px; 
+            border-radius: 2px; 
+            overflow: hidden; 
         }
-        .faq-section, .newsletter-section { border-color: var(--primary); }
+        .audio-progress { height: 100%; width: 0%; background: var(--primary); transition: width 0.1s linear; }
+
+        .std-box { background: rgba(0, 0, 0, 0.8); border: 2px solid var(--primary); border-radius: 18px; padding: 0; width: 100%; box-sizing: border-box; margin-bottom: 30px; overflow: hidden; }
         
-        /* NOVO: DESTAQUE FAQ */
-        .faq-highlight {
-            border-color: var(--neon-green) !important;
-            box-shadow: 0 0 15px rgba(0, 255, 0, 0.4) !important;
-            background: rgba(0, 255, 0, 0.05) !important;
-        }
-        .faq-highlight .faq-question {
-            color: var(--neon-green);
-        }
-        .faq-highlight .faq-toggle {
-            color: var(--neon-green);
-            text-shadow: 0 0 5px rgba(0, 255, 0, 0.8);
-        }
-
-        /* INFO ITEM COM EFEITO HOVER NEON */
-        .info-item { 
-            display: flex; align-items: flex-start; gap: 12px; padding: 10px; margin-bottom: 10px; 
-            background: rgba(255, 255, 255, 0.05); border-radius: 8px; 
-            border: 1px solid transparent; transition: all 0.3s ease;
-        }
-        .info-item:hover, .info-item:active {
-            border-color: var(--primary);
-            box-shadow: 0 0 15px rgba(255, 69, 0, 0.2);
-            transform: translateX(5px);
-        }
-
-        .info-icon { font-size: 18px; }
-        .info-label { font-size: 11px; color: var(--primary); font-weight: 800; margin-bottom: 4px; }
-        .info-text { font-size: 14px; color: #fff; }
-        
-        .map-button { display: block; background: var(--primary); color: var(--bg-black); padding: 12px; border-radius: 10px; text-decoration: none; font-weight: 900; text-align: center; font-size: 12px; margin-bottom: 10px; }
-        
-        /* BOTOES DE CONTATO */
-        .contact-buttons { display: flex; gap: 10px; width: 100%; margin-bottom: 20px; }
-        .contact-btn {
-            flex: 1;
-            padding: 12px;
-            border-radius: 10px;
-            text-decoration: none;
-            font-weight: 900;
-            font-size: 12px;
-            text-align: center;
-            display: flex; justify-content: center; align-items: center; gap: 8px;
-            color: #000;
-            transition: transform 0.2s ease;
-        }
-        .contact-btn:hover { transform: translateY(-2px); }
-        .contact-btn.whatsapp { background: #25D366; border: 1px solid #25D366; }
-        .contact-btn.email { background: #fff; border: 1px solid #ccc; }
-        .contact-btn svg { width: 16px; height: 16px; fill: #000; }
-
-        .map-container { margin-top: 0px; border-radius: 12px; overflow: hidden; height: 250px; background: #111; }
-        .map-container iframe { width: 100%; height: 100%; border: none; filter: grayscale(100%) contrast(1.2); }
-
-        /* SOBRE O EVENTO - AJUSTADO COM NOVAS CORES E FONTES */
-        .about-content { padding: 15px 25px 25px; text-align: center; } 
-        .about-text { 
-            font-size: 14px; 
-            line-height: 1.7; 
-            text-align: justify; 
-            color: var(--text-paragraph); /* Cor Cinza Quase Branco */
-        }
-        .about-text-center { text-align: center; display: block; margin-bottom: 10px; }
-        .c-org { color: var(--primary); font-weight: 900; text-transform: uppercase; }
-        .c-wht { color: var(--text-paragraph); font-weight: 400; } /* Ajustado para Cinza Quase Branco */
-
-        .faq-section { padding: 10px 20px 25px; box-shadow: none; } 
-        .faq-title { 
-            font-size: 18px; 
-            color: var(--primary); 
+        .std-header { 
+            background: var(--primary); 
+            color: #000; 
             font-weight: 900; 
             text-align: center; 
-            margin-bottom: 30px; /* Aumentado o espaçamento */
-            margin-top: 5px; 
+            margin: 0; 
+            padding: 20px 10px; 
+            font-size: 20px; 
+            letter-spacing: 2px; 
+            text-transform: uppercase; 
+            width: 100%; 
+            display: block; 
+            text-shadow: 0px 0px 5px rgba(255, 255, 255, 0.5); 
+            border-bottom: 2px solid #000;
         }
-        .faq-list { 
-            display: flex; 
-            flex-direction: column; 
-            gap: 20px; /* Aumentado o espaçamento entre os itens */
+        
+        .std-content { padding: 20px; }
+
+        .about-section-box, .location-section-box, .faq-section-box { background: rgba(0, 0, 0, 0.8); border: 2px solid var(--primary); border-radius: 18px; padding: 0; margin-bottom: 30px; overflow: hidden; }
+        
+        /* ✅ AJUSTE DA SEÇÃO SOBRE (ESPAÇAMENTO AUMENTADO E FONTE REDUZIDA) */
+        .about-brand-title {
+            font-size: 24px; 
+            font-weight: 900;
+            color: #fff;
+            text-align: center;
+            margin: 0 0 50px 0; 
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.4); 
+            line-height: 1;
         }
-        .faq-item { background: rgba(255, 255, 255, 0.03); border-bottom: 1px solid rgba(255,69,0,0.2); border-radius: 8px; margin-bottom: 8px; overflow: hidden; transition: all 0.3s ease; border: 1px solid transparent; }
-        .faq-item:hover, .faq-item:active { border-color: var(--primary); box-shadow: 0 0 10px rgba(255, 69, 0, 0.3); background: rgba(255, 69, 0, 0.05); }
-        .faq-question { padding: 15px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-weight: 700; font-size: 14px; }
+
+        .about-section-box .std-content {
+            padding-top: 25px !important; 
+        }
+
+        .channels-section-noborder { background: transparent; border: none; padding: 0; margin-bottom: 30px; overflow: visible; }
+        .channels-section-noborder .std-header { border-radius: 18px; margin-bottom: 20px; box-shadow: 0 0 15px rgba(255, 69, 0, 0.2); }
+        
+        .about-text { font-size: 14px; line-height: 1.7; text-align: justify; color: var(--text-paragraph); }
+        .c-org { color: var(--primary); font-weight: 700; text-shadow: 0 0 5px rgba(255, 79, 23, 0.5); }
+        
+        .manifesto-text { 
+            font-weight: 400; 
+            font-size: 14px !important; 
+            color: var(--text-paragraph); 
+            text-transform: none; 
+            display: block;
+            text-align: justify; 
+            margin-top: 15px; 
+            border-left: 3px solid var(--primary); 
+            padding-left: 10px;
+        }
+        
+        .faq-list { display: flex; flex-direction: column; padding: 15px 20px 25px; gap: 10px; }
+        .faq-item { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 69, 0, 0.3); border-radius: 8px; margin-bottom: 0; overflow: hidden; transition: all 0.3s ease; }
+        .faq-item:hover, .faq-item:active, .faq-item.active { background: rgba(255, 69, 0, 0.08); border-color: var(--primary); box-shadow: 0 0 10px rgba(255, 69, 0, 0.2); }
+        
+        .faq-question { padding: 15px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-weight: 700; font-size: 14px; color: #fff; text-shadow: 0 0 2px rgba(0,0,0,0.5); }
         .faq-toggle { color: var(--primary); font-weight: 900; font-size: 18px; transition: transform 0.3s ease; }
         .faq-item.active .faq-toggle { transform: rotate(45deg); }
         .faq-answer { max-height: 0; overflow: hidden; transition: 0.3s; padding: 0 15px; font-size: 13px; color: var(--text-dim); line-height: 1.5; }
         .faq-item.active .faq-answer { max-height: 300px; padding: 0 15px 15px 15px; }
-
-        /* NEWSLETTER MOBILE FIXED */
-        .newsletter-section { 
-            padding: 15px 25px 25px; 
-            margin: 40px auto 30px; 
-            text-align: center; 
-            box-shadow: none; 
-            max-width: 100%; 
-            box-sizing: border-box; 
-            margin-left: 0;
-            margin-right: 0;
+        .faq-highlight .faq-question { color: #fff; }
+        
+        .faq-answer a, .faq-map-btn { 
+            display: inline-block !important; 
+            margin-top: 10px; 
+            background: var(--primary) !important; 
+            color: #000 !important; 
+            padding: 8px 15px; 
+            border-radius: 5px; 
+            text-decoration: none; 
+            font-weight: 900; 
+            font-size: 11px; 
+            text-transform: uppercase; 
+            transition: transform 0.2s; 
+            box-shadow: 0 0 10px rgba(255, 69, 0, 0.4);
+            border: 1px solid var(--primary);
+        }
+        .faq-answer a:hover, .faq-map-btn:hover { 
+            transform: scale(1.05); 
+            background: #fff !important;
         }
 
-        .newsletter-title { font-size: 18px; color: var(--primary); font-weight: 900; margin-bottom: 5px; margin-top: 0; }
+        .info-item { display: flex; align-items: flex-start; gap: 12px; padding: 10px; margin-bottom: 10px; background: rgba(255, 255, 255, 0.05); border-radius: 8px; border: 1px solid transparent; transition: all 0.3s ease; }
+        .info-item:hover, .info-item:active { border-color: var(--primary); box-shadow: 0 0 15px rgba(255, 69, 0, 0.2); transform: translateX(5px); }
+        .info-icon { font-size: 18px; }
+        .info-label { font-size: 11px; color: var(--primary); font-weight: 800; margin-bottom: 4px; }
+        .info-text { font-size: 14px; color: #fff; }
+        
+        .map-container { margin-top: 0px; border-radius: 12px; overflow: hidden; height: 250px; background: #111; margin-top: 20px; }
+        .map-container iframe { width: 100%; height: 100%; border: none; filter: grayscale(100%) invert(90%) contrast(85%); }
+        
+        .map-button { 
+            display: block; background: var(--primary); color: var(--bg-black); 
+            padding: 14px; border-radius: 12px; text-decoration: none; 
+            font-weight: 900; text-align: center; font-size: 13px; 
+            margin-bottom: 15px; margin-top: 15px; 
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            border: 1px solid var(--primary);
+        }
+        .map-button:hover { 
+            transform: translateY(-3px); box-shadow: 0 10px 20px rgba(255, 79, 23, 0.3); 
+            filter: brightness(1.1);
+        }
+
+        .contact-buttons { display: flex; gap: 12px; width: 100%; margin-bottom: 0; }
+        .contact-btn { flex: 1; padding: 12px; border-radius: 12px; text-decoration: none; font-weight: 900; font-size: 12px; text-align: center; display: flex; justify-content: center; align-items: center; gap: 8px; color: #000; transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); position: relative; overflow: hidden; }
+        .contact-btn:hover { transform: translateY(-4px) scale(1.02); }
+        .contact-btn.whatsapp { background: #25D366; border: 1px solid #25D366; color: #000; }
+        .contact-btn.whatsapp:hover { box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4); }
+        .contact-btn.email { background: #e0e0e0; border: 1px solid #ccc; color: #000; }
+        .contact-btn.email:hover { background: #fff; box-shadow: 0 10px 25px rgba(255, 255, 255, 0.3); }
+        .contact-btn svg { width: 18px; height: 18px; fill: currentColor; }
+
+        @keyframes techno-beat {
+            0% { transform: scale(1); box-shadow: 0 0 15px rgba(255, 79, 23, 0.3); border-color: var(--primary); }
+            10% { transform: scale(1.015); box-shadow: 0 0 40px rgba(255, 79, 23, 0.8); border-color: #ffaa00; }
+            20% { transform: scale(1); box-shadow: 0 0 25px rgba(255, 79, 23, 0.5); border-color: var(--primary); }
+            100% { transform: scale(1); box-shadow: 0 0 15px rgba(255, 79, 23, 0.3); border-color: var(--primary); }
+        }
+
+        /* ✅ AJUSTE DE PADDING E ALINHAMENTO DO CONTEST CARD */
+        .contest-cta-card { background: rgba(0, 0, 0, 0.8); border: 2px solid var(--primary); border-radius: 12px; padding: 25px 25px; margin: 20px auto 40px; box-shadow: 0 0 25px rgba(255, 79, 23, 0.4); text-align: center; transition: all 0.3s ease; width: 100%; max-width: 500px; height: auto; display: flex; flex-direction: column; align-items: center; justify-content: center; animation: techno-beat 0.45s infinite ease-out; }
+        .contest-cta-card:hover, .contest-cta-card:active { transform: translateY(-3px) scale(1.01); box-shadow: 0 0 35px rgba(255, 79, 23, 0.6); background: rgba(0, 0, 0, 0.9); }
+        
+        .contest-cta-title { font-size: clamp(1rem, 2.5vw, 1.2rem); font-weight: 900; color: var(--primary); text-shadow: 0 0 8px rgba(255, 79, 23, 0.7); text-transform: uppercase; margin-bottom: 20px; animation: contest-title-blink 4s infinite; }
+        
+        /* Subtítulo removido via HTML */
+        
+        .contest-deadline { display: block; width: fit-content; margin: 0 auto 20px auto; font-size: clamp(10px, 3.5vw, 14px); white-space: nowrap; overflow: hidden; color: var(--primary); font-weight: 900; text-transform: uppercase; text-shadow: 0 0 8px var(--primary); letter-spacing: 1px; background: rgba(255, 79, 23, 0.1); padding: 5px 10px; border-radius: 4px; border: 1px solid rgba(255, 79, 23, 0.3); animation: pulse 3s infinite alternate; }
+        
+        @keyframes pulse { from { transform: scale(1); } to { transform: scale(1.02); } }
+        
+        @keyframes wiggle { 0%, 100% { transform: rotate(-3deg) scale(1); } 50% { transform: rotate(3deg) scale(1.05); } }
+        .contest-cta-link { display: inline-block; background: var(--primary); color: var(--bg-black); padding: 8px 20px; border-radius: 30px; font-weight: 900; font-size: 12px; text-decoration: none; transition: all 0.2s ease; border: 2px solid var(--primary); animation: none; }
+        .contest-cta-link:hover, .contest-cta-link:active { background: var(--bg-black); color: var(--primary); box-shadow: 0 0 15px var(--primary); animation: wiggle 1s infinite ease-in-out; }
+
+        .newsletter-section { background: #000; border: 2px solid var(--primary); border-radius: 20px; padding: 30px 20px; margin: 40px auto 30px; box-shadow: 0 0 15px rgba(255, 79, 23, 0.15); text-align: center; max-width: 100%; }
+        .newsletter-title { font-size: 18px; color: #fff; font-weight: 900; margin-bottom: 5px; margin-top: 0; }
         .newsletter-description { font-size: 11px; color: var(--text-dim); margin-bottom: 15px; text-transform: uppercase; font-weight: 700; }
         .newsletter-privacy { font-size: 9px; color: #666; margin-top: 10px; }
-        .newsletter-form { 
-            display: flex; 
-            flex-direction: column; 
-            gap: 10px; 
-            max-width: 500px; 
-            margin: 0 auto; 
-            justify-content: center; 
-        }
-
+        .newsletter-form { display: flex; flex-direction: column; gap: 10px; max-width: 500px; margin: 0 auto; justify-content: center; }
         .newsletter-input { width: 100%; padding: 12px; background: #111; border: 1px solid var(--primary); border-radius: 8px; color: var(--text-light); margin-bottom: 0; }
-        
-        /* BOTÃO INSCREVER MENOR E CENTRALIZADO */
-        .newsletter-button { 
-            width: 50%; 
-            margin: 10px auto 0; 
-            padding: 12px; 
-            background: var(--primary); 
-            border: none; 
-            border-radius: 8px; 
-            font-weight: 900; 
-            color: var(--bg-black); 
-            cursor: pointer; 
-        }
+        .newsletter-button { width: 50%; margin: 10px auto 0; padding: 12px; background: var(--primary); border: none; border-radius: 8px; font-weight: 900; color: var(--bg-black); cursor: pointer; }
         #successMessage { display: none; color: #00ff00; margin-top: 10px; font-weight: 700; font-size: 12px; }
         #errorMessage { display: none; color: #ff0000; margin-top: 10px; font-weight: 700; font-size: 12px; }
 
-        /* SEPARADOR DE SEÇÃO */
-        .section-divider {
-            width: 80%; height: 1px;
-            background: linear-gradient(90deg, transparent, var(--primary), transparent);
-            margin: 50px auto 10px; opacity: 0.3;
-        }
-
-        /* RODAPÉ & COPYRIGHT AUMENTADO */
-        .footer-copyright {
-            color: #ffffff; /* Branco */
-            font-weight: 700;
-            font-size: 14px; /* Aumentado */
-            opacity: 0.6;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
+        .section-divider { width: 80%; height: 1px; background: linear-gradient(90deg, transparent, var(--primary), transparent); margin: 50px auto 10px; opacity: 0.3; }
+        .footer-copyright { color: #ffffff; font-weight: 700; font-size: 14px; opacity: 0.6; text-transform: uppercase; letter-spacing: 2px; }
         footer { text-align: center; margin-top: 10px; padding: 20px 0 40px; }
 
-        /* FLOATING DEV BUTTON (Centralizado, Surge de Baixo, Uma Linha) */
-        #dev-float-wrapper {
-            position: fixed;
-            bottom: -100px; /* Começa escondido */
-            left: 50%; /* Centralizado */
-            transform: translateX(-50%);
-            z-index: 9990;
-            transition: bottom 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-            width: auto;
-        }
-        
-        #dev-float-wrapper.visible {
-            bottom: 20px; /* Sobe */
-        }
+        #dev-float-wrapper { position: fixed; bottom: -100px; left: 50%; transform: translateX(-50%); z-index: 9990; transition: bottom 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55); width: auto; }
+        #dev-float-wrapper.visible { bottom: calc(20px + env(safe-area-inset-bottom)); }
+        .dev-btn-float { background: rgba(0, 0, 0, 0.9); border: 1px solid var(--primary); color: var(--text-light); padding: 10px 24px; border-radius: 30px; font-size: 12px; text-decoration: none; display: flex; align-items: center; gap: 8px; font-weight: 700; letter-spacing: 1px; box-shadow: 0 0 20px rgba(0, 0, 0, 0.8); transition: all 0.3s ease; }
+        .dev-btn-float:hover { background: var(--primary); color: #000; box-shadow: 0 0 25px var(--primary); transform: scale(1.05); }
 
-        .dev-btn-float {
-            background: rgba(0, 0, 0, 0.9);
-            border: 1px solid var(--primary);
-            color: var(--text-light);
-            padding: 10px 24px; /* Aumentado */
-            border-radius: 30px;
-            font-size: 12px; /* Fonte aumentada */
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 700;
-            letter-spacing: 1px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
-            transition: all 0.3s ease;
-        }
-
-        .dev-btn-float:hover {
-            background: var(--primary);
-            color: #000;
-            box-shadow: 0 0 25px var(--primary);
-            transform: scale(1.05);
-        }
-
-        /* STICKY CTA - TEXTO CENTRALIZADO */
-        .sticky-cta { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(100px); width: auto; min-width: 260px; max-width: 320px; height: 60px; background: rgba(5, 5, 5, 0.98); border: 2px solid var(--primary); border-radius: 50px; padding: 5px 25px; display: flex; justify-content: space-between; align-items: center; gap: 15px; z-index: 1000; box-shadow: 0 0 30px rgba(255, 69, 0, 0.6); opacity: 0; transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); pointer-events: none; }
+        .sticky-cta { position: fixed; bottom: calc(20px + env(safe-area-inset-bottom)); left: 50%; transform: translateX(-50%) translateY(150px); width: auto; min-width: 260px; max-width: 320px; height: 60px; background: rgba(5, 5, 5, 0.98); border: 2px solid var(--primary); border-radius: 50px; padding: 5px 25px; display: flex; justify-content: space-between; align-items: center; gap: 15px; z-index: 1000; box-shadow: 0 0 30px rgba(255, 69, 0, 0.6); opacity: 0; transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); pointer-events: none; backdrop-filter: blur(5px); }
         .sticky-cta.visible { opacity: 1; transform: translateX(-50%) translateY(0); pointer-events: all; }
-        
-        .cta-text-col { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
-        .cta-line-1 { font-size: 10px; color: var(--text-light); font-weight: 400; }
-        .cta-line-2 { font-size: 14px; color: var(--primary); font-weight: 900; line-height: 1; }
+        .sticky-cta.closed-mode { height: 45px; min-width: 180px; padding: 0 15px; border-color: var(--neon-red); box-shadow: 0 0 10px rgba(255, 0, 0, 0.3); background: rgba(10, 0, 0, 0.98); }
+        .cta-text-col { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; min-width: 120px; }
+        .cta-percentage { font-size: 14px; color: var(--primary); font-weight: 900; line-height: 1.1; text-shadow: 0 0 5px var(--primary); }
+        .cta-label { font-size: 9px; color: #fff; font-weight: 700; text-transform: uppercase; white-space: nowrap; }
+        .cta-closed-text { color: var(--neon-red); font-size: 12px; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; white-space: nowrap; text-shadow: 0 0 8px rgba(255, 0, 0, 0.6); animation: pulseRed 2s infinite alternate; display: flex; align-items: center; gap: 6px; }
+        @keyframes pulseRed { from { opacity: 0.8; } to { opacity: 1; } }
         .cta-btn { background: var(--primary); color: var(--bg-black); padding: 10px 20px; border-radius: 30px; font-weight: 900; text-decoration: none; font-size: 12px; text-transform: uppercase; white-space: nowrap; }
 
+        @keyframes contest-border-pulse { 0% { border-color: var(--primary); box-shadow: 0 0 15px rgba(255, 79, 23, 0.4); } 50% { border-color: #ff7744; box-shadow: 0 0 30px rgba(255, 79, 23, 0.7); } 100% { border-color: var(--primary); box-shadow: 0 0 15px rgba(255, 79, 23, 0.4); } }
+        @keyframes contest-title-blink { 0%, 45%, 55%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
+
+        .visually-hidden { opacity: 0; position: absolute; top: 0; left: 0; height: 0; width: 0; z-index: -1; }
+
+        /* --- MOBILE FIXES --- */
         @media (max-width: 600px) {
-            .section-title, .faq-title, .newsletter-title, .event-title { font-size: 18px; white-space: nowrap; overflow: visible; letter-spacing: 1px; margin: 60px 0 20px; text-align: center !important; width: 100%; }
-            .lineup-title-txt { font-size: 22px !important; letter-spacing: 0.5px; white-space: nowrap; }
+            body { font-size: 16px; } 
+            .section-title, .newsletter-title, .event-title { font-size: 22px; white-space: nowrap; overflow: visible; letter-spacing: 2px; margin: 60px 0 30px; text-align: center !important; width: 100%; color: #fff; }
+            .faq-question { font-size: 16px; } 
+            .lineup-title-txt { font-size: 26px !important; letter-spacing: 0.5px; }
             .countdown-timer { justify-content: center; gap: 8px; }
             .about-section .section-title { text-align: center !important; padding: 0; }
-            .newsletter-description { font-size: 11px; white-space: nowrap; }
-            .lineup-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-            .dj-card.headliner { grid-column: span 2; } 
-
-            .social-links { flex-wrap: gap: 20px; padding-bottom: 10px; justify-content: center; }
-            .time-unit { padding: 8px 2px; width: 60px; }
-            .time-value { font-size: 18px; }
-            .time-label { font-size: 8px; }
-            .about-text { text-align: center !important; }
-
-            /* ✅ AJUSTE MOBILE: Garante que todos os retângulos de conteúdo tenham a mesma largura (98% do viewport) e centralização */
-            .event-countdown, .faq-section, .about-content, .location-section, .newsletter-section { 
-                width: 98% !important; 
-                margin: 20px auto; 
-                padding: 20px 15px 25px !important; 
-                box-sizing: border-box; 
-            }
-            .event-title, .faq-title, .newsletter-title, .section-title { margin-top: 0 !important; margin-bottom: 15px; line-height: 1.2; }
-            .newsletter-input { text-align: center; }
-        }
-        @media (max-width: 350px) {
-            .countdown-timer { gap: 5px; }
-            .time-unit { width: 45%; margin-bottom: 5px; } 
-            .time-value { font-size: 16px; }
-            .lineup-grid { grid-template-columns: 1fr; }
-            .dj-card.headliner { grid-column: auto; }
-        }
-        
-        /* === ESTILOS E ANIMAÇÕES DO DJ CONTEST CTA === */
-        
-        /* Animação para a borda pulsar em verde neon */
-        @keyframes contest-border-pulse { 
-            0% { border-color: var(--neon-green); box-shadow: 0 0 15px rgba(0, 255, 0, 0.4); } 
-            50% { border-color: #33ff33; box-shadow: 0 0 30px rgba(0, 255, 0, 0.7); } 
-            100% { border-color: var(--neon-green); box-shadow: 0 0 15px rgba(0, 255, 0, 0.4); } 
-        }
-        /* Animação para o título piscar */
-        @keyframes contest-title-blink { 
-            0%, 45%, 55%, 100% { opacity: 1; }
-            50% { opacity: 0.7; } /* Pisca menos intensamente */
-        }
-
-        /* ✅ ESTILO PRINCIPAL DO CARD (Compactado) */
-        .contest-cta-card {
-            background: rgba(0, 0, 0, 0.8);
-            border: 2px solid var(--neon-green); 
-            border-radius: 12px;
-            padding: 25px 15px; /* ✅ AJUSTE: Aumentado padding-top/bottom (25px) para mais altura e espaço interno */
-            margin: 20px auto 40px; /* ✅ AJUSTE: Mantida margem superior (20px) e inferior (40px) para separar das seções */
-            box-shadow: 0 0 25px rgba(0, 255, 0, 0.4); 
-            text-align: center;
-            transition: all 0.3s ease;
-            width: 100%;
-            max-width: 500px; 
-            height: auto;
-            /* Aplicar Animação de Borda */
-            animation: contest-border-pulse 2.5s infinite alternate;
-        }
-
-        .contest-cta-card:hover, .contest-cta-card:active {
-            transform: translateY(-3px) scale(1.01);
-            box-shadow: 0 0 35px rgba(0, 255, 0, 0.6); 
-            background: rgba(0, 0, 0, 0.9);
-        }
-
-        /* ✅ TÍTULO (Espaçamento maior abaixo) */
-        .contest-cta-title {
-            font-size: clamp(1rem, 2.5vw, 1.2rem); 
-            font-weight: 900;
-            color: var(--neon-green);
-            text-shadow: 0 0 8px rgba(0, 255, 0, 0.7);
-            text-transform: uppercase;
-            margin-bottom: 8px; /* ✅ AJUSTE: Aumentado de 5px para 8px para separar do subtítulo */
-            /* Aplicar Animação de Piscar */
-            animation: contest-title-blink 4s infinite;
-        }
-
-        /* ✅ SUBTÍTULO (Fonte maior, espaçamento) */
-        .contest-cta-subtitle {
-            font-size: 14px; 
-            color: var(--text-dim);
-            margin-bottom: 20px; /* ✅ AJUSTE: Aumentado de 15px para 20px para separar do player */
-            font-weight: 400;
-        }
-        
-        /* ✅ PLAYER (Removido, ajuste de margem) */
-        .contest-play-btn {
-            display: none;
-        }
-
-
-        /* ✅ LINK (Espaçamento) */
-        .contest-cta-link {
-            display: inline-block;
-            background: var(--neon-green);
-            color: var(--bg-black);
-            padding: 8px 20px; 
-            border-radius: 30px;
-            font-weight: 900;
-            font-size: 12px; 
-            text-decoration: none;
-            transition: all 0.2s ease;
-            border: 2px solid var(--neon-green);
-            margin-top: 5px; /* Ajustado para compensar a remoção do player */
-            animation: pulse 2s infinite; 
-        }
-
-        .contest-cta-link:hover, .contest-cta-link:active {
-            background: var(--bg-black);
-            color: var(--neon-green);
-            box-shadow: 0 0 15px var(--neon-green);
-        }
-
-        @media (max-width: 600px) {
-            .contest-cta-card { 
-                width: 98% !important; 
-                margin: 20px auto 40px !important; /* Margens adequadas em mobile */
-                padding: 20px 15px !important; /* Padding ajustado em mobile */
-                box-sizing: border-box; 
-            }
-            .section-title.lineup-title-txt {
-                margin: 40px 0 20px !important; /* Espaçamento superior do Line-Up em Mobile */
-            }
+            .newsletter-description { font-size: 12px; white-space: nowrap; }
+            .contest-cta-card, .location-section, .about-content, .faq-section, .links { margin-bottom: 80px !important; }
+            .contest-cta-card { width: 98% !important; margin: 20px auto 80px !important; padding: 30px 20px !important; box-sizing: border-box; }
+            .event-countdown { width: 98% !important; margin: 20px auto 60px !important; padding: 20px 15px 25px !important; }
+            .event-title, .newsletter-title, .section-title { margin-top: 0 !important; margin-bottom: 25px; line-height: 1.2; }
+            .newsletter-input { text-align: center; font-size: 16px; }
+            .section-title.lineup-title-txt { margin: 40px 0 30px !important; }
+            .lot-price-text { font-size: 24px; }
+            .event-live-box { padding: 25px 10px; }
+            .live-title { font-size: 20px; }
+            .live-price { font-size: 36px; }
+            .lineup-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; width: 98%; margin: 0 auto 50px; }
+            .dj-card { padding: 10px 5px; border-width: 1px; }
+            .dj-name { font-size: 15px; margin-bottom: 3px; }
+            .play-btn { transform: scale(1); }
+            .dj-photo { margin-bottom: 10px; }
+            .dj-card:nth-child(-n+3) { grid-column: span 2; padding: 20px; border-width: 2px; margin-bottom: 5px; }
+            .dj-card:nth-child(-n+3) .dj-name { font-size: 22px; margin-bottom: 5px; }
+            .dj-card:nth-child(-n+3) .play-btn { transform: scale(1.2); margin-top: 10px; }
+             .dj-card:nth-child(-n+3) .dj-photo { margin-bottom: 15px; }
+            .manifesto-text { border-left-width: 2px; } 
         }
     </style>
 </head>
 <body>
     <div id="preloader">
         <div class="preloader-content">
-            <img src="logo-name.png" alt="Loading..." class="preloader-logo">
+            <img src="logo-name.png" alt="Loading..." class="preloader-logo" width="240" height="80">
             <div class="loader-container">
                 <div class="loader-bar"></div>
             </div>
@@ -870,12 +635,9 @@
             </div>
     </div>
 
-    <div class="video-background">
+    <div class="video-background" id="videoBg">
         <div class="video-overlay"></div>
-        <video id="bgVideo" autoplay muted loop playsinline poster="infinity-logo.png">
-            <source src="video-bg.mp4" type="video/mp4">
-        </video>
-    </div>
+        </div>
 
     <div id="particleContainer"></div>
     
@@ -885,7 +647,7 @@
         <div class="profile-section">
             <div class="profile-image-wrapper">
                 <div class="profile-image">
-                    <img src="infinity-logo.png" alt="Infinity Fusion Logo" fetchpriority="high" decoding="async">
+                    <img src="infinity-logo.png" alt="Infinity Fusion Logo" fetchpriority="high" decoding="async" width="120" height="120">
                 </div>
             </div>
         </div>
@@ -896,62 +658,132 @@
                 📅 05 DE DEZEMBRO 2025<br>
                 <span class="location-name">ESTAÇÃO MARQUÊS</span>
             </time>
-            <div class="countdown-timer" id="countdown">
-                <div class="time-unit"><span class="time-value" id="days">00</span><span class="time-label">Dias</span></div>
-                <div class="time-unit"><span class="time-value" id="hours">00</span><span class="time-label">Horas</span></div>
-                <div class="time-unit"><span class="time-value" id="minutes">00</span><span class="time-label">Min</span></div>
-                <div class="time-unit"><span class="time-value" id="seconds">00</span><span class="time-label">Seg</span></div>
-            </div>
             
-            <div class="lot-status-container">
-                <div class="lot-header">
-                    <div class="lot-info-col">
-                        <span class="lot-value-text" id="lot-tier">2º LOTE</span>
+            <div id="pre-event-layout">
+                <div class="countdown-timer" id="countdown">
+                    <div class="time-unit"><span class="time-value" id="days">00</span><span class="time-label">Dias</span></div>
+                    <div class="time-unit"><span class="time-value" id="hours">00</span><span class="time-label">Horas</span></div>
+                    <div class="time-unit"><span class="time-value" id="minutes">00</span><span class="time-label">Min</span></div>
+                    <div class="time-unit"><span class="time-value" id="seconds">00</span><span class="time-label">Seg</span></div>
+                </div>
+                
+                <div class="lot-status-container">
+                    <div class="lot-header">
                         <span class="lot-price-text" id="lot-price">R$ 50,00</span>
+                        <span class="lot-warning">30% VENDIDO</span>
                     </div>
-                    <span class="lot-warning">87% VENDIDO 🔥</span>
+                    <div class="progress-track">
+                        <div class="progress-fill"></div>
+                    </div>
+                    <div class="lot-footer">ULTIMO LOTE DISPONÍVEL</div>
                 </div>
-                <div class="progress-track">
-                    <div class="progress-fill"></div>
+
+                <div class="countdown-cta-group">
+                    <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Infinity+Fusion&dates=20251205T220000/20251206T060000&details=Hard+Techno+Experience&location=Estação+Marquês+Barra+Funda" target="_blank" rel="noopener noreferrer" class="calendar-btn auto-remove-post-event">
+                        + ADICIONAR À AGENDA
+                    </a>
+                    
+                    <a href="https://wa.me/5511988602480" target="_blank" rel="noopener noreferrer" class="btn-whatsapp-countdown" onclick="vibratePhone()">
+                        <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                        <div class="btn-text">
+                            <span class="btn-title">COMPRA SEM TAXA</span>
+                            <span class="btn-sub">VIA WHATSAPP</span>
+                        </div>
+                    </a>
                 </div>
-                <div class="lot-footer">VIRADA DE LOTE EM BREVE</div>
             </div>
 
-            <button class="share-btn" onclick="shareEvent()">
-                <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="22" y1="2" x2="11" y2="13"></line>
-                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-                </svg>
-                <span>COMPARTILHAR</span>
-            </button>
+            <div id="post-event-layout" style="display: none;">
+                <div class="event-live-box">
+                    <div>
+                        <div class="live-title">🔥 O EVENTO COMEÇOU! 🔥</div>
+                    </div>
+                    <div>
+                         <div class="live-subtitle">INGRESSOS DISPONÍVEIS SOMENTE NA PORTARIA</div>
+                         <div class="live-price">R$ 80,00</div>
+                    </div>
+                </div>
+            </div>
         </section>
         
-        <div class="contest-cta-card">
-            <div class="contest-cta-title">DJ Contest Infinity Fusion</div>
-            <div class="contest-cta-subtitle">Mostre seu talento e toque na próxima Infinity Fusion!</div>
-            
-            <a href="https://www.instagram.com/p/DRFNTefDH4w/" target="_blank" rel="noopener noreferrer" class="contest-cta-link">
-                PARTICIPAR DO DJ CONTEST!
-            </a>
-        </div>
         <section id="lineup">
-            <h2 class="section-title invert-fx lineup-title-txt">LINE-UP CONFIRMADO</h2>
+            <h2 class="section-title invert-fx lineup-title-txt">LINE-UP COMPLETO</h2>
             <div class="lineup-grid" id="lineupGrid"></div>
         </section>
         
-        <section id="location">
-            <h2 class="section-title invert-fx">COMO CHEGAR 📍</h2>
-            <div class="location-section">
+        <div class="contest-cta-card" id="djContestCard">
+            <div class="contest-cta-title">DJ Contest Infinity Fusion</div>
+            <div class="contest-deadline">ENVIAR SET ATÉ 30/11 ÀS 23:59</div>
+            <a href="https://www.instagram.com/p/DRFNTefDH4w/" target="_blank" rel="noopener noreferrer" class="contest-cta-link">
+                PARTICIPAR
+            </a>
+        </div>
+
+        <section class="about-section-box">
+            <h2 class="std-header">SOBRE O EVENTO</h2>
+            <div class="std-content">
+                <h3 class="about-brand-title">INFINITY FUSION</h3>
+                
+                <p class="about-text">
+                    Nascida da união explosiva entre <span class="c-org">Hard Sessions</span> e <span class="c-org">Nexus</span>, a Infinity Fusion surge para incendiar o cenário <span class="c-org">underground</span> de São Paulo.
+                    <br><br>
+                    Nosso propósito é criar uma nova era de eventos dedicados ao <span class="c-org">Hardtechno</span> — intensos, imersivos e sem limites.
+                    <br><br>
+                    Com uma fusão de energia <span class="c-org">Raw</span>, atmosfera <span class="c-org">industrial</span> e batidas imersivas, a Infinity Fusion é mais que uma festa: é uma experiência sonora que conecta mentes e corações no mesmo pulso.
+                    <br><br>
+                    <span class="manifesto-text">
+                        O colapso entre o underground e o futuro está prestes a acontecer. <span class="c-org">INFINITY FUSION</span> surge como a fusão definitiva entre o som brutal do hardtechno industrial e a estética futurista que pulsa nas madrugadas de São Paulo.
+                    </span>
+                </p>
+            </div>
+        </section>
+
+        <div class="faq-section-box auto-remove-post-event">
+            <h3 class="std-header">PERGUNTAS FREQUENTES</h3>
+            <div class="faq-list">
+                <div class="faq-item faq-highlight"><div class="faq-question"><span>👗 Dress Code?</span><span class="faq-toggle">+</span></div><div class="faq-answer">Recomendamos All Black (roupas pretas) ou estilo underground. Vista-se confortavelmente para dançar.</div></div>
+                <div class="faq-item faq-highlight"><div class="faq-question"><span>🎟 Ingresso na porta?</span><span class="faq-toggle">+</span></div><div class="faq-answer">Sujeito a lotação e alteração de preço. <span style="color:var(--primary); font-weight:700;">Valor: R$ 80,00.</span> Recomendamos comprar antecipado.</div></div>
+                <div class="faq-item"><div class="faq-question"><span>🔞 Pode entrar menores de 18 anos?</span><span class="faq-toggle">+</span></div><div class="faq-answer">Estritamente para maiores de 18 anos.</div></div>
+                <div class="faq-item"><div class="faq-question"><span>🛂 É obrigatório levar documento?</span><span class="faq-toggle">+</span></div><div class="faq-answer">Sim. Obrigatório apresentar documento original com foto (RG, CNH ou Passaporte) para entrar.</div></div>
+                <div class="faq-item"><div class="faq-question"><span>🚫 Pode levar bebidas/comida?</span><span class="faq-toggle">+</span></div><div class="faq-answer">Não. O local possui bar completo e opções de alimentação.</div></div>
+                <div class="faq-item"><div class="faq-question"><span>🕒 Horário do evento?</span><span class="faq-toggle">+</span></div><div class="faq-answer">Das 22:00 às 06:00.</div></div>
+                <div class="faq-item"><div class="faq-question"><span>📍 Qual o endereço completo?</span><span class="faq-toggle">+</span></div>
+                    <div class="faq-answer">
+                        Av. Marquês de São Vicente, 412 - Várzea da Barra Funda, São Paulo - SP. <br>
+                        <a href="https://maps.google.com/maps?q=Av.+Marqu%C3%AAs+de+S%C3%A3o+Vicente,+412+-+V%C3%A1rzea+da+Barra+Funda,+S%C3%A3o+Paulo+-+SP" target="_blank" class="faq-map-btn">Abrir no Maps</a>
+                    </div>
+                </div>
+                <div class="faq-item"><div class="faq-question"><span>🎂 Aniversariante VIP pode entrar até que horas?</span><span class="faq-toggle">+</span></div><div class="faq-answer">A entrada VIP é permitida a noite toda, sujeita à conferência do RG na portaria.</div></div>
+                <div class="faq-item"><div class="faq-question"><span>🧥 Terá chapelaria/Guarda volumes?</span><span class="faq-toggle">+</span></div><div class="faq-answer">Sim, haverá chapelaria no local.</div></div>
+                <div class="faq-item"><div class="faq-question"><span>💳 Aceita cartão?</span><span class="faq-toggle">+</span></div><div class="faq-answer">Sim: Crédito, Débito e PIX.</div></div>
+            </div>
+        </div>
+
+        <section class="location-section-box auto-remove-post-event">
+            <h2 class="std-header">COMO CHEGAR 📍</h2>
+            <div class="std-content">
                 <div class="location-info">
                     <div class="info-item"><span class="info-icon">🏢</span><div><div class="info-label">LOCAL</div><div class="info-text">Estação Marquês</div></div></div>
                     <div class="info-item"><span class="info-icon">📍</span><div><div class="info-label">ENDEREÇO</div><div class="info-text">Av. Marquês de São Vicente, 412 - SP</div></div></div>
                     <div class="info-item"><span class="info-icon">🚇</span><div><div class="info-label">METRÔ</div><div class="info-text">Palmeiras-Barra Funda (Linha Vermelha)</div></div></div>
                     <div class="info-item"><span class="info-icon">🚗</span><div><div class="info-label">ESTACIONAMENTO</div><div class="info-text">Disponível no local</div></div></div>
                     
-                    <a href="https://www.google.com/maps/search/Av.+Marquês+de+São+Vicente,+412+-+Várzea+da+Barra+Funda,+São+Paulo+-+SP" target="_blank" rel="noopener noreferrer" class="map-button">ABRIR NO GOOGLE MAPS</a>
+                    <div class="map-container">
+                        <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3658.1067215239745!2d-46.67323892383151!3d-23.528659678822695!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce58039c90b8c7%3A0x9d0c2c02976c6e3d!2sEsta%C3%A7%C3%A3o%20Marqu%C3%AAs%20Eventos!5e0!3m2!1spt-BR!2sbr!4v1732560000000!5m2!1spt-BR!2sbr" 
+                            width="100%" 
+                            height="100%" 
+                            style="border:0; filter: grayscale(100%) invert(90%) contrast(85%);" 
+                            allowfullscreen="" 
+                            loading="lazy" 
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+
+                    <a href="https://maps.app.goo.gl/9Q5Q5Q5Q5Q5Q5Q5Q" target="_blank" rel="noopener noreferrer" class="map-button">ABRIR NO GOOGLE MAPS APP</a>
                     
                     <div class="contact-buttons">
-                        <a href="https://wa.me/5511959365932" target="_blank" class="contact-btn whatsapp">
+                        <a href="https://wa.me/5511988602480" target="_blank" class="contact-btn whatsapp">
                             <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
                             WHATSAPP
                         </a>
@@ -961,104 +793,65 @@
                         </a>
                     </div>
                 </div>
-                <div class="map-container">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3658.058300262174!2d-46.68069502476579!3d-23.5284370788118!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce580320641113%3A0x868b1a8d38401340!2sAv.+Marqu%C3%AAs+de+S%C3%A3o+Vicente%2C+412+-+V%C3%A1rzea+da+Barra+Funda%2C+S%C3%A3o+Paulo+-+SP%2C+01139-000%2C+Brazil!5e0!3m2!1sen!2sus!4v1700877545041!5m2!1sen!2sus" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                </div>
             </div>
         </section>
 
-        <section class="about-section">
-            <h2 class="section-title invert-fx">SOBRE O EVENTO</h2>
-            <div class="about-content">
-                <p class="about-text">
-                    <span class="about-text-center c-org" style="font-size: 20px; text-shadow: 0 0 8px rgba(255, 79, 23, 0.7);">INFINITY FUSION — HARD TECHNO EM SUA ESSÊNCIA</span><br>
-                    
-                    A Infinity Fusion entrega uma <span class="c-org" style="font-weight: 700;">EXPERIÊNCIA</span> totalmente dedicada ao <span class="c-org" style="font-weight: 700;">HARD TECHNO</span>: sets intensos, <span class="c-org" style="font-weight: 700;">ATMOSFERA INDUSTRIAL</span> e estética futurista em preto e neon.
-                    <br><br>
-                    
-                    <span style="color: #FFFFFF; font-weight: 600; font-size: 16px; letter-spacing: 1px; display: block; text-align: center; margin-bottom: 10px;">Combinação precisa de luz, som e visual criando uma noite pesada, envolvente e fiel à cultura rave contemporânea.</span>
-                    <br>
-                    
-                    <span style="font-weight: 900; font-size: 16px; text-shadow: 0 0 5px rgba(255, 79, 23, 0.8);">
-                        <span class="c-org">HARD TECHNO SEM EXAGEROS.</span>
-                        <span style="color: #FFFFFF;">SEM ROMANCES.</span>
-                        <span class="c-org">APENAS O IMPACTO REAL DA PISTA.</span>
-                    </span>
-                </p>
-            </div>
-            
-            <div class="faq-section">
-                <h3 class="faq-title invert-fx">PERGUNTAS FREQUENTES</h3>
-                <div class="faq-list">
-                    <div class="faq-item faq-highlight"><div class="faq-question"><span>👗 Dress Code?</span><span class="faq-toggle">+</span></div><div class="faq-answer">Recomendamos All Black (roupas pretas) ou estilo underground. Vista-se confortavelmente para dançar.</div></div>
-                    
-                    <div class="faq-item faq-highlight"><div class="faq-question"><span>🎟 Ingresso na porta?</span><span class="faq-toggle">+</span></div><div class="faq-answer">Sujeito a lotação e alteração de preço. <span style="color:var(--neon-green); font-weight:700;">Valor: R$ 80,00.</span> Recomendamos comprar antecipado.</div></div>
-
-                    <div class="faq-item"><div class="faq-question"><span>🔞 Classificação etária?</span><span class="faq-toggle">+</span></div><div class="faq-answer">Estritamente para maiores de 18 anos.</div></div>
-                    
-                    <div class="faq-item"><div class="faq-question"><span>🛂 É obrigatório levar documento?</span><span class="faq-toggle">+</span></div><div class="faq-answer">Sim. Obrigatório apresentar documento original com foto (RG, CNH ou Passaporte) para entrar.</div></div>
-
-                    <div class="faq-item"><div class="faq-question"><span>🚫 Pode levar bebidas/comida?</span><span class="faq-toggle">+</span></div><div class="faq-answer">Não. O local possui bar completo e opções de alimentação.</div></div>
-                    <div class="faq-item"><div class="faq-question"><span>🕒 Horário do evento?</span><span class="faq-toggle">+</span></div><div class="faq-answer">Das 22:00 às 06:00.</div></div>
-                    
-                    <div class="faq-item"><div class="faq-question"><span>📍 Qual o endereço completo?</span><span class="faq-toggle">+</span></div><div class="faq-answer">Av. Marquês de São Vicente, 412 - Várzea da Barra Funda, São Paulo - SP.</div></div>
-
-                    <div class="faq-item"><div class="faq-question"><span>🎂 Aniversariante VIP pode entrar até que horas?</span><span class="faq-toggle">+</span></div><div class="faq-answer">A entrada VIP é permitida a noite toda, sujeita à conferência do RG na portaria.</div></div>
-
-                    <div class="faq-item"><div class="faq-question"><span>🧥 Haverá chapelaria?</span><span class="faq-toggle">+</span></div><div class="faq-answer">Sim, haverá chapelaria no local.</div></div>
-                    <div class="faq-item"><div class="faq-question"><span>💳 Aceita cartão?</span><span class="faq-toggle">+</span></div><div class="faq-answer">Sim: Crédito, Débito e PIX.</div></div>
+        <section class="channels-section-noborder">
+            <h2 class="std-header">CANAIS OFICIAIS ⚡</h2>
+            <div class="std-content">
+                <div class="links">
+                    <a href="https://www.sympla.com.br/evento/infinity-fusion/3163299" target="_blank" rel="noopener noreferrer" class="link-card auto-remove-post-event">
+                        <div class="link-icon sympla">
+                            <svg viewBox="0 0 24 24" fill="#FFD700" stroke="#ff4500" stroke-width="1">
+                                <path d="M13 10V3L4 14H11V21L20 10H13Z"/>
+                            </svg>
+                        </div>
+                        <div class="link-content"><div class="link-title">GARANTIR MEU ACESSO</div><div class="link-description">Compre online com segurança</div></div>
+                        <div class="link-arrow">⚡</div>
+                    </a>
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSf2DXh-_sB7YW0XMARxt_IMEPqX91064JgyT2HBBXC_Eg6NVA/viewform" target="_blank" rel="noopener noreferrer" class="link-card auto-remove-post-event">
+                        <div class="link-icon ticket"><svg width="60%" height="60%" viewBox="0 0 24 24" fill="none"><rect x="3" y="6" width="18" height="12" rx="2" stroke="#FFD700" stroke-width="2"/><circle cx="8" cy="12" r="1.5" fill="#FFD700"/><circle cx="16" cy="12" r="1.5" fill="#FFD700"/></svg></div>
+                        <div class="link-content"><div class="link-title">INGRESSO SEM TAXA</div><div class="link-description">Compre via PIX sem taxas</div></div>
+                        <div class="link-arrow">⚡</div>
+                    </a>
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLScReh_qEZPtOUqNu6rHjtmVKL8-i3TScIr2rebpw4b3euCtsw/viewform" target="_blank" rel="noopener noreferrer" class="link-card">
+                        <div class="link-icon talent"><img src="icon-talent.png" alt="Talentos" loading="lazy" decoding="async"></div>
+                        <div class="link-content"><div class="link-title">SELEÇÃO DE NOVOS TALENTOS</div><div class="link-description">DJ ou produtor? Mostre seu trabalho aqui</div></div>
+                        <div class="link-arrow">⚡</div>
+                    </a>
+                    <a href="https://chat.whatsapp.com/CHK8jKPORfi2XAUygk9tIb" target="_blank" rel="noopener noreferrer" class="link-card">
+                        <div class="link-icon whatsapp"><img src="icon-whatsapp.png" alt="WhatsApp" loading="lazy" decoding="async"></div>
+                        <div class="link-content"><div class="link-title">GRUPO OFICIAL</div><div class="link-description">Entre na comunidade WhatsApp agora</div></div>
+                        <div class="link-arrow">⚡</div>
+                    </a>
+                    <a href="https://www.instagram.com/thenexusbrasil/" target="_blank" rel="noopener noreferrer" class="link-card">
+                        <div class="link-icon nexus"><img src="icon-nexus.png" alt="Nexus" loading="lazy" decoding="async"></div>
+                        <div class="link-content"><div class="link-title">CONHEÇA A NEXUS</div><div class="link-description">Evento de Hard Dance em São Paulo</div></div>
+                        <div class="link-arrow">⚡</div>
+                    </a>
+                    <a href="https://hotmart.com/pt-br/marketplace/produtos/hagsxd-nexus-cursos-aprenda-a-produzir-hardstyle-com-sl-complex-u2q0w/U102050307P" target="_blank" rel="noopener noreferrer" class="link-card">
+                        <div class="link-icon course"><svg width="60%" height="60%" viewBox="0 0 24 24" fill="none" stroke="#FFD700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg></div>
+                        <div class="link-content"><div class="link-title">APRENDA A PRODUZIR</div><div class="link-description">Curso de Hardstyle com SL Complex</div></div>
+                        <div class="link-arrow">⚡</div>
+                    </a>
+                     <a href="https://www.tiktok.com/@infinityfusionofc" target="_blank" rel="noopener noreferrer" class="link-card">
+                        <div class="link-icon tiktok-img">
+                            <img src="icon-tiktok.png" alt="TikTok" loading="lazy" decoding="async">
+                        </div>
+                        <div class="link-content"><div class="link-title">SIGA NO TIKTOK</div><div class="link-description">Conteúdos exclusivos e bastidores</div></div>
+                        <div class="link-arrow">⚡</div>
+                    </a>
                 </div>
             </div>
-        </section>
-        
-        <section class="links">
-            <a href="https://www.sympla.com.br/evento/infinity-fusion/3163299" target="_blank" rel="noopener noreferrer" class="link-card">
-                <div class="link-icon sympla">
-                    <svg viewBox="0 0 24 24" fill="#FFD700" stroke="#ff4500" stroke-width="1">
-                        <path d="M13 10V3L4 14H11V21L20 10H13Z"/>
-                    </svg>
-                </div>
-                <div class="link-content"><div class="link-title">GARANTIR MEU ACESSO</div><div class="link-description">Compre online com segurança</div></div>
-                <div class="link-arrow">⚡</div>
-            </a>
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSf2DXh-_sB7YW0XMARxt_IMEPqX91064JgyT2HBBXC_Eg6NVA/viewform" target="_blank" rel="noopener noreferrer" class="link-card">
-                <div class="link-icon ticket"><svg width="60%" height="60%" viewBox="0 0 24 24" fill="none"><rect x="3" y="6" width="18" height="12" rx="2" stroke="#FFD700" stroke-width="2"/><circle cx="8" cy="12" r="1.5" fill="#FFD700"/><circle cx="16" cy="12" r="1.5" fill="#FFD700"/></svg></div>
-                <div class="link-content"><div class="link-title">INGRESSO SEM TAXA</div><div class="link-description">Compre via PIX sem taxas</div></div>
-                <div class="link-arrow">⚡</div>
-            </a>
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLScReh_qEZPtOUqNu6rHjtmVKL8-i3TScIr2rebpw4b3euCtsw/viewform" target="_blank" rel="noopener noreferrer" class="link-card">
-                <div class="link-icon talent"><img src="icon-talent.png" alt="Talentos" loading="lazy" decoding="async"></div>
-                <div class="link-content"><div class="link-title">SELEÇÃO DE NOVOS TALENTOS</div><div class="link-description">DJ ou produtor? Mostre seu trabalho aqui</div></div>
-                <div class="link-arrow">⚡</div>
-            </a>
-            <a href="https://chat.whatsapp.com/CHK8jKPORfi2XAUygk9tIb" target="_blank" rel="noopener noreferrer" class="link-card">
-                <div class="link-icon whatsapp"><img src="icon-whatsapp.png" alt="WhatsApp" loading="lazy" decoding="async"></div>
-                <div class="link-content"><div class="link-title">GRUPO OFICIAL</div><div class="link-description">Entre na comunidade WhatsApp agora</div></div>
-                <div class="link-arrow">⚡</div>
-            </a>
-            <a href="https://www.instagram.com/thenexusbrasil/" target="_blank" rel="noopener noreferrer" class="link-card">
-                <div class="link-icon nexus"><img src="icon-nexus.png" alt="Nexus" loading="lazy" decoding="async"></div>
-                <div class="link-content"><div class="link-title">CONHEÇA A NEXUS</div><div class="link-description">Evento de Hard Dance em São Paulo</div></div>
-                <div class="link-arrow">⚡</div>
-            </a>
-            <a href="https://hotmart.com/pt-br/marketplace/produtos/hagsxd-nexus-cursos-aprenda-a-produzir-hardstyle-com-sl-complex-u2q0w/U102050307P" target="_blank" rel="noopener noreferrer" class="link-card">
-                <div class="link-icon course"><svg width="60%" height="60%" viewBox="0 0 24 24" fill="none" stroke="#FFD700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg></div>
-                <div class="link-content"><div class="link-title">APRENDA A PRODUZIR</div><div class="link-description">Curso de Hardstyle com SL Complex</div></div>
-                <div class="link-arrow">⚡</div>
-            </a>
-             <a href="https://www.tiktok.com/@infinityfusionofc" target="_blank" rel="noopener noreferrer" class="link-card">
-                <div class="link-icon tiktok-img">
-                    <img src="icon-tiktok.png" alt="TikTok" loading="lazy" decoding="async">
-                </div>
-                <div class="link-content"><div class="link-title">SIGA NO TIKTOK</div><div class="link-description">Conteúdos exclusivos e bastidores</div></div>
-                <div class="link-arrow">⚡</div>
-            </a>
         </section>
 
         <section class="newsletter-section" id="footerTrigger">
             <div class="newsletter-title invert-fx">FIQUE POR DENTRO</div>
             <div class="newsletter-description">RECEBA NOVIDADES E PROMOÇÕES</div>
             <form class="newsletter-form" id="newsletterForm" action="https://docs.google.com/forms/d/e/1FAIpQLSf8hPw24ntxtbG8l3sBzAC3w7-wuLjNIsZ2VN0FruOJrTKPPg/formResponse" method="POST" target="hidden_iframe" onsubmit="return validateEmail()">
+                
+                <input type="text" name="b_check_field" id="honeypot" class="visually-hidden" tabindex="-1" autocomplete="off">
+                
                 <input type="email" name="entry.1948041952" class="newsletter-input" id="emailInput" placeholder="Seu e-mail" required>
                 <button type="submit" class="newsletter-button">INSCREVER</button>
             </form>
@@ -1076,93 +869,161 @@
     </main>
 
     <div id="dev-float-wrapper">
-        <a href="#" class="dev-btn-float">
+        <a href="https://www.instagram.com/ghostframedev" target="_blank" rel="noopener noreferrer" class="dev-btn-float">
             <span>⚡ BY GHOSTFRAME</span>
         </a>
     </div>
 
     <div class="sticky-cta" id="stickyCta">
         <div class="cta-text-col">
-            <span class="cta-line-1">ÚLTIMOS</span>
-            <span class="cta-line-2">INGRESSOS</span>
+            <span class="cta-percentage">30% DOS</span>
+            <span class="cta-label">INGRESSOS VENDIDOS</span>
         </div>
         <a href="https://www.sympla.com.br/evento/infinity-fusion/3163299" target="_blank" rel="noopener noreferrer" class="cta-btn">COMPRAR</a>
     </div>
 
     <script>
-        // --- PRELOADER ---
-        window.addEventListener('load', () => {
+        // ✅ PRELOADER + LAZY LOAD DE VÍDEO INTELIGENTE
+        document.addEventListener('DOMContentLoaded', () => {
             const preloader = document.getElementById('preloader');
             const loaderBar = document.querySelector('.loader-bar');
             const loaderPercent = document.getElementById('loaderPercent');
             
             let width = 0;
+            let loaded = false;
+
             const interval = setInterval(() => {
+                const increment = loaded ? 10 : (Math.random() * 2 + 1); 
+                width += increment;
+
                 if (width >= 100) {
+                    width = 100;
                     clearInterval(interval);
                     setTimeout(() => {
                         preloader.style.opacity = '0';
-                        setTimeout(() => preloader.remove(), 1000);
-                    }, 800);
-                } else {
-                    width += Math.floor(Math.random() * 3) + 1; 
-                    if (width > 100) width = 100;
-                    loaderBar.style.width = width + '%';
-                    loaderPercent.textContent = width + '%';
+                        setTimeout(() => {
+                            preloader.remove();
+                            // Inicia vídeo APÓS preloader sair para não competir banda
+                            initVideoBackground(); 
+                        }, 500); 
+                    }, 200);
                 }
-            }, 60); 
 
-            const vid = document.getElementById('bgVideo');
-            if (vid) {
-                vid.play().catch(error => {
-                    console.log('Autoplay prevented:', error);
-                });
-            }
+                loaderBar.style.width = width + '%';
+                loaderPercent.textContent = Math.floor(width) + '%';
+            }, 15);
+
+            window.onload = () => { loaded = true; };
+            setTimeout(() => { loaded = true; }, 3500); // Safety fallback
         });
 
-        // --- COUNTDOWN E LÓGICA DE ATUALIZAÇÃO DE LOTE E PREÇO ---
-        let countdownInterval;
-        function updatePriceAndLot() {
-            const now = new Date().getTime();
-            const lotTier = document.getElementById('lot-tier');
-            const lotPrice = document.getElementById('lot-price');
-            const switchDate = new Date('2025-11-24T00:00:00-03:00').getTime(); 
+        function initVideoBackground() {
+            // ✅ CORREÇÃO: Tenta carregar vídeo em TODOS os dispositivos (incluindo mobile)
+            const videoContainer = document.getElementById('videoBg');
+            const videoEl = document.createElement('video');
+            videoEl.autoplay = true;
+            videoEl.muted = true;
+            videoEl.loop = true;
+            videoEl.playsInline = true; // Crucial para iPhone
+            videoEl.poster = "infinity-logo.png"; // Fallback se falhar
+            
+            const source = document.createElement('source');
+            source.src = "video-bg.mp4";
+            source.type = "video/mp4";
+            
+            videoEl.appendChild(source);
+            videoContainer.appendChild(videoEl);
+            // .active pode ser usado para transições CSS se necessário
+            videoContainer.classList.add('active');
+        }
 
-            if (lotTier && lotPrice) {
-                if (now >= switchDate) {
-                    lotTier.textContent = '3º LOTE';
-                    lotPrice.textContent = 'R$ 60,00';
-                } else {
-                    lotTier.textContent = '2º LOTE';
-                    lotPrice.textContent = 'R$ 50,00';
+        // --- LÓGICA DE ATUALIZAÇÃO ---
+        let countdownInterval;
+
+        function updateUI() {
+            const now = new Date().getTime();
+            // ⚠️ DATAS HARDCODED - Mantenha atualizado
+            const dateNov27 = new Date('2025-11-27T00:00:00-03:00').getTime();
+            const dateDec02 = new Date('2025-12-02T00:00:00-03:00').getTime();
+            const dateDec04 = new Date('2025-12-04T00:00:00-03:00').getTime(); 
+            const dateDec05 = new Date('2025-12-05T00:00:00-03:00').getTime(); 
+            const eventStart = new Date('2025-12-05T22:00:00-03:00').getTime();
+            // ✅ DATA PARA LIMPEZA AUTOMÁTICA DO SITE (07/DEZ)
+            const cleanupDate = new Date('2025-12-07T00:00:00-03:00').getTime();
+            const contestDeadline = new Date('2025-11-30T23:59:59-03:00').getTime();
+
+            const contestCard = document.getElementById('djContestCard');
+            if (contestCard) {
+                if (now > contestDeadline) {
+                    contestCard.innerHTML = `
+                        <div class="contest-cta-title" style="color: var(--primary);">DJ CONTEST INFINITY FUSION</div>
+                        <div style="color: var(--neon-red); font-weight: 900; font-size: 18px; margin: 10px 0; text-shadow: 0 0 10px var(--neon-red);">INSCRIÇÕES ENCERRADAS</div>
+                        <div class="contest-cta-subtitle" style="color: #fff;">EM BREVE DIVULGAREMOS O VENCEDOR</div>
+                    `;
                 }
             }
-        }
 
-        function updateCountdown() {
-            const eventDate = new Date('2025-12-05T22:00:00-03:00').getTime();
-            const now = new Date().getTime();
-            const distance = eventDate - now;
-
-            updatePriceAndLot(); // Atualiza lote e preço a cada segundo
-            
-            if (distance < 0) {
-                clearInterval(countdownInterval);
-                document.getElementById('countdown').innerHTML = '<div class="time-unit" style="width:100%; border-color:#444"><span class="time-value" style="font-size:20px">O EVENTO JÁ COMEÇOU!</span></div>';
-                return;
+            // ✅ REMOÇÃO AUTOMÁTICA PÓS-FESTA (Dia 07+)
+            if (now >= cleanupDate) {
+                document.querySelectorAll('.auto-remove-post-event').forEach(el => el.style.display = 'none');
             }
 
-            document.getElementById('days').textContent = String(Math.floor(distance / (1000 * 60 * 60 * 24))).padStart(2, '0');
-            document.getElementById('hours').textContent = String(Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
-            document.getElementById('minutes').textContent = String(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
-            document.getElementById('seconds').textContent = String(Math.floor((distance % (1000 * 60)) / 1000)).padStart(2, '0');
-        }
-        countdownInterval = setInterval(updateCountdown, 1000);
-        updateCountdown();
+            // ✅ LÓGICA DE EVENTO INICIADO
+            if (now >= eventStart) {
+                clearInterval(countdownInterval);
+                document.getElementById('pre-event-layout').style.display = 'none';
+                document.getElementById('post-event-layout').style.display = 'block';
+                const shareBtn = document.querySelector('.share-btn');
+                if(shareBtn) shareBtn.style.display = 'none';
+                
+                const whatsappBtn = document.querySelector('.btn-whatsapp-countdown');
+                if(whatsappBtn) whatsappBtn.style.display = 'none';
+                
+                const stickyCta = document.getElementById('stickyCta');
+                const stickyTextCol = stickyCta.querySelector('.cta-text-col');
+                const stickyBtn = stickyCta.querySelector('.cta-btn');
+                if(stickyBtn) stickyBtn.style.display = 'none';
+                stickyCta.classList.add('closed-mode');
+                stickyCta.style.justifyContent = 'center';
+                stickyTextCol.style.textAlign = 'center';
+                stickyTextCol.innerHTML = `<div class="cta-closed-text">⛔ VENDAS ENCERRADAS</div>`;
+                return;
+            } else {
+                document.getElementById('pre-event-layout').style.display = 'block';
+                document.getElementById('post-event-layout').style.display = 'none';
+                const priceEl = document.getElementById('lot-price');
+                const warnEl = document.querySelector('.lot-warning');
+                const fillEl = document.querySelector('.progress-fill');
+                const datePriceSwitch = new Date('2025-11-24T00:00:00-03:00').getTime();
+                
+                if(priceEl) priceEl.textContent = (now >= datePriceSwitch) ? 'R$ 60,00' : 'R$ 50,00';
 
-        // --- DJ LINEUP LOGIC ---
+                let percentage = 30;
+                if (now >= dateDec05) percentage = 95;
+                else if (now >= dateDec04) percentage = 85; 
+                else if (now >= dateDec02) percentage = 85; 
+                else if (now >= dateNov27) percentage = 65; 
+
+                if(percentage > 100) percentage = 100;
+
+                if (warnEl) warnEl.textContent = percentage + '% VENDIDO';
+                if (fillEl) fillEl.style.width = percentage + '%';
+
+                const stickyPercent = document.querySelector('.cta-percentage');
+                if(stickyPercent) stickyPercent.textContent = percentage + '% DOS';
+
+                const distance = eventStart - now;
+                document.getElementById('days').textContent = String(Math.floor(distance / (1000 * 60 * 60 * 24))).padStart(2, '0');
+                document.getElementById('hours').textContent = String(Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
+                document.getElementById('minutes').textContent = String(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
+                document.getElementById('seconds').textContent = String(Math.floor((distance % (1000 * 60)) / 1000)).padStart(2, '0');
+            }
+        }
+
+        countdownInterval = setInterval(updateUI, 1000);
+        updateUI();
+
         const djLineup = [
-            // HEADLINERS
             { name: 'SALVYAN 👑', instagram: 'salvyan.music', photo: 'salvyan.jpg', pos: 'center 5%', headliner: true, audio: 'salvyan.mp3' },
             { name: 'LAUD 👑', instagram: 'laud.mp3', photo: 'laud.jpg', pos: 'center 21%', headliner: true, audio: 'laud.mp3' },
             { name: 'MITSUNARI 👑', instagram: 'mitsunaribr', photo: 'mitsunari.jpg', pos: 'center 90%', headliner: true, audio: 'mitsunari.mp3' },
@@ -1175,38 +1036,41 @@
         const lineupGrid = document.getElementById('lineupGrid');
         djLineup.forEach((dj, index) => {
             const djCard = document.createElement('div');
-            // REMOVIDO isContest, só verifica Headliner
             djCard.className = ('dj-card' + (dj.headliner ? ' headliner' : ''));
             const audioId = `audio-${index}`;
+            const barId = `bar-${index}`;
             
-            // USANDO APENAS A ESTRUTURA PADRÃO DO DJ
              djCard.innerHTML = `
                 <a href="https://instagram.com/${dj.instagram}" target="_blank" class="dj-photo">
-                    <img id="photo-${audioId}" src="${dj.photo}" alt="${dj.name}" style="object-position: ${dj.pos};" loading="lazy">
+                    <img id="photo-${audioId}" src="${dj.photo}" alt="${dj.name}" style="object-position: ${dj.pos};" loading="lazy" width="100" height="100">
                 </a>
-                <div class="info-wrap">
-                    <div class="dj-name">${dj.name}</div>
-                    <div class="dj-instagram" onclick="window.open('https://instagram.com/${dj.instagram}', '_blank')">@${dj.instagram}</div>
-                    <button class="play-btn" aria-label="Ouvir set de ${dj.name}" onclick="toggleAudio('${audioId}', this)">▶</button>
-                    <audio id="${audioId}" src="${dj.audio}" preload="none"></audio>
+                <div class="dj-name">${dj.name}</div>
+                <div class="dj-instagram" onclick="window.open('https://instagram.com/${dj.instagram}', '_blank')">@${dj.instagram}</div>
+                <button class="play-btn" aria-label="Ouvir set de ${dj.name}" onclick="toggleAudio('${audioId}', this)">▶</button>
+                <div class="audio-progress-container">
+                    <div id="${barId}" class="audio-progress"></div>
                 </div>
+                <audio id="${audioId}" src="${dj.audio}" preload="none"></audio>
             `;
             lineupGrid.appendChild(djCard);
         });
 
-        // --- FUNÇÃO toggleAudio PADRÃO (sem lidar com contest) ---
         function toggleAudio(id, btn) {
             const audio = document.getElementById(id);
             const photoElement = document.getElementById(`photo-${id}`).closest('.dj-photo');
+            const progressBar = document.getElementById(`bar-${id.split('-')[1]}`);
             
-            // 1. Limpa o estado e o efeito visual de todos os outros players
             document.querySelectorAll('audio').forEach(a => { 
                 if(a.id !== id) { 
                     a.pause(); a.currentTime = 0; 
                     const otherPhoto = document.getElementById(`photo-${a.id}`);
+                    // Remove animação dos outros
                     if (otherPhoto) otherPhoto.closest('.dj-photo').classList.remove('is-playing');
+                    const otherBar = document.getElementById(`bar-${a.id.split('-')[1]}`);
+                    if(otherBar) otherBar.style.width = '0%';
                 }
             });
+
             document.querySelectorAll('.play-btn').forEach(b => { 
                 if(b !== btn) { 
                     b.textContent = '▶'; 
@@ -1215,31 +1079,31 @@
                 }
             });
 
-
             if (audio.paused) {
+                vibratePhone(40);
                 audio.volume = 1.0;
                 audio.play().then(_ => { 
                     btn.textContent = '■'; 
                     btn.classList.add('playing'); 
+                    // ✅ ATIVA A CLASSE QUE FAZ BALANÇAR NO RITMO
+                    if (photoElement) photoElement.classList.add('is-playing');
                     
-                    if (photoElement) {
-                        photoElement.classList.add('is-playing'); // Adiciona o efeito visual
-                    }
-                    
-                    // TIMER
                     audio.ontimeupdate = () => {
                         const timeLeft = audio.duration - audio.currentTime;
                         const minutes = Math.floor(timeLeft / 60);
                         const seconds = Math.floor(timeLeft % 60).toString().padStart(2, '0');
+                        
+                        const percentage = (audio.currentTime / audio.duration) * 100;
+                        if(progressBar) progressBar.style.width = percentage + '%';
+
                         if (!isNaN(minutes)) {
                              btn.textContent = `${minutes}:${seconds}`;
                         }
                         if(timeLeft <= 0) {
                              btn.textContent = '▶';
                              btn.classList.remove('playing');
-                             if (photoElement) { 
-                                photoElement.classList.remove('is-playing');
-                             }
+                             if (photoElement) photoElement.classList.remove('is-playing');
+                             if(progressBar) progressBar.style.width = '0%';
                         }
                     };
 
@@ -1247,9 +1111,7 @@
                     console.error("Erro de áudio:", error); 
                     btn.classList.add('error'); 
                     btn.textContent = '⚠️';
-                    if (photoElement) {
-                         photoElement.classList.remove('is-playing'); // Remove o efeito em caso de erro
-                    }
+                    if (photoElement) photoElement.classList.remove('is-playing');
 
                     if(error.name !== "NotAllowedError") {
                         setTimeout(() => { btn.classList.remove('error'); btn.textContent = '▶'; }, 2000);
@@ -1259,13 +1121,14 @@
                 audio.pause();
                 btn.textContent = '▶';
                 btn.classList.remove('playing');
-                if (photoElement) {
-                    photoElement.classList.remove('is-playing'); // Remove o efeito ao pausar
-                } 
-            }
+                // ✅ REMOVE A CLASSE QUANDO PAUSA
+                if (photoElement) photoElement.classList.remove('is-playing');
+            } 
         }
         
-        // --- FUNÇÃO toggleContestAudio REMOVIDA ---
+        function vibratePhone(ms = 50) {
+            if (navigator.vibrate) navigator.vibrate(ms);
+        }
 
         document.querySelectorAll('.faq-question').forEach(question => {
             question.addEventListener('click', function() {
@@ -1285,19 +1148,19 @@
             const particle = document.createElement('div');
             particle.className = Math.random() > 0.5 ? 'particle orange' : 'particle';
             particle.style.left = Math.random() * 100 + '%';
-            
             const size = Math.random() * 4 + 2;
             particle.style.width = `${size}px`;
             particle.style.height = `${size}px`;
-            
             particle.style.animationDuration = (5 + Math.random() * 10) + 's';
-            
             particle.addEventListener('animationend', () => particle.remove());
             particleContainer.appendChild(particle);
         }
         setInterval(createParticle, 500);
 
         function validateEmail() {
+            const honeypot = document.getElementById('honeypot');
+            if (honeypot.value !== "") { return false; }
+
             const email = document.getElementById('emailInput').value;
             const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!re.test(email)) {
@@ -1310,42 +1173,41 @@
         }
 
         let submitted = false;
-        document.querySelector('iframe[name="hidden_iframe"]').onload = function() {
+        const form = document.getElementById('newsletterForm');
+        const hiddenIframe = document.querySelector('iframe[name="hidden_iframe"]');
+
+        form.addEventListener('submit', (e) => {
+            if (!validateEmail()) {
+                e.preventDefault();
+                return;
+            }
+            submitted = true;
+            vibratePhone(40);
+        });
+
+        hiddenIframe.onload = function() {
             if (submitted) {
-                document.getElementById('successMessage').style.display = 'block';
-                document.getElementById('newsletterForm').reset();
-                setTimeout(() => {
-                    document.getElementById('successMessage').style.display = 'none';
-                    submitted = false;
-                }, 5000);
+                try {
+                    document.getElementById('successMessage').style.display = 'block';
+                    form.reset();
+                } catch (e) {
+                    console.log("Cross-origin frame access restricted.");
+                    document.getElementById('successMessage').style.display = 'block';
+                    form.reset();
+                } finally {
+                    setTimeout(() => {
+                        document.getElementById('successMessage').style.display = 'none';
+                        submitted = false;
+                    }, 5000);
+                }
             }
         };
-        document.getElementById('newsletterForm').addEventListener('submit', () => submitted = true);
-        
-        function shareEvent() {
-            if (navigator.share) {
-                navigator.share({
-                    title: 'Infinity Fusion - Hard Techno Experience',
-                    text: 'Confira este evento de Hard Techno em SP!',
-                    url: window.location.href,
-                }).catch(console.error);
-            } else {
-                navigator.clipboard.writeText(window.location.href);
-                const btn = document.querySelector('.share-btn span');
-                const originalText = btn.textContent;
-                btn.textContent = 'COPIADO!';
-                setTimeout(() => btn.textContent = originalText, 2000);
-            }
-        }
 
-        // --- LOGIC FOR FLOATING DEV BUTTON ---
         window.addEventListener('scroll', () => {
             const devFloat = document.getElementById('dev-float-wrapper');
             if (!devFloat) return;
-
             const scrollPosition = window.scrollY + window.innerHeight;
             const threshold = document.body.offsetHeight - 300; 
-
             if (scrollPosition > threshold) {
                 devFloat.classList.add('visible');
             } else {
@@ -1353,13 +1215,11 @@
             }
         });
 
-        // --- INTELLIGENT VISIBILITY OBSERVER (CTA vs DEV BUTTON) ---
         const stickyCta = document.getElementById('stickyCta');
         const devFloatingBtn = document.getElementById('dev-float-wrapper');
         const headerTrigger = document.getElementById('headerTrigger');
         const footerTrigger = document.getElementById('footerTrigger'); 
 
-        // 1. Show CTA when user scrolls past header
         const headerObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (!entry.isIntersecting) {
@@ -1373,7 +1233,6 @@
         }, { threshold: 0 });
         headerObserver.observe(headerTrigger);
 
-        // 2. Hide CTA when user reaches footer/newsletter
         const footerObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
