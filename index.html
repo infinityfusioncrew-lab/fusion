@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
@@ -86,14 +86,12 @@
         /* --- RESET E BASE --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
-        /* ✅ CORREÇÃO FIREFOX MOBILE: Impedir inflação de texto automática */
         html { 
             scroll-behavior: smooth;
             -webkit-text-size-adjust: 100%;
-            -moz-text-size-adjust: none; /* Crucial para Firefox Mobile */
-            text-size-adjust: 100%;
-            
-            /* ✅ CORREÇÃO FIREFOX SCROLLBAR: Estilo fino para não quebrar layout */
+            -moz-text-size-adjust: none; 
+            text-size-adjust: none;
+            touch-action: manipulation;
             scrollbar-width: thin;
             scrollbar-color: var(--primary) #0a0a0a;
         }
@@ -106,7 +104,9 @@
             overflow-x: hidden;
             padding-bottom: 120px; 
             font-size: 16px; 
-            line-height: 1.5; /* Melhor controle de altura de linha */
+            line-height: 1.5;
+            width: 100%;
+            position: relative;
         }
 
         :focus-visible { outline: 2px solid var(--primary); outline-offset: 4px; }
@@ -515,7 +515,7 @@
         .info-text { font-size: 14px; color: #fff; }
         
         .map-container { margin-top: 0px; border-radius: 12px; overflow: hidden; height: 250px; background: #111; margin-top: 20px; }
-        .map-container iframe { width: 100%; height: 100%; border: none; filter: grayscale(100%) invert(90%) contrast(85%); }
+        .map-container iframe { width: 100%; height: 100%; border: none; filter: grayscale(100%) invert(90%) contrast(85%); pointer-events: none; }
         
         .map-button { 
             display: block; background: var(--primary); color: var(--bg-black); 
@@ -546,7 +546,6 @@
             100% { transform: scale(1); box-shadow: 0 0 15px rgba(255, 79, 23, 0.3); border-color: var(--primary); }
         }
 
-        /* ✅ AJUSTE DE PADDING E ALINHAMENTO DO CONTEST CARD */
         .contest-cta-card { background: rgba(0, 0, 0, 0.8); border: 2px solid var(--primary); border-radius: 12px; padding: 25px 25px; margin: 20px auto 40px; box-shadow: 0 0 25px rgba(255, 79, 23, 0.4); text-align: center; transition: all 0.3s ease; width: 100%; max-width: 500px; height: auto; display: flex; flex-direction: column; align-items: center; justify-content: center; animation: techno-beat 0.45s infinite ease-out; }
         .contest-cta-card:hover, .contest-cta-card:active { transform: translateY(-3px) scale(1.01); box-shadow: 0 0 35px rgba(255, 79, 23, 0.6); background: rgba(0, 0, 0, 0.9); }
         
@@ -577,7 +576,6 @@
         #dev-float-wrapper { position: fixed; bottom: -100px; left: 50%; transform: translateX(-50%); z-index: 9990; transition: bottom 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55); width: auto; }
         #dev-float-wrapper.visible { bottom: calc(20px + env(safe-area-inset-bottom)); }
         
-        /* ✅ CORREÇÃO 3: BOTÃO DEV SEM QUEBRA DE LINHA */
         .dev-btn-float {
             background: rgba(0, 0, 0, 0.9);
             border: 1px solid var(--primary);
@@ -591,7 +589,7 @@
             gap: 8px;
             font-weight: 700;
             letter-spacing: 1px;
-            white-space: nowrap; /* Impede quebra de linha */
+            white-space: nowrap; 
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
             transition: all 0.3s ease;
         }
@@ -603,7 +601,6 @@
             transform: scale(1.05);
         }
 
-        /* ✅ CORREÇÃO 1: STICKY CTA RESTAURADO (CONFLITOS REMOVIDOS) */
         .sticky-cta { 
             position: fixed; 
             bottom: calc(20px + env(safe-area-inset-bottom)); 
@@ -643,21 +640,72 @@
 
         .visually-hidden { opacity: 0; position: absolute; top: 0; left: 0; height: 0; width: 0; z-index: -1; }
 
+        /* --- CSS NOVO: ESTILOS DO VENCEDOR DO CONTEST --- */
+        .winner-photo-container {
+            width: 160px;
+            height: 160px;
+            margin: 10px auto 20px;
+            border-radius: 50%;
+            border: 3px solid var(--primary);
+            padding: 3px; 
+            box-shadow: 0 0 25px rgba(255, 79, 23, 0.5);
+            animation: winnerPulse 2s infinite alternate ease-in-out;
+        }
+
+        .winner-photo {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            filter: grayscale(20%) contrast(1.1);
+        }
+
+        .winner-name {
+            font-size: clamp(1.5rem, 4vw, 2rem);
+            font-weight: 900;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+            text-shadow: 0 0 15px var(--primary), 0 0 5px #fff;
+        }
+
+        .winner-subtitle {
+            font-size: 14px;
+            color: var(--primary);
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+        
+        @keyframes winnerPulse {
+            from { box-shadow: 0 0 25px rgba(255, 79, 23, 0.5); transform: scale(1); border-color: var(--primary); }
+            to { box-shadow: 0 0 50px var(--primary), 0 0 20px #fff; transform: scale(1.03); border-color: #fff; }
+        }
+
         /* --- MOBILE FIXES --- */
         @media (max-width: 600px) {
             body { font-size: 16px; } 
             
-            /* ✅ CORREÇÃO 2: TÍTULO COM QUEBRA DE LINHA NO MOBILE (FIREFOX FIX) */
             .section-title, .newsletter-title, .event-title { 
-                font-size: 22px; 
-                white-space: normal; /* Permite quebrar linha */
+                font-size: 5.5vw !important;
+                white-space: nowrap !important;
                 overflow: visible; 
-                letter-spacing: 2px; 
+                letter-spacing: 1px; 
                 margin: 60px 0 30px; 
                 text-align: center !important; 
                 width: 100%; 
                 color: #fff; 
                 line-height: 1.2;
+                display: flex;
+                justify-content: center;
+                gap: 5px;
+            }
+            
+            .event-countdown {
+                padding: 25px 10px !important;
+                width: 95% !important;
             }
 
             .faq-question { font-size: 16px; } 
@@ -667,8 +715,9 @@
             .newsletter-description { font-size: 12px; white-space: nowrap; }
             .contest-cta-card, .location-section, .about-content, .faq-section, .links { margin-bottom: 80px !important; }
             .contest-cta-card { width: 98% !important; margin: 20px auto 80px !important; padding: 30px 20px !important; box-sizing: border-box; }
+            
             .event-countdown { width: 98% !important; margin: 20px auto 60px !important; padding: 20px 15px 25px !important; }
-            .event-title, .newsletter-title, .section-title { margin-top: 0 !important; margin-bottom: 25px; line-height: 1.2; }
+            .newsletter-title, .section-title { margin-top: 0 !important; margin-bottom: 25px; line-height: 1.2; }
             .newsletter-input { text-align: center; font-size: 16px; }
             .section-title.lineup-title-txt { margin: 40px 0 30px !important; }
             .lot-price-text { font-size: 24px; }
@@ -685,6 +734,14 @@
             .dj-card:nth-child(-n+3) .play-btn { transform: scale(1.2); margin-top: 10px; }
              .dj-card:nth-child(-n+3) .dj-photo { margin-bottom: 15px; }
             .manifesto-text { border-left-width: 2px; } 
+
+            .calendar-btn, .btn-whatsapp-countdown {
+                white-space: nowrap !important;
+                font-size: 11px !important;
+                padding: 10px 10px !important;
+                width: 90% !important;
+                max-width: none !important;
+            }
         }
     </style>
 </head>
@@ -717,7 +774,7 @@
         </div>
 
         <section class="event-countdown">
-            <h1 class="event-title invert-fx">🔥 PRÓXIMO EVENTO 🔥</h1>
+            <h1 class="event-title invert-fx">PRÓXIMO EVENTO</h1>
             <time class="event-date" datetime="2025-12-05T22:00">
                 📅 05 DE DEZEMBRO 2025<br>
                 <span class="location-name">ESTAÇÃO MARQUÊS</span>
@@ -775,11 +832,18 @@
             <div class="lineup-grid" id="lineupGrid"></div>
         </section>
         
-        <div class="contest-cta-card" id="djContestCard">
-            <div class="contest-cta-title">DJ Contest Infinity Fusion</div>
-            <div class="contest-deadline">ENVIAR SET ATÉ 30/11 ÀS 23:59</div>
-            <a href="https://www.instagram.com/p/DRFNTefDH4w/" target="_blank" rel="noopener noreferrer" class="contest-cta-link">
-                PARTICIPAR
+        <div class="contest-cta-card" id="djContestCard" style="animation: none; border-color: var(--primary);">
+            <div class="contest-cta-title">VENCEDOR DJ CONTEST</div>
+            
+            <div class="winner-photo-container">
+                <img src="djmarkz.jpg" alt="DJ MARKZ" class="winner-photo" width="160" height="160">
+            </div>
+            
+            <div class="winner-name">DJ MARKZ</div>
+            <div class="winner-subtitle">CONFIRMADO NO LINE-UP</div>
+
+            <a href="https://www.instagram.com/p/DRzlTqEjSvA/?img_index=1" target="_blank" rel="noopener noreferrer" class="contest-cta-link">
+                VER POST OFICIAL
             </a>
         </div>
 
@@ -814,7 +878,7 @@
                 <div class="faq-item"><div class="faq-question"><span>📍 Qual o endereço completo?</span><span class="faq-toggle">+</span></div>
                     <div class="faq-answer">
                         Av. Marquês de São Vicente, 412 - Várzea da Barra Funda, São Paulo - SP. <br>
-                        <a href="https://maps.google.com/maps?q=Av.+Marqu%C3%AAs+de+S%C3%A3o+Vicente,+412+-+V%C3%A1rzea+da+Barra+Funda,+S%C3%A3o+Paulo+-+SP" target="_blank" class="faq-map-btn">Abrir no Maps</a>
+                        <a href="https://www.google.com/maps/search/?api=1&query=Av.+Marquês+de+São+Vicente,+412+-+Várzea+da+Barra+Funda,+São+Paulo" target="_blank" class="faq-map-btn">Abrir no Maps</a>
                     </div>
                 </div>
                 <div class="faq-item"><div class="faq-question"><span>🎂 Aniversariante VIP pode entrar até que horas?</span><span class="faq-toggle">+</span></div><div class="faq-answer">A entrada VIP é permitida a noite toda, sujeita à conferência do RG na portaria.</div></div>
@@ -834,7 +898,7 @@
                     
                     <div class="map-container">
                         <iframe 
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3658.1067215239745!2d-46.67323892383151!3d-23.528659678822695!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce58039c90b8c7%3A0x9d0c2c02976c6e3d!2sEsta%C3%A7%C3%A3o%20Marqu%C3%AAs%20Eventos!5e0!3m2!1spt-BR!2sbr!4v1732560000000!5m2!1spt-BR!2sbr" 
+                            src="https://maps.google.com/maps?q=Estacao%20Marques%20Barra%20Funda&t=&z=15&ie=UTF8&iwloc=&output=embed" 
                             width="100%" 
                             height="100%" 
                             style="border:0; filter: grayscale(100%) invert(90%) contrast(85%);" 
@@ -844,7 +908,7 @@
                         </iframe>
                     </div>
 
-                    <a href="https://maps.app.goo.gl/9Q5Q5Q5Q5Q5Q5Q5Q" target="_blank" rel="noopener noreferrer" class="map-button">ABRIR NO GOOGLE MAPS APP</a>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Estação+Marquês+Av+Marques+de+Sao+Vicente+412" target="_blank" rel="noopener noreferrer" class="map-button">ABRIR NO GOOGLE MAPS APP</a>
                     
                     <div class="contact-buttons">
                         <a href="https://wa.me/5511988602480" target="_blank" class="contact-btn whatsapp">
@@ -1014,19 +1078,7 @@
             const eventStart = new Date('2025-12-05T22:00:00-03:00').getTime();
             // ✅ DATA PARA LIMPEZA AUTOMÁTICA DO SITE (07/DEZ)
             const cleanupDate = new Date('2025-12-07T00:00:00-03:00').getTime();
-            const contestDeadline = new Date('2025-11-30T23:59:59-03:00').getTime();
-
-            const contestCard = document.getElementById('djContestCard');
-            if (contestCard) {
-                if (now > contestDeadline) {
-                    contestCard.innerHTML = `
-                        <div class="contest-cta-title" style="color: var(--primary);">DJ CONTEST INFINITY FUSION</div>
-                        <div style="color: var(--neon-red); font-weight: 900; font-size: 18px; margin: 10px 0; text-shadow: 0 0 10px var(--neon-red);">INSCRIÇÕES ENCERRADAS</div>
-                        <div class="contest-cta-subtitle" style="color: #fff;">EM BREVE DIVULGAREMOS O VENCEDOR</div>
-                    `;
-                }
-            }
-
+            
             // ✅ REMOÇÃO AUTOMÁTICA PÓS-FESTA (Dia 07+)
             if (now >= cleanupDate) {
                 document.querySelectorAll('.auto-remove-post-event').forEach(el => el.style.display = 'none');
